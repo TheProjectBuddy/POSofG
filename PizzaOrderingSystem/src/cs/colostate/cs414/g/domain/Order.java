@@ -1,8 +1,11 @@
 package cs.colostate.cs414.g.domain;
 
-public class Order {
-
-	public Order() {
+public class Order
+{
+	OrderStatus;
+	public Order() 
+	{
+			
 	}
 	
 
