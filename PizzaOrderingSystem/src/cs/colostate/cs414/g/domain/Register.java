@@ -15,8 +15,8 @@ public class Register {
 	public int generateOrderID(){
 		return orderID++;
 	}
-	public void addItem(int itemID){
-		newOrder.addItemToOrder(itemID);
+	public void addItem(MenuItem item){
+		newOrder.addItemToOrder(item);
 	}
 	public float getTotal(){
 		grandTotal = newOrder.computeTotal(orderID);
