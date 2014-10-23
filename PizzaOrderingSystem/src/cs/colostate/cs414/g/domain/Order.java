@@ -3,25 +3,75 @@ package cs.colostate.cs414.g.domain;
 import java.util.ArrayList;
 
 public class Order {
-	int orderID;
-	OrderStatus orderStatus;
-	ArrayList<MenuItem> orderList = new ArrayList<MenuItem>();
-	float total = 0;
+	public int orderID;
+	public OrderStatus orderStatus;
+	public ArrayList<OrderItem> orderList = new ArrayList<OrderItem>();
+	public float total = 0;
+	public float amountDue;
+	public int numberOfItems;
 	
-	public Order(int orderID){
-		this.orderID = orderID;
-		this.orderStatus=OrderStatus.WAITING;
+	public Order(){
+		
+	}
+	
+	public int getNumItems() {
+		return numberOfItems ;
+	}
+	
+	public void pay(float amount, String type) {
+		Payment payment = new Payment(amount, type);
+		this.amountDue -= payment.getAmount();
+	}
+	
+	public ArrayList<OrderItem> getOrderList() {
+		return this.orderList;
+	}
+	
+	public double getTotal() {
+		return this.total;
+	}
+	
+	public double getAmountDue() {
+		return this.amountDue;
+	}
+	
+	public boolean isPaid() {
+		if(amountDue >= 0)
+			return true ;
+		return false ;
 	}
 
-	public void addItemToOrder(MenuItem item) {
-		orderList.add(item);
-	}
-
-	public float computeTotal(int orderID) {
-		for(MenuItem item:orderList){
-			total+=item.getPrice();
+	public boolean addItem(MenuItem item) {
+		boolean found = false;
+		for(OrderItem orderItem : orderList) {
+			if (orderItem.equals(item)) {
+				found = true;
+				orderItem.incrementItemQuantity();
+				this.amountDue += item.price;
+				break;
+			}
 		}
-		return total;
+			
+		if(!found) {
+			this.orderList.add(new OrderItem(item));
+			this.amountDue += item.price;
+			this.total += item.price ;
+			numberOfItems++ ;
+			return true ;
+		}
+		else
+			return false ;
+	}
+	
+	public boolean removeItem(MenuItem item) {
+		for(OrderItem orderItem : this.orderList) {
+			if(orderItem.equals(item)) {
+				orderList.remove(orderItem);
+				numberOfItems-- ;
+				return true ;
+			}
+		}
+		return false ;
 	}
 
 }

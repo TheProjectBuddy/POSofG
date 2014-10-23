@@ -2,10 +2,15 @@ package cs.colostate.cs414.g.domain;
 
 public class MenuItem {
 	
-	int itemID;
-	float price;
-	String description;
+	public int itemID;
+	public float price;
+	public String description;
+	public String name;
 
+	public MenuItem(String name, float price) {
+		this.name = name;
+		this.price = price;
+	}
 	public int getItemID() {
 		return itemID;
 	}
