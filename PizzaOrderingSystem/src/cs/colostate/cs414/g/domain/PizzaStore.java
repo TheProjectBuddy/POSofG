@@ -26,7 +26,7 @@ public class PizzaStore {
 
 	private void loadManagers() {
 		try {
-			FileInputStream inFile = new FileInputStream("managers.txt");// TO BE CREATED
+			FileInputStream inFile = new FileInputStream("managers.txt");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inFile));
 			StoreManager toAdd = null;
 			String str;
@@ -45,7 +45,7 @@ public class PizzaStore {
 		String line;
 		int lineNumber = 0;
 		try {
-			FileInputStream inFile = new FileInputStream("menu");//TO BE CREATED
+			FileInputStream inFile = new FileInputStream("menu");
 			BufferedReader content = new BufferedReader(new InputStreamReader(inFile));
 			Menu loadMenu = null;
 			while((line = content.readLine()) != null){
