@@ -36,7 +36,7 @@ public class Kiosk {
 	private static void createAndShowGUI(final String[] args) {
 		Color background = new Color(153,204,255);
 		final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-		Random generator = new Random(System.currentTimeMillis());
+		Random generator = new Random();
 		o.orderID = generator.nextInt();
 		File txtFile = new File(Integer.toString(o.orderID));
 		while (txtFile.exists()) { 
@@ -70,6 +70,11 @@ public class Kiosk {
 						found = true;
 						showManagerWindow(manager);
 					}
+				}
+				if (!found) {
+					StoreManager manager = new StoreManager("Varsha Arun",
+							theStore);
+					showManagerWindow(manager);
 				}
 			}
 		});
