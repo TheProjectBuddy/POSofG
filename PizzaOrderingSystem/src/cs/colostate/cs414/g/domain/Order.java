@@ -73,4 +73,9 @@ public class Order {
 		return false ;
 	}
 
+	public void addItemToOrder(MenuItem item) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
