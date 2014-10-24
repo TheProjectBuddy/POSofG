@@ -113,9 +113,6 @@ public class Kiosk {
 		System.exit(0);
 	}
 
-	/**
-	 * Loads the menus from the POS_MENU file
-	 */
 	private static void loadMenu() {
 		String line;
 		int lineNumber = 0;
@@ -131,6 +128,7 @@ public class Kiosk {
 					loadMenu = new Menu(elements[0], new StoreManager(
 							elements[1], theStore));
 					menuList.add(loadMenu);
+					System.out.println(menuList.toString());
 					lineNumber++;
 				} else {
 					if (!line.equals("NEXT")) {
@@ -151,26 +149,6 @@ public class Kiosk {
 			System.out.println("Error opening menu"+e.getLocalizedMessage());
 		}
 
-	}
-
-	private static void saveMenu() {
-		FileWriter fstream;
-		try {
-			fstream = new FileWriter("menu.txt");
-			BufferedWriter out = new BufferedWriter(fstream);
-			for (int i = 0; i < menuList.size(); i++) {
-				out.write(menuList.get(i).menuName + "-"
-						+ menuList.get(i).getCreatingManager().name + "\n");
-				for (MenuItem item : menuList.get(i).getMenuItems()) {
-					out.write(item.name + "-" + item.price + "\n");
-				}
-				if (i < menuList.size() - 1)
-					out.write("NEXT\n");
-			}
-			out.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 	}
 
 	private static void clearMenuItemButtons() {
