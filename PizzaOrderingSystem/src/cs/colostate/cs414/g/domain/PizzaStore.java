@@ -68,4 +68,44 @@ public class PizzaStore {
 			System.out.println("Error opening menu");
 		}
 	}
+	public void save() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Menu getCurrentMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addMenuItem(String name, double price) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getCurrentMenuName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<String> getCurrentMenuItemNames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<Double> getCurrentMenuItemPrices() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setMenuList(ArrayList<Menu> menuList2) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

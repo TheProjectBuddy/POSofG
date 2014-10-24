@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Order {
 	public int orderID;
-	public OrderStatus orderStatus;
 	public ArrayList<OrderItem> orderList = new ArrayList<OrderItem>();
 	public float total = 0;
 	public float amountDue;
@@ -18,8 +17,8 @@ public class Order {
 		return numberOfItems ;
 	}
 	
-	public void pay(float amount, String type) {
-		Payment payment = new Payment(amount, type);
+	public void pay(double d, String type) {
+		Payment payment = new Payment(d, type);
 		this.amountDue -= payment.getAmount();
 	}
 	
