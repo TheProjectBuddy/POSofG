@@ -71,11 +71,6 @@ public class Kiosk {
 						showManagerWindow(manager);
 					}
 				}
-				if (!found) {
-					StoreManager manager = new StoreManager("Varsha Arun",
-							theStore);
-					showManagerWindow(manager);
-				}
 			}
 		});
 		desktop.add(loginLabel);
@@ -193,10 +188,6 @@ public class Kiosk {
 		drawOrderButtons();
 	}
 
-	/**
-	 * Always draws a bottom bar with the VIEW ORDER and PLACE ORDER buttons in
-	 * it
-	 */
 	public static void drawOrderButtons() {
 		final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.getContentPane().add(new JSeparator());
