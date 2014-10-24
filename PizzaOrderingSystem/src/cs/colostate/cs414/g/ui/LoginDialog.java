@@ -19,7 +19,6 @@ public class LoginDialog extends JDialog {
  
     public LoginDialog(Frame parent) {
         super(parent, "Login", true);
-        //
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints cs = new GridBagConstraints();
  

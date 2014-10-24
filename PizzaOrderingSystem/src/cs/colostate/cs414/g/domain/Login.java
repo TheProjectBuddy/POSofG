@@ -5,7 +5,8 @@ public class Login {
 	PizzaStore theStore;
 
 	public static boolean authenticate(String username, String password) {
-	     if (username.equals("bob") && password.equals("secret")) {
+		//To be changed to manager cashier chef
+	     if (username.equals("varsha") && password.equals("secret")) {
 	            return true;
 	        }
 	        return false;
