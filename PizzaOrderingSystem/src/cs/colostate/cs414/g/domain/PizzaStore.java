@@ -34,6 +34,7 @@ public class PizzaStore {
 				toAdd = new StoreManager(str, this);
 				managerList.add(toAdd);
 			}
+			System.out.println(managerList.toString());
 			reader.close();
 		} catch(Exception f) {
 			System.out.println("Error opening manager file.");
@@ -44,7 +45,7 @@ public class PizzaStore {
 		String line;
 		int lineNumber = 0;
 		try {
-			FileInputStream inFile = new FileInputStream("menu.txt");//TO BE CREATED
+			FileInputStream inFile = new FileInputStream("menu");//TO BE CREATED
 			BufferedReader content = new BufferedReader(new InputStreamReader(inFile));
 			Menu loadMenu = null;
 			while((line = content.readLine()) != null){
@@ -65,7 +66,7 @@ public class PizzaStore {
 			}
 			content.close();
 		} catch (Exception e) {
-			System.out.println("Error opening menu");
+			System.out.println("Error opening menu"+e.getMessage());
 		}
 	}
 	public void save() {

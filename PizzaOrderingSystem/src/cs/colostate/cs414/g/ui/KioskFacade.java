@@ -5,52 +5,53 @@ import java.util.ArrayList;
 import cs.colostate.cs414.g.domain.Menu;
 import cs.colostate.cs414.g.domain.MenuItem;
 import cs.colostate.cs414.g.domain.PizzaStore;
+import cs.colostate.cs414.g.domain.StoreManager;
 
 public class KioskFacade {
-
-	public PizzaStore getTheStore() {
-		// TODO Auto-generated method stub
-		return null;
+	private PizzaStore theStore;
+	
+	public KioskFacade() {
+		theStore = new PizzaStore();
+		theStore.initialization();
 	}
-
-	public String getMenuName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void addNewMenu(String string, String string2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public ArrayList<String> getCurrentMenuItemNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<Double> getCurrentMenuItemPrices() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public MenuItem getOrderItem(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	public void save() {
-		// TODO Auto-generated method stub
-		
+		theStore.save();
 	}
-
+	
+	public void setRestaurant(PizzaStore theStore) {
+		this.theStore = theStore;
+	}
+	
+	public PizzaStore getStore() {
+		return theStore;
+	}
+	
+	public MenuItem getOrderItem(String name) {
+		return theStore.getCurrentMenu().getItemOfName(name);
+	}
+	
 	public void addMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		
+		theStore.addMenu(menu);
 	}
-
-	public void addMenuItem(String string, double parseDouble) {
-		// TODO Auto-generated method stub
-		
+	
+	public void addMenuItem(String name, double price) {
+		theStore.addMenuItem(name, price);
 	}
-
+	
+	public String getMenuName() {
+		return theStore.getCurrentMenuName();
+	}
+	
+	public void addNewMenu(String menuName, String managerName) {
+		theStore.addMenu(new Menu(menuName, new StoreManager(managerName, theStore)));
+	}
+	
+	public ArrayList<String> getCurrentMenuItemNames() {
+		return theStore.getCurrentMenuItemNames();
+	}
+	
+	public ArrayList<Double> getCurrentMenuItemPrices() {
+		return theStore.getCurrentMenuItemPrices();
+	}
 }

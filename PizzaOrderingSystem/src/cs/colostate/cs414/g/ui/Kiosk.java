@@ -30,7 +30,7 @@ public class Kiosk {
 	private static ArrayList<JButton> menuItemButtons = new ArrayList<JButton>();
 	private static ArrayList<JButton> orderButtons = new ArrayList<JButton>();
 	private static KioskFacade kFacade = new KioskFacade();
-	public static PizzaStore theStore = kFacade.getTheStore();
+	public static PizzaStore theStore = kFacade.getStore();
 	private static String[] args;
 
 	private static void createAndShowGUI(final String[] args) {
@@ -54,7 +54,6 @@ public class Kiosk {
 
 		loadMenu();
 
-		// ############### CONTENT ######################
 		gBC.gridx = 0;
 		gBC.gridy = -1;
 		gBC.weightx = 0.5;
@@ -121,7 +120,7 @@ public class Kiosk {
 		String line;
 		int lineNumber = 0;
 		try {
-			FileInputStream inFile = new FileInputStream("menu.txt");
+			FileInputStream inFile = new FileInputStream("menu");
 			BufferedReader content = new BufferedReader(new InputStreamReader(
 					inFile));
 			Menu loadMenu = null;
@@ -149,7 +148,7 @@ public class Kiosk {
 			menu = menuList.get(0);
 
 		} catch (Exception e) {
-			System.out.println("Error opening menu");
+			System.out.println("Error opening menu"+e.getLocalizedMessage());
 		}
 
 	}
