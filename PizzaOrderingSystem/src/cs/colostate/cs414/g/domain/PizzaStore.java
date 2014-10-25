@@ -11,7 +11,7 @@ public class PizzaStore {
 	public String storeName;
 	public String storeLocation;
 	public String storePhoneNum;
-	private ArrayList<Menu> menuList;
+	private Menu menu;
 	private ArrayList<StoreManager> managerList;
 	private ArrayList<Cashier> cashierList;
 	private ArrayList<Chef> chefList;
@@ -107,24 +107,23 @@ public class PizzaStore {
 	}
 
 	public Menu getCurrentMenu() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+		return menu; }
 
 	public void addMenu(Menu menu) {
-		// TODO Auto-generated method stub
+		this.menu=menu;
 
 	}
 
-	public void addMenuItem(String name, double price) {
-		// TODO Auto-generated method stub
+	//public void addMenuItem(String name, double price) {
+	
 
-	}
+	//}
 
-	public String getCurrentMenuName() {
+	//public String getCurrentMenuName() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+	//	return null;
+	//}
 
 	public ArrayList<String> getCurrentMenuItemNames() {
 		// TODO Auto-generated method stub
@@ -136,9 +135,9 @@ public class PizzaStore {
 		return null;
 	}
 
-	public void setMenuList(ArrayList<Menu> menuList2) {
+	//public void setMenuList(ArrayList<Menu> menuList2) {
 		// TODO Auto-generated method stub
 
-	}
+	//}
 
 }
