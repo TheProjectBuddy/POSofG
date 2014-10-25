@@ -32,9 +32,8 @@ public class StoreManager {
 	public void setStore(PizzaStore store) {
 		this.store = store;
 	}
-        public void createMenu(String menuName) {
-		Menu menu = new Menu(menuName);
-		
-		store.addMenu(menu);
-	}
+    // public void createMenu(String menuName) {
+		//Menu menu = new Menu(menuName);
+		//store.addMenu(menu);
+	//}
 }

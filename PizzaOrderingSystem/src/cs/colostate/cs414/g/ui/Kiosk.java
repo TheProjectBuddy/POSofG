@@ -23,7 +23,6 @@ public class Kiosk {
 			+ kioskID);
 	private static Order o = new Order();
 	private static ArrayList<StoreManager> managerList = new ArrayList<StoreManager>();
-	private static ArrayList<Menu> menuList = new ArrayList<Menu>();
 	private static Menu menu;
 	private static JLabel currentMenu;
 	private static JDesktopPane desktop;
@@ -127,8 +126,7 @@ public class Kiosk {
 					kFacade.addNewMenu(elements[0], elements[1]);
 					loadMenu = new Menu(elements[0], new StoreManager(
 							elements[1], theStore));
-					menuList.add(loadMenu);
-					System.out.println(menuList.toString());
+					menu = loadMenu;
 					lineNumber++;
 				} else {
 					if (!line.equals("NEXT")) {
@@ -142,8 +140,8 @@ public class Kiosk {
 				}
 			}
 			content.close();
-			theStore.setMenuList(menuList);
-			menu = menuList.get(0);
+			theStore.setMenu(menu);
+			//menu = menuList.get(0);
 
 		} catch (Exception e) {
 			System.out.println("Error opening menu"+e.getLocalizedMessage());
@@ -429,17 +427,16 @@ public class Kiosk {
 		addMenuButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean found = false;
-				for (Menu obj : menuList) {
-					if (obj.menuName.equalsIgnoreCase(addMenuTextField
+				
+					if (menu.menuName.equalsIgnoreCase(addMenuTextField
 							.getText())) {
 						found = true;
-						menu = obj;
 					}
-				}
+				
 				if (!found) {
 					menu = new Menu(addMenuTextField.getText(), manager);
 					kFacade.addMenu(menu);
-					menuList.add(menu);
+					//menuList.add(menu);
 					theStore.addMenu(menu);
 				}
 				addMenuTextField.setText("Menu has been changed");

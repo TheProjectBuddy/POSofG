@@ -11,13 +11,13 @@ public class PizzaStore {
 	public String storeName;
 	public String storeLocation;
 	public String storePhoneNum;
-	private ArrayList<Menu> menuList;
+	private Menu menu;
 	private ArrayList<StoreManager> managerList;
 	private ArrayList<Cashier> cashierList;
 	private ArrayList<Chef> chefList;
 
 	public PizzaStore() {
-		menuList = new ArrayList<Menu>();
+		//menuList = new ArrayList<Menu>();
 		managerList = new ArrayList<StoreManager>();
 		cashierList = new ArrayList<Cashier>();
 		chefList = new ArrayList<Chef>();
@@ -82,7 +82,7 @@ public class PizzaStore {
 					String elements[] = line.split("-");
 					loadMenu = new Menu(elements[0], new StoreManager(
 							elements[1], this));
-					menuList.add(loadMenu);
+				menu= loadMenu;
 					lineNumber++;
 				} else {
 					if (!line.equals("NEXT")) {
@@ -107,24 +107,23 @@ public class PizzaStore {
 	}
 
 	public Menu getCurrentMenu() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+		return menu; }
 
 	public void addMenu(Menu menu) {
-		// TODO Auto-generated method stub
+		this.menu=menu;
 
 	}
 
-	public void addMenuItem(String name, double price) {
-		// TODO Auto-generated method stub
+	//public void addMenuItem(String name, double price) {
+	
 
-	}
+	//}
 
-	public String getCurrentMenuName() {
+	//public String getCurrentMenuName() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+	//	return null;
+	//}
 
 	public ArrayList<String> getCurrentMenuItemNames() {
 		// TODO Auto-generated method stub
@@ -136,9 +135,8 @@ public class PizzaStore {
 		return null;
 	}
 
-	public void setMenuList(ArrayList<Menu> menuList2) {
+	public void setMenu(Menu menu2) {
 		// TODO Auto-generated method stub
-
+		
 	}
-
 }

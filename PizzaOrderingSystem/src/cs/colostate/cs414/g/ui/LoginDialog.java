@@ -9,7 +9,11 @@ import cs.colostate.cs414.g.domain.Login;
  
 public class LoginDialog extends JDialog {
  
-    private JTextField tfUsername;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField tfUsername;
     private JPasswordField pfPassword;
     private JLabel lbUsername;
     private JLabel lbPassword;
