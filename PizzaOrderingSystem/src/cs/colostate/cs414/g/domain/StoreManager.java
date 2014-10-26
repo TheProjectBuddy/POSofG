@@ -33,7 +33,7 @@ public class StoreManager {
 		this.store = store;
 	}
      public void createMenu(String menuName) {
-		Menu menu = new Menu(menuName);
+		Menu menu = new Menu(menuName, this);
 		store.addMenu(menu);
 	}
 }

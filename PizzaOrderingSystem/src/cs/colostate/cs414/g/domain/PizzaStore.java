@@ -65,7 +65,7 @@ public class PizzaStore {
 			}
 			reader.close();
 		} catch (Exception f) {
-			System.out.println("Error opening manager file.");
+			System.out.println("Error opening employees file");
 		}
 	}
 
@@ -120,10 +120,9 @@ public class PizzaStore {
 
 	//}
 
-	//public String getCurrentMenuName() {
-		// TODO Auto-generated method stub
-	//	return null;
-	//}
+	public String getCurrentMenuName() {
+		return menu.getName();
+	}
 
 	public ArrayList<String> getCurrentMenuItemNames() {
 		
@@ -137,7 +136,7 @@ public class PizzaStore {
 	}
 
 
-	public void setMenu(Menu menu2) {
+	public void setMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		
 	}
