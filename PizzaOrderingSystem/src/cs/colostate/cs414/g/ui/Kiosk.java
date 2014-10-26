@@ -501,6 +501,41 @@ public class Kiosk {
 		return p;
 	}
 
+        public static ArrayList<Object> addSpecialItemInterface()
+	{
+		ArrayList<Object> p= new ArrayList<Object>();
+		JLabel addSpecialLabel = new JLabel("Add Special(item-price)");
+		p.add(addSpecialLabel);
+		final JTextField addSpecialTextField = new JTextField(15);
+		p.add(addSpecialTextField);
+		JButton addSpecialButton = new JButton("Create Special");
+		addSpecialButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String string = addSpecialTextField.getText();
+				String elements[] = string.split("-");
+				try {
+					elements[0] = elements[0].trim();
+					elements[1] = elements[1].trim();
+					if (elements[1].startsWith("$"))
+						kFacade.addSpecialItem(elements[0],
+								Double.parseDouble(elements[1].substring(1)));
+					else
+						kFacade.addSpecialItem(elements[0],
+								Double.parseDouble(elements[1]));
+					addSpecialTextField.setText(elements[0] + " Added!");
+				} catch (Exception exc) {
+					System.out.println(exc);
+					addSpecialTextField.setText("Error adding item!");
+				}
+				
+			}
+		});
+		
+		p.add(addSpecialButton);
+		return p;
+	}
+
 	public static JLabel getReceipt() {
 		ArrayList<OrderItem> orderItems = o.getOrderList();
 		String text = "<html><center><h1>ORDER SUMMARY</h1><br>";
