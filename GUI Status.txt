@@ -1,0 +1,4 @@
+Manager getting authenticated as of now
+The manager view is getting displayed once login is successful.
+ 
+*The frame must be set according to specifications now.
