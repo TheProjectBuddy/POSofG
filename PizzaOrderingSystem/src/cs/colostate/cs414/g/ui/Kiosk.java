@@ -58,7 +58,7 @@ public class Kiosk {
 		gBC.weightx = 0.5;
 		gBC.weighty = 0.25;
 
-		JLabel loginLabel = new JLabel("Manager Name");
+		JLabel loginLabel = new JLabel("Manager Login");
 		final JTextField loginTextField = new JTextField(15);
 		JButton submitLogInButton = new JButton("Submit");
 		submitLogInButton.addActionListener(new ActionListener() {
@@ -77,9 +77,12 @@ public class Kiosk {
 				}
 			}
 		});
+		
+		JLabel orderSummary = getReceipt();
 		desktop.add(loginLabel);
 		desktop.add(loginTextField);
 		desktop.add(submitLogInButton);
+		desktop.add(orderSummary);
 		currentMenu = new JLabel("Current Menu: " + kFacade.getMenuName());
 		desktop.add(currentMenu);
 		gBC.gridy += 1;
@@ -178,7 +181,7 @@ public class Kiosk {
 				b.setPreferredSize(new Dimension(150, 100));
 				b.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						o.addItemToOrder(item); 
+						o.addItem(item); //Adding item to order upon click
 					}
 				});
 				gBC.gridx = i % 5;
@@ -194,39 +197,44 @@ public class Kiosk {
 	public static void drawOrderButtons() {
 		final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.getContentPane().add(new JSeparator());
-		JButton viewOrder = new JButton("View Order");
 		JButton placeOrder = new JButton("Place Order");
-		viewOrder.setPreferredSize(new Dimension(100, 100));
-		viewOrder.setBackground(Color.green);
+		JButton modifyOrder = new JButton("Modify Order");
+		
+		modifyOrder.setPreferredSize(new Dimension(100,100));
+		modifyOrder.setBackground(Color.blue);
 		placeOrder.setPreferredSize(new Dimension(100, 100));
 		placeOrder.setBackground(Color.blue);
 
-		viewOrder.addActionListener(new ActionListener() {
+		modifyOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				JInternalFrame internalFrame = new JInternalFrame(
-						"Order Summary", false, true, false, false);
+				//modify in the receipt
+				JInternalFrame internalFrame = new JInternalFrame("Modify/Cancel Order", false, true, false, false);
 				internalFrame.setBounds(0, 50, 500, size.height);
-				internalFrame.setBackground(new Color(225, 225, 255));
-				gBC.ipady = size.height - 100;
-				gBC.weightx = 0;
+				internalFrame.setBackground(new Color(225, 225, 255)) ;
+				gBC.ipady = size.height-100;
+				gBC.weightx = 0 ;
 				gBC.gridwidth = 4;
-				gBC.gridx = 0;
-				gBC.gridy = 0;
-
-				JLabel receipt = getReceipt();
-				internalFrame.add(receipt);
-				internalFrame.show();
-				frame.add(internalFrame, gBC);
+				gBC.gridx = 0 ;
+				gBC.gridy = 0 ;
+				
+				ArrayList<OrderItem> orderItems = o.getOrderList() ;
+				//ButtonGroup orderButton = new ButtonGroup();
+				for(int i=0; i<orderItems.size(); i++) {
+					JRadioButton ordBtn = new JRadioButton(orderItems.toString());
+					internalFrame.add(ordBtn);
+				}
+				internalFrame.show() ;
+				frame.add(internalFrame, gBC) ;
 				internalFrame.setVisible(true);
 				try {
-					internalFrame.setSelected(true);
+					internalFrame.setSelected(true) ;
 				} catch (PropertyVetoException e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
-
+			
+				
 		placeOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JDesktopPane desktop2 = new JDesktopPane();
@@ -358,12 +366,12 @@ public class Kiosk {
 				frame.setVisible(true);
 			}
 		});
-		gBC.gridy += 1;
-		gBC.gridx = 0;
-		desktop.add(viewOrder, gBC);
-		orderButtons.add(viewOrder);
-		gBC.gridx = 1;
-		desktop.add(placeOrder, gBC);
+		gBC.gridy += 1 ;
+		gBC.gridx = 0 ;
+		desktop.add(modifyOrder, gBC) ;
+		orderButtons.add(modifyOrder);
+		gBC.gridx = 1 ;
+		desktop.add(placeOrder, gBC) ;
 		orderButtons.add(placeOrder);
 	}
 
@@ -500,8 +508,7 @@ public class Kiosk {
 		drawMenuItemButtons();
 		return p;
 	}
-
-        public static ArrayList<Object> addSpecialItemInterface()
+public static ArrayList<Object> addSpecialItemInterface()
 	{
 		ArrayList<Object> p= new ArrayList<Object>();
 		JLabel addSpecialLabel = new JLabel("Add Special(item-price)");
@@ -550,19 +557,19 @@ public class Kiosk {
 					+ "<td>$" + lineTotal + "</td></tr><br>";
 		}
 		DecimalFormat formatter = new DecimalFormat("#0.00");
-		String tot = formatter.format(o.total);
+		String total = formatter.format(o.total);
 		String payments = formatter.format(o.total - o.amountDue);
 		String amountDue = formatter.format(o.amountDue);
-		text += "<tr><td></td><td></td><td></td><td>Total: $" + tot
+		text += "<tr><td></td><td></td><td></td><td>Total: $" + total
 				+ "</td></tr>"
 				+ "<tr><td></td><td>Payments:</td><td></td><td>$" + payments
 				+ "</td></tr>"
 				+ "<tr><td></td><td>Amount Due:</td><td></td><td>$" + amountDue
 				+ "</td><tr></table></center></html>";
-		JLabel recipt = new JLabel(text, JLabel.CENTER);
-		return recipt;
+		JLabel receipt = new JLabel(text, JLabel.CENTER);
+		return receipt;
 	}
-
+	
 	public static void main(final String[] args1) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
