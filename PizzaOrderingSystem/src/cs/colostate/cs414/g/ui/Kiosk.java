@@ -532,7 +532,7 @@ public class Kiosk {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				args = args1;
-				final JFrame frame = new JFrame("JDialog Demo");
+				final JFrame frame = new JFrame("My Pizzeria Employee Login");
 		        final JButton btnLogin = new JButton("Click to login");
 
 		        btnLogin.addActionListener(
