@@ -13,6 +13,7 @@ public class Menu {
 	private MenuItem special;
 	private ArrayList<MenuItem> allMenuItem = new ArrayList<MenuItem>();
         private ArrayList<String> menuItemNames = new ArrayList<String>();
+        private ArrayList<Double> menuItemPrices = new ArrayList<Double>();
 	public Menu(String menuName, Calendar effectiveDate, Calendar ineffectiveDate, StoreManager creatingManager) {
 		this.menuName = menuName;
 		this.effectiveDate = effectiveDate;
@@ -47,6 +48,7 @@ public class Menu {
 		{
 			allMenuItem.add(item);
             menuItemNames.add(item.name);
+            menuItemPrices.add(item.price);
 	}
          
 	}
@@ -75,6 +77,11 @@ public class Menu {
         public ArrayList<String> getMenuItemNames(){
 	
 		return this.menuItemNames;
+	}
+        
+        public ArrayList<Double> getMenuItemPrices() {
+		
+		return this.menuItemPrices;
 	}
 
 	public MenuItem getSpecial() {
