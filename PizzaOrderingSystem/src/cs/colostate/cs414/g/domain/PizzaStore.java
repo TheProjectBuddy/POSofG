@@ -63,6 +63,7 @@ public class PizzaStore {
 				}
 
 			}
+			Login.addLogins(loginPwd);
 			reader.close();
 		} catch (Exception f) {
 			System.out.println("Error opening employees file");

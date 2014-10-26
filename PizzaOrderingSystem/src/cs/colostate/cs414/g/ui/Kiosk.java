@@ -220,8 +220,11 @@ public class Kiosk {
 				ArrayList<OrderItem> orderItems = o.getOrderList() ;
 				//ButtonGroup orderButton = new ButtonGroup();
 				for(int i=0; i<orderItems.size(); i++) {
-					JRadioButton ordBtn = new JRadioButton(orderItems.toString());
+					JRadioButton ordBtn = new JRadioButton(orderItems.get(i).getItem().getName());
 					internalFrame.add(ordBtn);
+					JTextField qty = new JTextField(orderItems.get(i).getItem().getName());
+					internalFrame.add(qty);
+				
 				}
 				internalFrame.show() ;
 				frame.add(internalFrame, gBC) ;
