@@ -55,6 +55,7 @@ public class Menu {
 		allMenuItem.remove(item);
 	}
 	
+
 	public void setSpecial(MenuItem item) {
 		this.special = item;
 	}
@@ -71,6 +72,11 @@ public class Menu {
 		return this.allMenuItem;
 	}
 	
+        public ArrayList<String> getMenuItemNames(){
+	
+		return this.menuItemNames;
+	}
+
 	public MenuItem getSpecial() {
 		return this.special;
 	}
