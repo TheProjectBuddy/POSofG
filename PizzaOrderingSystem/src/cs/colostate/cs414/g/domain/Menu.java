@@ -92,7 +92,12 @@ public class Menu {
 		return allMenuItem.size();
 	}
 	public MenuItem getItemOfName(String name) {
-		// TODO Auto-generated method stub
+		for(int i = 0; i < allMenuItem.size(); ++i) {
+			if(allMenuItem.get(i).getName().equals(name)) {
+				return allMenuItem.get(i);
+			}
+		}
+		
 		return null;
 	}
 	public MenuItem getItem(int itemID) {
