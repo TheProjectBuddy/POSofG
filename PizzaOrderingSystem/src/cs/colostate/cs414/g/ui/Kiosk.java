@@ -140,7 +140,7 @@ public class Kiosk {
 				}
 			}
 			content.close();
-			theStore.setMenu(menu);
+			theStore.addMenu(menu);
 			//menu = menuList.get(0);
 
 		} catch (Exception e) {
