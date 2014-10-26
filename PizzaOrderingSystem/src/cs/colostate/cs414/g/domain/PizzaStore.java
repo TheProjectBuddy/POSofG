@@ -126,8 +126,8 @@ public class PizzaStore {
 	//}
 
 	public ArrayList<String> getCurrentMenuItemNames() {
-		// TODO Auto-generated method stub
-		return null;
+		
+           return menu.getMenuItemNames();
 	}
 
 	public ArrayList<Double> getCurrentMenuItemPrices() {
