@@ -42,6 +42,13 @@ public class KioskFacade {
 		tempmenu.addMenuItem(tempMenuItem);
 	}
 	
+        public void addSpecialItem(String name, double price) {
+		Menu tempmenu=theStore.getCurrentMenu();
+		MenuItem tempMenuItem=new MenuItem(name,price);
+		tempmenu.setSpecial(tempMenuItem);
+		
+	}
+
 	public String getMenuName() {
 		return theStore.getCurrentMenuName();
 	}
