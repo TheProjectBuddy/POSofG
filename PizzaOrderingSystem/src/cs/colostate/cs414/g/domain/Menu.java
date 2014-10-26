@@ -12,7 +12,7 @@ public class Menu {
 	private StoreManager creatingManager;
 	private MenuItem special;
 	private ArrayList<MenuItem> allMenuItem = new ArrayList<MenuItem>();
-
+        private ArrayList<String> menuItemNames = new ArrayList<String>();
 	public Menu(String menuName, Calendar effectiveDate, Calendar ineffectiveDate, StoreManager creatingManager) {
 		this.menuName = menuName;
 		this.effectiveDate = effectiveDate;
@@ -42,8 +42,13 @@ public class Menu {
 	}
 	
 	public void addMenuItem(MenuItem item) {
+
 		if(!allMenuItem.contains(item))
+		{
 			allMenuItem.add(item);
+            menuItemNames.add(item.name);
+	}
+         
 	}
 	
 	public void removeMenuItem(MenuItem item) {
