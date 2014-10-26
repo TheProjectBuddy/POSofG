@@ -131,8 +131,9 @@ public class PizzaStore {
 	}
 
 	public ArrayList<Double> getCurrentMenuItemPrices() {
-		// TODO Auto-generated method stub
-		return null;
+		
+         return menu.getMenuItemPrices();
+
 	}
 
 
