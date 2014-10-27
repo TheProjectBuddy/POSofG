@@ -12,7 +12,7 @@ public class MenuItem {
 	private int ovenSpace;
 
 
-	public MenuItem(String name, double price, double prepTime, double cookTime, int ovenSpace) {
+	public MenuItem(String type, double price, double prepTime, double cookTime, int ovenSpace) {
 		this.type = type;
 		this.price = price;
 		this.prepTime = prepTime;
@@ -77,9 +77,5 @@ public class MenuItem {
 	
 	public String toString() {
 		return this.getType();
-	}
-	public boolean cancel() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
