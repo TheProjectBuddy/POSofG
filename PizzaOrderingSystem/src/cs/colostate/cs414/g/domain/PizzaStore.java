@@ -1,144 +1,62 @@
 package cs.colostate.cs414.g.domain;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
+import cs.colostate.cs414.g.util.MainUtil;
 
 public class PizzaStore {
-	public String storeName;
-	public String storeLocation;
-	public String storePhoneNum;
-	private Menu menu;
-	private ArrayList<StoreManager> managerList;
-	private ArrayList<Cashier> cashierList;
-	private ArrayList<Chef> chefList;
-
-	public PizzaStore() {
-		//menuList = new ArrayList<Menu>();
-		managerList = new ArrayList<StoreManager>();
-		cashierList = new ArrayList<Cashier>();
-		chefList = new ArrayList<Chef>();
-	}
-
-	public void initialization() {
-		loadEmployees();
-		loadMenu();
-	}
-
-	private void loadEmployees() {
-		try {
-			FileInputStream inFile = new FileInputStream("employees.txt");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					inFile));
-			StoreManager toAddM = null;
-			Cashier toAddCash = null;
-			Chef toAddC = null;
-			Map<String, String> loginPwd = new HashMap<String, String>();
-			String str;
-			while ((str = reader.readLine()) != null && str != "") {
-				String elements[] = str.split("-");
-				if (elements[1].equalsIgnoreCase("Store Manager")) {
-					toAddM = new StoreManager(str, this);
-					toAddM.setName(elements[0]);
-					loginPwd.put(elements[2], elements[3]);
-					toAddM.setLoginUidPwd(loginPwd);
-					managerList.add(toAddM);
-				}
-				else if (elements[1].equalsIgnoreCase("Cashier")) {
-					toAddCash = new Cashier(str, this);
-					toAddCash.setName(elements[0]);
-					loginPwd.put(elements[2], elements[3]);
-					toAddCash.setLoginUidPwd(loginPwd);
-					cashierList.add(toAddCash);
-				}
-				if (elements[1].equalsIgnoreCase("Chef")) {
-					toAddC = new Chef(str, this);
-					toAddC.setName(elements[0]);
-					loginPwd.put(elements[2], elements[3]);
-					toAddC.setLoginUidPwd(loginPwd);
-					chefList.add(toAddC);
-				}
-
-			}
-			Login.addLogins(loginPwd);
-			reader.close();
-		} catch (Exception f) {
-			System.out.println("Error opening employees file");
-		}
-	}
-
-	private void loadMenu() {
-		String line;
-		int lineNumber = 0;
-		try {
-			FileInputStream inFile = new FileInputStream("menu");
-			BufferedReader content = new BufferedReader(new InputStreamReader(
-					inFile));
-			Menu loadMenu = null;
-			while ((line = content.readLine()) != null) {
-				if (lineNumber == 0) {
-					String elements[] = line.split("-");
-					loadMenu = new Menu(elements[0], new StoreManager(
-							elements[1], this));
-				menu= loadMenu;
-					lineNumber++;
-				} else {
-					if (!line.equals("NEXT")) {
-						String elements[] = line.split("-");
-						MenuItem item = new MenuItem(elements[0],
-								Float.parseFloat(elements[1]));
-						loadMenu.addMenuItem(item);
-					} else {
-						lineNumber = 0;
+	static Map< String, ArrayList< Order > > orders = Collections.synchronizedMap(new HashMap< String, ArrayList< Order > >());
+	static Map< String, Customer > customers = Collections.synchronizedMap(new HashMap< String, Customer >());
+	
+	public static ArrayList< Order > getOrdersList() {
+		ArrayList< Order > ordersList = new ArrayList< Order >();
+		synchronized(orders) {
+			Set< Map.Entry< String, ArrayList<Order > > > entrySet = orders.entrySet();
+			for (Map.Entry< String, ArrayList<Order > > kv : entrySet) {
+				ArrayList<Order> custOrders = kv.getValue();
+				synchronized(custOrders) {
+					for (Order order : custOrders) {
+						ordersList.add(order);
 					}
 				}
 			}
-			content.close();
-		} catch (Exception e) {
-			System.out.println("Error opening menu" + e.getMessage());
 		}
+		
+		return ordersList;
 	}
-
-	public void save() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public Menu getCurrentMenu() {
 	
-		return menu; }
-
-	public void addMenu(Menu menu) {
-		this.menu=menu;
-
-	}
-
-	//public void addMenuItem(String name, double price) {
-	
-
-	//}
-
-	public String getCurrentMenuName() {
-		return menu.getName();
-	}
-
-	public ArrayList<String> getCurrentMenuItemNames() {
+	public static void main(String[] args) {
 		
-           return menu.getMenuItemNames();
-	}
-
-	public ArrayList<Double> getCurrentMenuItemPrices() {
+		FileInputStream menuFileStream = null;
+		try {
+			File file = new File("menu.txt"); 
+			menuFileStream = new FileInputStream(file);
+		}
+		catch (FileNotFoundException e) {
+			System.err.println("Unable to open menu file. Exiting...");
+			System.exit(1);
+		}
 		
-         return menu.getMenuItemPrices();
-
-	}
-
-
-	public void setMenu(Menu menu) {
-		// TODO Auto-generated method stub
+		Menu menu = null;
+		try {
+			menu = new Menu(menuFileStream);
+		}
+		catch (Exception exception) {
+			System.err.println(exception.getMessage());
+			exception.printStackTrace(System.err);
+			System.exit(1);
+		}
 		
+		final Kitchen kitchen = new Kitchen();
+		MainUtil.run(new PhoneOrder(customers, orders), menu, kitchen);
 	}
 }

@@ -1,17 +1,18 @@
 package cs.colostate.cs414.g.domain;
 
+import cs.colostate.cs414.g.util.OrderStatus;
+
 public class OrderItem {
 
 	MenuItem item;
-	private int quantity;
+	private Order order;
+	private OrderItemEmp employee;
+	private OrderStatus currentStage = OrderStatus.MODIFY;
 	
-	public OrderItem(MenuItem item) {
+	public OrderItem(Order order, MenuItem item) {
 		this.item = item;
-		this.setQuantity(1);
-	}
-	
-	public void incrementItemQuantity() {
-		this.setQuantity(this.getQuantity() + 1);
+		this.order = order;
+		this.currentStage = OrderStatus.PREPARATION_WAITING;
 	}
 	
 	public boolean equals(MenuItem menuItem) {
@@ -21,14 +22,27 @@ public class OrderItem {
 	public MenuItem getItem(){
 		return item ;
 	}
-
-	public int getQuantity() {
-		return quantity;
+	public boolean cancel() {
+		return employee == null || employee.cancel(this);
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public OrderItemEmp getWorker() {
+		return employee;
 	}
 
+	public void setWorker(OrderItemEmp employee) {
+		this.employee = employee;
+	}
+	
+	public Order getOrder() {
+		return order;
+	}
+	
+	public OrderStatus getCurrentStage() {
+		return currentStage;
+	}
 
+	public String toString() {
+		return item.toString();
+	}
 }
