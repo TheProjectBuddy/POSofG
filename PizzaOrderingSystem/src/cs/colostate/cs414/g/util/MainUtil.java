@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import cs.colostate.cs414.g.domain.Login;
 import cs.colostate.cs414.g.domain.Menu;
 import cs.colostate.cs414.g.domain.PhoneOrder;
-import cs.colostate.cs414.g.ui.LoginDialog;
+//import cs.colostate.cs414.g.ui.LoginDialog;
 import cs.colostate.cs414.g.ui.WelcomeWindow;
 
 public class MainUtil {
@@ -25,8 +25,19 @@ public class MainUtil {
 						if(Login.checkExistingUsername(userName)) 
 						{
 							userWhileLoop = false;
-							password = JOptionPane.showInputDialog(null, "Hello, Kindly Enter Your Password", "Login Details - Password", 0);
-						
+							while(passWhileLoop)
+							{
+								password = JOptionPane.showInputDialog(null, "Hello, Kindly Enter Your Password", "Login Details - Password", 0);
+								if(Login.authenticate(password))
+								{
+									passWhileLoop = false;
+								}
+								else
+								{
+									JOptionPane.showMessageDialog(null, "Wrong Password.. Try Again");
+									passWhileLoop = true;
+								}
+							}
 						}
 						else
 						{
