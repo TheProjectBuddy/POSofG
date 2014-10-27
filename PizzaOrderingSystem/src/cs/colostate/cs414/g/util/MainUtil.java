@@ -45,7 +45,7 @@ public class MainUtil {
 							userWhileLoop = true;
 						}
 					}
-					WelcomeWindow frame = new WelcomeWindow(phoneOrder, menu, startStage);
+					WelcomeWindow frame = new WelcomeWindow(phoneOrder, menu, startStage, Login.isManager);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

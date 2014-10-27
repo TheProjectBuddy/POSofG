@@ -12,10 +12,10 @@ public class Login {
 	
 	private static String userID, password;
 	static boolean flag = false;
-	
+	public static int isManager = 0;
 	public static boolean authenticate(String passwordProvided) {
 		if(passwordProvided.equals(password)) return true;
-		else return false;
+		return false;
 		
 		
 		
@@ -38,6 +38,7 @@ public class Login {
 				{
 					password = elements[3];
 					flag = true;
+					if(elements[1].equals("Store Manager")) isManager = 1;
 					break;
 					
 				}

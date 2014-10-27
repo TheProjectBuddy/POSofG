@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import cs.colostate.cs414.g.domain.Login;
 import cs.colostate.cs414.g.domain.Menu;
 import cs.colostate.cs414.g.domain.PhoneOrder;
 import cs.colostate.cs414.g.util.Stage;
@@ -39,7 +40,7 @@ public class WelcomeWindow extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public WelcomeWindow(PhoneOrder phoneOrder, Menu menu, Stage startStage) {
+	public WelcomeWindow(PhoneOrder phoneOrder, Menu menu, Stage startStage, int isManager) {
 		phoneOperatorWindow = new PhoneOperatorWindow(this, phoneOrder, menu, startStage);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,7 +75,8 @@ public class WelcomeWindow extends JFrame{
 			}
 		});
 		panel.add(buttonManager);
-		
+		if(isManager == 1) buttonManager.setVisible(true);
+		else buttonManager.setVisible(false);
 		buttonExit = new JButton("Exit");
 		buttonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
