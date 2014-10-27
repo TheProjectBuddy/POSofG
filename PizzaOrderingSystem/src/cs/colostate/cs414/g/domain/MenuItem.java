@@ -78,4 +78,8 @@ public class MenuItem {
 	public String toString() {
 		return this.getType();
 	}
+	public boolean cancel() {
+ // TODO Auto-generated method stub 
+		return false; 
+	}
 }

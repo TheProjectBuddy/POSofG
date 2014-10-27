@@ -57,6 +57,7 @@ public class PizzaStore {
 		}
 		
 		final Kitchen kitchen = new Kitchen();
+		
 		MainUtil.run(new PhoneOrder(customers, orders), menu, kitchen);
 	}
 }
