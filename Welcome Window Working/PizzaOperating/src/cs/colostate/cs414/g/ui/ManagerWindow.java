@@ -155,7 +155,58 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				ManagerWindow.this.setVisible(false);
 				int selectedMenuRow = menuTable.getSelectedRow();
-				if (selectedMenuRow != -1) {
+				if(selectedMenuRow != -1 || selectedMenuRow == 0 || selectedMenuRow == 1 || selectedMenuRow == 2)
+				{
+					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
+					
+					JTextField nameItem = new JTextField(selectedFood.getName());
+					
+					nameItem.setText(selectedFood.name);
+				    JTextField itemPrice = new JTextField(5);
+				    
+				    
+				    JTextField toppingPrice = new JTextField(5);
+				    
+				    
+				    JPanel myPanel = new JPanel(new GridLayout(8, 2));
+				      myPanel.add(new JLabel("Item Name: "));
+				      myPanel.add(nameItem);
+				      nameItem.setText(selectedFood.toString());
+				      
+				      myPanel.add(new JLabel("Item Price:"));
+				      myPanel.add(itemPrice);
+				      itemPrice.setText(Double.toString(selectedFood.getPrice()));
+				      
+				      myPanel.add(new JLabel("Topping Price:"));
+				      myPanel.add(toppingPrice);
+				      toppingPrice.setText("1.0");
+				      
+				     
+				      JCheckBox box = new JCheckBox("Special?");
+				      myPanel.add(box);
+				      if(selectedFood.special == 0) box.setSelected(false);
+				      else box.setSelected(true);
+				      
+				      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+				               "Please Enter Details Of New Item", JOptionPane.OK_CANCEL_OPTION);
+				      if (result == JOptionPane.OK_OPTION) {
+				    	  
+				    	  MenuItemModification menuItemModification = new MenuItemModification();
+				    	  menuItemModification.modifyPizza(nameItem, itemPrice, toppingPrice, box, selectedFood.itemID);
+				      }
+				      InputStream inputStream;
+					try {
+						inputStream = new FileInputStream(new File("menu.txt"));
+						Menu newMenu = new Menu(inputStream);
+					      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+					      addedItem.setVisible(true);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if (selectedMenuRow != -1 && selectedMenuRow != 0 && selectedMenuRow != 1 && selectedMenuRow != 2) 
+				{
 					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
 					
 					JTextField nameItem = new JTextField(selectedFood.getName());

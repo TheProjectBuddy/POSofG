@@ -182,4 +182,10 @@ public class MenuItemModification
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void modifyPizza(JTextField nameItem, JTextField itemPrice,
+			JTextField toppingPrice, JCheckBox box, int itemID) {
+		// TODO Auto-generated method stub
+		
+	}
 }
