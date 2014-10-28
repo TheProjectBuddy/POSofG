@@ -184,8 +184,74 @@ public class MenuItemModification
 	}
 
 	public void modifyPizza(JTextField nameItem, JTextField itemPrice,
-			JTextField toppingPrice, JCheckBox box, int itemID) {
+			JTextField toppingPrice, JCheckBox box, int itemID, String prepTime, String cookTime, String ovenSpace) {
 		// TODO Auto-generated method stub
+		
+		File file = new File("menu.txt");
+		try 
+		{
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String LineRead = bufferedReader.readLine();
+			int count = 0;
+			String[] updated = new String[100];
+			while(LineRead != null)
+			{
+				
+				
+				updated[count] = LineRead;
+				count++;
+				LineRead = bufferedReader.readLine();
+			}
+			bufferedReader.close();
+			
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			String lineToWrite;
+			String starting = "0" ;
+			
+			String name = nameItem.getText();
+			if(name.equals("SMALL Pizza")) name = "small";
+			else if(name.equals("MEDIUM Pizza")) name = "medium";
+			else if(name.equals("LARGE Pizza")) name = "large";
+			String price = itemPrice.getText();
+			String topPrice = toppingPrice.getText();
+			
+			String end = "|0";
+			if(box.isSelected()) end = "|1";
+			
+		lineToWrite = starting+"|"+name+"|"+price+"|"+topPrice+"|"+prepTime+"|"+cookTime+"|"+ovenSpace+end;
+
+			System.out.println(lineToWrite+"|"+itemID);
+			for(int i=0; i<100; i++)
+			{
+				
+				if(updated[i] != null) 
+					{
+						if(i == (itemID-1))
+						{
+							
+							bufferedWriter.write(lineToWrite+"|"+itemID+"\n");
+							
+						}
+						else
+						{
+							bufferedWriter.write(updated[i]+"\n");
+						}
+						
+					}
+				
+				
+			}
+			bufferedWriter.close();
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+
+		
 		
 	}
 }

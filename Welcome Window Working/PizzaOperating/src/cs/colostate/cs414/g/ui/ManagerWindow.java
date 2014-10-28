@@ -155,7 +155,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				ManagerWindow.this.setVisible(false);
 				int selectedMenuRow = menuTable.getSelectedRow();
-				if(selectedMenuRow != -1 || selectedMenuRow == 0 || selectedMenuRow == 1 || selectedMenuRow == 2)
+				if(selectedMenuRow != -1 && (selectedMenuRow == 0 || selectedMenuRow == 1 || selectedMenuRow == 2))
 				{
 					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
 					
@@ -179,8 +179,9 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				      
 				      myPanel.add(new JLabel("Topping Price:"));
 				      myPanel.add(toppingPrice);
-				      toppingPrice.setText("1.0");
-				      
+				      if(selectedMenuRow == 0) toppingPrice.setText("1");
+				      else if(selectedMenuRow == 1) toppingPrice.setText("1.5");
+				      else if(selectedMenuRow == 2) toppingPrice.setText("2");
 				     
 				      JCheckBox box = new JCheckBox("Special?");
 				      myPanel.add(box);
@@ -190,9 +191,11 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				      int result = JOptionPane.showConfirmDialog(null, myPanel, 
 				               "Please Enter Details Of New Item", JOptionPane.OK_CANCEL_OPTION);
 				      if (result == JOptionPane.OK_OPTION) {
-				    	  
+				    	  String prepTime = Double.toString(selectedFood.getPrepTime());
+				    	  String cookTime = Double.toString(selectedFood.getCookTime());
+				    	  String overSpace = Integer.toString(selectedFood.getOvenSpace());;
 				    	  MenuItemModification menuItemModification = new MenuItemModification();
-				    	  menuItemModification.modifyPizza(nameItem, itemPrice, toppingPrice, box, selectedFood.itemID);
+				    	  menuItemModification.modifyPizza(nameItem, itemPrice, toppingPrice, box, selectedFood.itemID, prepTime, cookTime, overSpace);
 				      }
 				      InputStream inputStream;
 					try {
@@ -238,6 +241,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				     
 				     
 				      myPanel.add(topping);
+				      others.setSelected(true);
 				      myPanel.add(others);
 				      myPanel.add(new JLabel("Item Prep Time:"));
 				      myPanel.add(prepTime);
@@ -280,7 +284,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				int selectedMenuRow = menuTable.getSelectedRow();
-				if (selectedMenuRow != -1) {
+				if (selectedMenuRow != -1 && selectedMenuRow != 0 && selectedMenuRow !=1  && selectedMenuRow != 2) {
 					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
 					ManagerWindow.this.setVisible(false);
 					 int result = JOptionPane.showConfirmDialog(null, "You want to delete selected item?", 
@@ -300,6 +304,11 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}
+				else if(selectedMenuRow == 0 || selectedMenuRow == 1 || selectedMenuRow == 2)
+				{
+					JOptionPane.showConfirmDialog(null, "You cannot delete selected item?", 
+				               "Are you sure?", JOptionPane.OK_CANCEL_OPTION);
 				}
 			}
 		});
