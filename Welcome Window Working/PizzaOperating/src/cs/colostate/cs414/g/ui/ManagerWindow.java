@@ -5,10 +5,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -30,6 +37,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import cs.colostate.cs414.g.domain.*;
+import cs.colostate.cs414.g.util.MainUtil;
 import cs.colostate.cs414.g.util.Stage;
 public class ManagerWindow  extends JFrame implements ActionListener {
 
@@ -109,8 +117,17 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 			    	  MenuItemModification menuItemModification = new MenuItemModification();
 			    	  menuItemModification.addNewItem(nameItem, itemPrice, toppingPrice, pizza, topping, others, box, prepTime, cookTime, ovenSpace);
 			      }
-			      ManagerWindow addedItem = new ManagerWindow(startStage, menu);
-			      addedItem.setVisible(true);
+			      InputStream inputStream;
+				try {
+					inputStream = new FileInputStream(new File("menu.txt"));
+					Menu newMenu = new Menu(inputStream);
+				      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+				      addedItem.setVisible(true);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			      
 			}
 		});
 		contentPane.add(buttonAdd);
@@ -160,9 +177,42 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 			}
 		});*/
 		contentPane.add(buttonDelete);
-		
-		
-		
+		/*
+		JButton back = new JButton("Update Changes");
+		back.setBounds(34, 331, 117, 29);
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				ManagerWindow.this.setVisible(false);
+				
+				Map< String, ArrayList< Order > > orders = Collections.synchronizedMap(new HashMap< String, ArrayList< Order > >());
+				Map< String, Customer > customers = Collections.synchronizedMap(new HashMap< String, Customer >());
+				FileInputStream menuFileStream = null;
+				try {
+					File file = new File("menu.txt"); 
+					menuFileStream = new FileInputStream(file);
+				}
+				catch (FileNotFoundException e) {
+					System.err.println("Unable to open menu file. Exiting...");
+					System.exit(1);
+				}
+				
+				Menu menu = null;
+				try {
+					menu = new Menu(menuFileStream);
+				}
+				catch (Exception exception) {
+					System.err.println(exception.getMessage());
+					exception.printStackTrace(System.err);
+					System.exit(1);
+				}
+				
+				final Kitchen kitchen = new Kitchen();
+				
+				MainUtil.run(new PhoneOrder(customers, orders), menu, kitchen);
+			}
+		});
+		contentPane.add(back);
+		*/
 		
 		
 		

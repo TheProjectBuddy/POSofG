@@ -48,12 +48,14 @@ public class MenuItemModification
 			String name = nameItem.getText();
 			String price = itemPrice.getText();
 			
-			String end = "";
-			if(box.isSelected()) end = "|Special";
+			String end = "|0";
+			if(box.isSelected()) end = "|1";
+			
 			if(starting.equals("2")) lineToWrite = starting+"|"+name+"|"+price+"|"+prepTime.getText()+"|"+cookTime.getText()+"|"+overSpace.getText()+end;
 			else lineToWrite = starting+"|"+name;
-			System.out.println(lineToWrite);
-			bufferedWriter.write(lineToWrite+"\n");
+			count++;
+			System.out.println(lineToWrite+"|"+count);
+			bufferedWriter.write(lineToWrite+"|"+count+"\n");
 			bufferedWriter.close();
 		}
 		catch(Exception e)

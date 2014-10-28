@@ -46,9 +46,9 @@ public class Menu {
 				splits[i] = splits[i].trim();
 			}
 			
-			final int NUM_PIZZA_PARAMS = 7;
-			final int NUM_TOPPINGS_PARAMS = 2;
-			final int NUM_OTHER_PARAMS = 6;
+			final int NUM_PIZZA_PARAMS = 9;
+			final int NUM_TOPPINGS_PARAMS = 3;
+			final int NUM_OTHER_PARAMS = 8;
 			if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
 				// must be a pizza
 				Pizza.Size size;
