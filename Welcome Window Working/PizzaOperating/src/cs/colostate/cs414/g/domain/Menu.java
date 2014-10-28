@@ -46,9 +46,9 @@ public class Menu {
 				splits[i] = splits[i].trim();
 			}
 			
-			final int NUM_PIZZA_PARAMS = 7;
-			final int NUM_TOPPINGS_PARAMS = 2;
-			final int NUM_OTHER_PARAMS = 6;
+			final int NUM_PIZZA_PARAMS = 9;
+			final int NUM_TOPPINGS_PARAMS = 3;
+			final int NUM_OTHER_PARAMS = 8;
 			if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
 				// must be a pizza
 				Pizza.Size size;
@@ -70,8 +70,9 @@ public class Menu {
 				double prepTime = Double.parseDouble(splits[4]);
 				double cookTime = Double.parseDouble(splits[5]);
 				int ovenSpace = Integer.parseInt(splits[6]);
+				int ID = Integer.parseInt(splits[splits.length-1]);
 				items.add(new Pizza(size, price, pricePerToppings, 
-						prepTime, cookTime, ovenSpace));
+						prepTime, cookTime, ovenSpace, ID));
 			}
 			else if (splits.length == NUM_TOPPINGS_PARAMS && splits[0].equals("1")) {
 				toppings.add(new Topping(splits[1]));
@@ -82,8 +83,9 @@ public class Menu {
 				double prepTime = Double.parseDouble(splits[3]);
 				double cookTime = Double.parseDouble(splits[4]);
 				int ovenSpace = Integer.parseInt(splits[5]);
+				int ID = Integer.parseInt(splits[splits.length-1]);
 				items.add(new MenuItem(name, price, prepTime, 
-						cookTime, ovenSpace));
+						cookTime, ovenSpace, ID));
 			}
 			else {
 				throw new Exception("Unable to parse menu file -- error found.");

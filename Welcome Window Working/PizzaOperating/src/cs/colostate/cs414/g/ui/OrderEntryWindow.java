@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -57,6 +60,8 @@ public class OrderEntryWindow extends JFrame {
 	public OrderEntryWindow(final Stage startStage, final Menu menu, 
 			final PhoneOrder phoneOperator, final Customer customer, 
 			final PhoneOperatorWindow operatorWindow) {
+		
+		
 		final Order lastOrder = phoneOperator.getLastOrder(customer.getPhoneNumber());
 		final Order currentOrder = phoneOperator.getCurrentOrderForCustomer(customer, true);
 		final ArrayList< OrderItem > newOrderItems = new ArrayList< OrderItem >();
