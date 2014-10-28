@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import cs.colostate.cs414.g.util.OrderStatus;
 import cs.colostate.cs414.g.util.Stage;
+import cs.colostate.cs414.g.util.Update;
 import cs.colostate.cs414.g.util.WaitingQueue;
 
-public class Kitchen extends Stage implements java.io.Serializable
+public class Kitchen extends Stage implements Update, java.io.Serializable
 {
 	private WaitingQueue preparationWaitingQueue = new WaitingQueue(OrderStatus.PREPARATION_WAITING);
 	private WaitingQueue cookingWaitingQueue = new WaitingQueue(OrderStatus.COOKING_WAITING);

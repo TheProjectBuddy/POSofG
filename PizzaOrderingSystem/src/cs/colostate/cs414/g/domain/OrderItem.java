@@ -1,13 +1,17 @@
 package cs.colostate.cs414.g.domain;
 
-import cs.colostate.cs414.g.util.OrderStatus;
+import java.util.TreeMap;
 
-public class OrderItem {
+import cs.colostate.cs414.g.util.OrderStatus;
+import cs.colostate.cs414.g.util.TimeUtil;
+
+public class OrderItem implements java.io.Serializable{
 
 	MenuItem item;
-	private Order order;
+	public Order order;
 	private OrderItemEmp employee;
 	private OrderStatus currentStage = OrderStatus.MODIFY;
+	private TreeMap< OrderStatus, TimeUtil > stageTimes = new TreeMap< OrderStatus, TimeUtil >();
 	
 	public OrderItem(Order order, MenuItem item) {
 		this.item = item;
@@ -44,5 +48,22 @@ public class OrderItem {
 
 	public String toString() {
 		return item.toString();
+	}
+
+	public TreeMap<OrderStatus, TimeUtil> getStageTimes() {
+		return stageTimes;
+	}
+	public void startStage(OrderStatus stage) {
+		// set the start time of the stage to the current time
+		assert(stageTimes.get(stage) == null);
+		currentStage = stage;
+		TimeUtil tr = new TimeUtil();
+		tr.setStart(TimeUtil.getCurrentTime());
+		stageTimes.put(stage, tr);
+	}
+	public void endStage(OrderStatus stage) {
+		TimeUtil tr = stageTimes.get(stage);
+		assert(tr != null);
+		tr.setEnd(TimeUtil.getCurrentTime());
 	}
 }

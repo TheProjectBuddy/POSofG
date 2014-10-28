@@ -5,9 +5,10 @@ import java.util.Iterator;
 
 import cs.colostate.cs414.g.util.OrderStatus;
 import cs.colostate.cs414.g.util.Stage;
+import cs.colostate.cs414.g.util.Update;
 import cs.colostate.cs414.g.util.WaitingQueue;
 
-public class Oven extends Stage implements OrderItemEmp, java.io.Serializable
+public class Oven extends Stage implements Update,OrderItemEmp, java.io.Serializable
 {
 	private WaitingQueue waitingQueue = null;
 	private ArrayList<OrderItem> cookingList = new ArrayList<OrderItem>();
@@ -49,6 +50,7 @@ public class Oven extends Stage implements OrderItemEmp, java.io.Serializable
 	public void addOrderItem(OrderItem item) {
 		cookingList.add(item);
 		freeSpace-= item.getItem().getOvenSpace();
+		item.startStage(stage);
 		item.setWorker(this);
 	}
 	

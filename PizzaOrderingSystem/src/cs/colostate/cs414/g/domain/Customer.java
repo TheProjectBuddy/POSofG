@@ -1,7 +1,11 @@
 package cs.colostate.cs414.g.domain;
 
-public class Customer {
+public class Customer implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String phoneNumber;
 	private String name;
 	

@@ -4,22 +4,24 @@ import java.util.Map;
 
 import cs.colostate.cs414.g.util.OrderStatus;
 import cs.colostate.cs414.g.util.Stage;
+import cs.colostate.cs414.g.util.TimeUtil;
+import cs.colostate.cs414.g.util.Update;
 import cs.colostate.cs414.g.util.WaitingQueue;
 
 
-public class Chef extends Stage implements OrderItemEmp, java.io.Serializable{
+public class Chef extends Stage implements Update,OrderItemEmp, java.io.Serializable{
 
 	public String name;
 	PizzaStore store;
 	public Map<String,String> loginUidPwd;
+	private double time;
 	private WaitingQueue waitingQueue = null;
 	private OrderItem currentOrderItem = null;
 
-	public Chef(String name, PizzaStore pizzaStore) {
-		this.name = name;
-		this.store = pizzaStore;
+	public Update initialize() {
+		time = TimeUtil.getCurrentTime();
+		return this;
 	}
-	
 	public void setWaitingQueue(WaitingQueue waitingQueue) {
 		this.waitingQueue = waitingQueue;
 	}
@@ -53,17 +55,26 @@ public class Chef extends Stage implements OrderItemEmp, java.io.Serializable{
 
 	public void update() {
 		if (currentOrderItem != null) {
+			TimeUtil timeRange = currentOrderItem.getStageTimes().get(getAssociatedStage());
+			System.out.println(timeRange.getStart());
+			double elapsedTime = TimeUtil.getCurrentTime() - timeRange.getStart();
+
+			elapsedTime /= 60.0;
+			if (elapsedTime > currentOrderItem.getItem().getPrepTime()) {
+				currentOrderItem.endStage(getAssociatedStage());
 				currentOrderItem.setWorker(null);
 				nextStage.addOrderItem(currentOrderItem);
 				currentOrderItem = null;
-
-		}
+			}
+		
 		if (currentOrderItem == null && waitingQueue.peekNextItem() != null) {
 			addOrderItem(waitingQueue.removeNextItem());
 		}
 	}
+	}
 	public void addOrderItem(OrderItem item) {
 		if (currentOrderItem == null) {
+			item.startStage(getAssociatedStage());
 			item.setWorker(this);
 			currentOrderItem = item;
 		}

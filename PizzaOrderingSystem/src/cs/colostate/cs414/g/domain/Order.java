@@ -1,10 +1,16 @@
 package cs.colostate.cs414.g.domain;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import cs.colostate.cs414.g.util.OrderStatus;
+import cs.colostate.cs414.g.util.TimeUtil;
 
-public class Order {
+public class Order implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int orderID;
 	public ArrayList<OrderItem> orderList = new ArrayList<OrderItem>();
 	public float total = 0;
@@ -47,7 +53,7 @@ public class Order {
 		return false ;
 	}
 	
-	public boolean removeItem(MenuItem item) {
+	public boolean removeItem(OrderItem item) {
 		if (orderList.contains(item)) {
 		if (item.cancel()) {
 			orderList.remove(item);
@@ -152,5 +158,42 @@ public class Order {
 	public void setOrderList(ArrayList<OrderItem> orderList) {
 		this.orderList = orderList;
 	}
-	
+	public synchronized double calculateTotalTime() {
+		double max = 0.0;
+		max = getTimeCreated();
+		OrderStatus stage = this.getCurrentStage();
+		for (OrderItem oi : orderList) {
+			TreeMap< OrderStatus, TimeUtil > durations = oi.getStageTimes();
+			if (durations.size() > 0) {
+				OrderStatus lastStage = durations.lastKey();
+				double endTime = durations.get(lastStage).getEnd();
+				if (endTime > max) {
+					max = endTime;
+				}
+			}
+		}
+		
+		assert(max > getTimeCreated());
+		return (max - getTimeCreated());
+	}
+	public synchronized double getTimeSpentPreparing(){
+		double orderPrepTime=0;
+		for (OrderItem curItem: orderList){
+			TimeUtil prepWait=curItem.getStageTimes().get(OrderStatus.PREPARATION_WAITING);
+			TimeUtil prep=curItem.getStageTimes().get(OrderStatus.PREPARATION);
+			if (prep != null) orderPrepTime += prep.getDuration();
+			if (prepWait != null) orderPrepTime += prepWait.getDuration();
+		}
+		return orderPrepTime;
+	}
+	public synchronized double getTimeSpentCooking(){
+		double orderCookTime=0;
+		for (OrderItem curItem: orderList){
+			TimeUtil cookWait=curItem.getStageTimes().get(OrderStatus.COOKING_WAITING);
+			TimeUtil cook=curItem.getStageTimes().get(OrderStatus.COOKING);
+			if (cook != null) orderCookTime += cook.getDuration();
+			if (cookWait != null) orderCookTime += cookWait.getDuration();
+		}
+		return orderCookTime;
+	}
 }

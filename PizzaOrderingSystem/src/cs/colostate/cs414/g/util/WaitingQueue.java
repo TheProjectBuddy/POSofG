@@ -18,6 +18,7 @@ public class WaitingQueue extends Stage implements OrderItemEmp,
 	public synchronized void addOrderItem(OrderItem item) {
 		queue.add(item);
 		item.setWorker(this);
+		item.startStage(associatedStage);
 	}
 
 	/**

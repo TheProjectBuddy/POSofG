@@ -189,7 +189,7 @@ public class OrderEntryWindow extends JFrame {
 		contentPane.add(buttonAddTopping);
 		
 		buttonFinish = new JButton("Finish");
-		buttonFinish.setForeground(Color.BLUE);
+		buttonFinish.setForeground(Color.BLACK);
 		buttonFinish.setBounds(228, 331, 117, 29);
 		buttonFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -252,8 +252,6 @@ public class OrderEntryWindow extends JFrame {
 		
 		isModifying = lastOrder == currentOrder;
 		
-		// Add the items to the order (that were either just created from the 
-		// preference, or because you are editing an order.
 		for (OrderItem item :currentOrder.getOrderList()) {
 			orderTableModel.addRow(new Object[] { item, "$" + item.getItem().getPrice() });
 		}
