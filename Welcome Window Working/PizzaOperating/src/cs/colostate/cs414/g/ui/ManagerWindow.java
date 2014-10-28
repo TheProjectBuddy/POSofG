@@ -219,17 +219,32 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 	
 		buttonDelete = new JButton("Delete Item");
 		buttonDelete.setBounds(34, 331, 117, 29);
-		/*buttonAdd.addActionListener(new ActionListener() {
+		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				int selectedMenuRow = table.getSelectedRow();
+				int selectedMenuRow = menuTable.getSelectedRow();
 				if (selectedMenuRow != -1) {
 					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
-					OrderItem newItem = currentOrder.addItem(menu.instantiateFood(selectedFood));
-					newOrderItems.add(newItem);
-					orderTableModel.addRow(new Object[] { newItem, "$" + selectedFood.getPrice() });
+					ManagerWindow.this.setVisible(false);
+					 int result = JOptionPane.showConfirmDialog(null, "You want to delete selected item?", 
+				               "Are you sure?", JOptionPane.OK_CANCEL_OPTION);
+					 if (result == JOptionPane.OK_OPTION) {
+				    	  
+				    	  MenuItemModification menuItemModification = new MenuItemModification();
+				    	  menuItemModification.deleteItem(selectedFood.itemID);
+				      }
+				      InputStream inputStream;
+					try {
+						inputStream = new FileInputStream(new File("menu.txt"));
+						Menu newMenu = new Menu(inputStream);
+					      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+					      addedItem.setVisible(true);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
-		});*/
+		});
 		contentPane.add(buttonDelete);
 		/*
 		JButton back = new JButton("Update Changes");

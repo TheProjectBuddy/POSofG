@@ -130,4 +130,55 @@ public class MenuItemModification
 			
 		}
 	}
+
+	public void deleteItem(int itemID) {
+		File file = new File("menu.txt");
+		try 
+		{
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String LineRead = bufferedReader.readLine();
+			int count = 0;
+			String[] updated = new String[100];
+			while(LineRead != null)
+			{
+				
+				
+				updated[count] = LineRead;
+				count++;
+				LineRead = bufferedReader.readLine();
+			}
+			bufferedReader.close();
+			
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			for(int i=0; i<100; i++)
+			{
+				
+				if(updated[i] != null) 
+					{
+						if(i == (itemID-1))
+						{
+							
+							
+						}
+						else
+						{
+							bufferedWriter.write(updated[i]+"\n");
+						}
+						
+					}
+				
+				
+			}
+			bufferedWriter.close();
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+		// TODO Auto-generated method stub
+		
+	}
 }
