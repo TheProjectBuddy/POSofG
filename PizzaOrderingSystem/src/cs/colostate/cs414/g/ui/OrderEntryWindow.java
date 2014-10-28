@@ -90,8 +90,8 @@ public class OrderEntryWindow extends JFrame {
 			public void actionPerformed(ActionEvent event) {
 				int selectedMenuRow = table.getSelectedRow();
 				if (selectedMenuRow != -1) {
-					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
-					OrderItem newItem = currentOrder.addItem(menu.instantiateFood(selectedFood));
+					MenuItem selectedFood = menu.getFoodItems().get(selectedMenuRow);
+					OrderItem newItem = currentOrder.addFood(menu.instantiateFood(selectedFood));
 					newOrderItems.add(newItem);
 					orderTableModel.addRow(new Object[] { newItem, "$" + selectedFood.getPrice() });
 				}
@@ -114,7 +114,7 @@ public class OrderEntryWindow extends JFrame {
 				double totalPrice = 0.0;
 				
 				for (int i = 0; i < orderTableModel.getRowCount(); ++i) {
-					MenuItem f = ((OrderItem)orderTableModel.getValueAt(i, 0)).getItem();
+					MenuItem f = ((OrderItem)orderTableModel.getValueAt(i, 0)).getFood();
 					totalPrice += f.getPrice();
 				}
 				priceLabel.setText("$" + Double.toString(totalPrice));
@@ -162,8 +162,8 @@ public class OrderEntryWindow extends JFrame {
 				MenuItem food = null;
 				final int row = orderTable.getSelectedRow();
 				OrderItem item = row >= 0 ? (OrderItem)orderTableModel.getValueAt(row, 0) : null; 
-				if (row != -1 && item.getItem() instanceof Pizza) {
-					final Pizza pizza = (Pizza)item.getItem();
+				if (row != -1 && item.getFood() instanceof Pizza) {
+					final Pizza pizza = (Pizza)item.getFood();
 					final ToppingsDialog toppingsDialog = new ToppingsDialog(menu, pizza.getToppingPrice(), pizza.getToppings());
 					toppingsDialog.setOkButtonActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent event) {
@@ -193,7 +193,7 @@ public class OrderEntryWindow extends JFrame {
 		buttonFinish.setBounds(228, 331, 117, 29);
 		buttonFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if (!isModifying && currentOrder.getOrderList().size() == 0) {
+				if (!isModifying && currentOrder.getOrderItems().size() == 0) {
 					return;
 				}
 				//estimate time
@@ -204,7 +204,7 @@ public class OrderEntryWindow extends JFrame {
 				int min =(int) estimatedTime %60;
 
 				
-				if (!isModifying && currentOrder.getOrderList().size() > 0) {
+				if (!isModifying && currentOrder.getOrderItems().size() > 0) {
 					JFrame popUp = new JFrame();
 					JOptionPane.showMessageDialog(popUp, "Time until food is ready is: " + days + "d:" + hours + "h:" + min+"m", 
 
@@ -232,7 +232,7 @@ public class OrderEntryWindow extends JFrame {
 		labelOrder.setBounds(337, 26, 61, 16);
 		contentPane.add(labelOrder);
 		
-		labelOrderNumber = new JLabel(Integer.toString(currentOrder.getOrderID()));
+		labelOrderNumber = new JLabel(Integer.toString(currentOrder.getOrderId()));
 		labelOrderNumber.setHorizontalAlignment(SwingConstants.TRAILING);
 		labelOrderNumber.setBounds(572, 26, 31, 16);
 		contentPane.add(labelOrderNumber);
@@ -244,16 +244,16 @@ public class OrderEntryWindow extends JFrame {
 		
 		// Fill out preferences if needed
 		if (lastOrder != null && lastOrder != currentOrder) {
-			for (OrderItem item : lastOrder.getOrderList()) {
-				OrderItem newItem = currentOrder.addItem(item.getItem().copy());
+			for (OrderItem item : lastOrder.getOrderItems()) {
+				OrderItem newItem = currentOrder.addFood(item.getFood().copy());
 				newOrderItems.add(newItem);
 			}
 		}
 		
 		isModifying = lastOrder == currentOrder;
 		
-		for (OrderItem item :currentOrder.getOrderList()) {
-			orderTableModel.addRow(new Object[] { item, "$" + item.getItem().getPrice() });
+		for (OrderItem item :currentOrder.getOrderItems()) {
+			orderTableModel.addRow(new Object[] { item, "$" + item.getFood().getPrice() });
 		}
 	}
 }

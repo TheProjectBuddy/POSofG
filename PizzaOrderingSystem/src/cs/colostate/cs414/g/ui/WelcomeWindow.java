@@ -40,7 +40,7 @@ public class WelcomeWindow extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public WelcomeWindow(PhoneOrder phoneOrder, Menu menu, Stage startStage, int isManager) {
+	public WelcomeWindow(PhoneOrder phoneOrder, Menu menu, Stage startStage) {
 		phoneOperatorWindow = new PhoneOperatorWindow(this, phoneOrder, menu, startStage);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +66,7 @@ public class WelcomeWindow extends JFrame{
 			}
 		});
 		panel.add(buttonEmployee);
-		
+		if(Login.isManager == 1){
 		buttonManager = new JButton("Manager");
 		buttonManager.addActionListener( new ActionListener () {
 			public void actionPerformed(ActionEvent arg0) {
@@ -75,8 +75,7 @@ public class WelcomeWindow extends JFrame{
 			}
 		});
 		panel.add(buttonManager);
-		if(isManager == 1) buttonManager.setVisible(true);
-		else buttonManager.setVisible(false);
+		}
 		buttonExit = new JButton("Exit");
 		buttonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {

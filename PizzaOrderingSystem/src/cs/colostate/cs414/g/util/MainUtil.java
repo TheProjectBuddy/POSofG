@@ -16,7 +16,7 @@ public class MainUtil {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					String userName, password;
+					/*String userName, password;
 					boolean userWhileLoop = true;
 					boolean passWhileLoop = true;
 					while(userWhileLoop)
@@ -45,7 +45,9 @@ public class MainUtil {
 							userWhileLoop = true;
 						}
 					}
-					WelcomeWindow frame = new WelcomeWindow(phoneOrder, menu, startStage, Login.isManager);
+					
+					*/
+					WelcomeWindow frame = new WelcomeWindow(phoneOrder, menu, startStage);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -53,7 +53,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		};
 		orderTrackingModel.setColumnCount(8);
 		orderTrackingModel.setColumnIdentifiers(new String[] {
-			"Order #", "Customer Name", "Order Cost", "Time Order Taken", "Status"
+			"Order #", "Customer Name", "Delivery Location", "Order Cost", "Time Order Taken", "Estimated Delivery Time", "Actual Delivery Time", "Status"
 		});
 		this.refreshOrderTrackingTable();
 		orderTrackingTable = new JTable(orderTrackingModel);
@@ -114,7 +114,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		for (Order order : orders) {
 			//if (order.isOrderCompleted() == false) continue;
 			Object[] rowData = new Object[] {
-				order.getOrderID(),
+				order.getOrderId(),
 				order.getCustomer().getName(),
 				moneyFormatter.format(order.getPrice()),
 				timeFormatter.format(order.getTimeCreated()),
@@ -145,7 +145,10 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 			
 			double maxCookTime = -1.0; int maxCookId = -1;
 			double averageCookTime = 0.0;
-
+			
+			double maxDeliveryTime = -1.0; int maxDeliveryId = -1;
+			double averageDeliveryTime = 0.0;
+			
 			double maxTotalTime = -1.0; int maxTotalId = -1;
 			double averageTotalTime = 0.0;
 			
@@ -163,17 +166,18 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				
 				if (order.getTimeSpentPreparing() > maxPrepTime) {
 					maxPrepTime = order.getTimeSpentPreparing();
-					maxPrepId = order.getOrderID();
+					maxPrepId = order.getOrderId();
 				}
 				
 				if (order.getTimeSpentCooking() > maxCookTime) {
 					maxCookTime = order.getTimeSpentCooking();
-					maxCookId = order.getOrderID();
+					maxCookId = order.getOrderId();
 				}
+				
 				
 				if (order.calculateTotalTime() > maxTotalTime) {
 					maxTotalTime = order.calculateTotalTime();
-					maxTotalId = order.getOrderID();
+					maxTotalId = order.getOrderId();
 				}
 			}
 			
@@ -181,6 +185,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				averageCost /= count;
 				averagePrepTime /= count;
 				averageCookTime /= count;
+				averageDeliveryTime /= count;
 				averageTotalTime /= count;
 				
 				setRow(reportModel, 1, new Object[] { "Average cost: " + moneyFormatter.format(averageCost) });
@@ -195,6 +200,12 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 						"Average Cook Time: " + timeFormatter.format(averageCookTime),
 						"Max Cook Time: " + timeFormatter.format(maxCookTime),
 						"Max Cook Order #: " + maxCookId
+				});
+				
+				setRow(reportModel, 4, new Object[] {
+						"Average Delivery Time: " + timeFormatter.format(averageDeliveryTime),
+						"Max Delivery Time: " + timeFormatter.format(maxDeliveryTime),
+						"Max Delivery Order #: " + maxDeliveryId
 				});
 				
 				setRow(reportModel, 5, new Object[] {

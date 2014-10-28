@@ -3,67 +3,67 @@ package cs.colostate.cs414.g.domain;
 import java.util.TreeMap;
 
 import cs.colostate.cs414.g.util.OrderStatus;
-import cs.colostate.cs414.g.util.TimeUtil;
+import cs.colostate.cs414.g.util.TimeRange;
+import cs.colostate.cs414.g.util.TimeSystem;
 
 public class OrderItem implements java.io.Serializable{
-
-	MenuItem item;
-	public Order order;
-	private OrderItemEmp employee;
-	private OrderStatus currentStage = OrderStatus.MODIFY;
-	private TreeMap< OrderStatus, TimeUtil > stageTimes = new TreeMap< OrderStatus, TimeUtil >();
 	
-	public OrderItem(Order order, MenuItem item) {
-		this.item = item;
+	private static final long serialVersionUID = -7261946680285305982L;
+	private MenuItem food;
+	private Order order;
+	private OrderItemEmp worker;
+	private TreeMap< OrderStatus, TimeRange > stageTimes = new TreeMap< OrderStatus, TimeRange >();
+	private OrderStatus currentStage = OrderStatus.MODIFY;
+	
+	public OrderItem(Order order, MenuItem food) {
+		this.food = food;
 		this.order = order;
 		this.currentStage = OrderStatus.PREPARATION_WAITING;
 	}
-	
-	public boolean equals(MenuItem menuItem) {
-		return this.item == menuItem;
-	}
-	
-	public MenuItem getItem(){
-		return item ;
-	}
+
 	public boolean cancel() {
-		return employee == null || employee.cancel(this);
+		return worker == null || worker.cancel(this);
+	}
+	
+	public void startStage(OrderStatus stage) {
+		assert(stageTimes.get(stage) == null);
+		currentStage = stage;
+		TimeRange tr = new TimeRange();
+		tr.setStart(TimeSystem.getCurrentTime());
+		stageTimes.put(stage, tr);
+	}
+	
+	public void endStage(OrderStatus stage) {
+		TimeRange tr = stageTimes.get(stage);
+		assert(tr != null);
+		tr.setEnd(TimeSystem.getCurrentTime());
 	}
 
 	public OrderItemEmp getWorker() {
-		return employee;
+		return worker;
 	}
 
-	public void setWorker(OrderItemEmp employee) {
-		this.employee = employee;
+	public void setWorker(OrderItemEmp worker) {
+		this.worker = worker;
 	}
-	
+
+	public MenuItem getFood() {
+		return food;
+	}
+
 	public Order getOrder() {
 		return order;
+	}
+
+	public TreeMap<OrderStatus, TimeRange> getStageTimes() {
+		return stageTimes;
 	}
 	
 	public OrderStatus getCurrentStage() {
 		return currentStage;
 	}
-
+	
 	public String toString() {
-		return item.toString();
-	}
-
-	public TreeMap<OrderStatus, TimeUtil> getStageTimes() {
-		return stageTimes;
-	}
-	public void startStage(OrderStatus stage) {
-		// set the start time of the stage to the current time
-		assert(stageTimes.get(stage) == null);
-		currentStage = stage;
-		TimeUtil tr = new TimeUtil();
-		tr.setStart(TimeUtil.getCurrentTime());
-		stageTimes.put(stage, tr);
-	}
-	public void endStage(OrderStatus stage) {
-		TimeUtil tr = stageTimes.get(stage);
-		assert(tr != null);
-		tr.setEnd(TimeUtil.getCurrentTime());
+		return food.toString();
 	}
 }

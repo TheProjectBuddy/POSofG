@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Pizza extends MenuItem implements java.io.Serializable
 {
 	
+	private static final long serialVersionUID = -4306771495867540495L;
 	private Size size;
 	private double toppingPrice;
 	private ArrayList< Topping > toppings = new ArrayList< Topping >();

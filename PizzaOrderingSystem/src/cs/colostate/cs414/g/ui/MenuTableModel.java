@@ -17,11 +17,11 @@ public class MenuTableModel extends AbstractTableModel
 	}
 	
 	public int getRowCount() {
-		return menu.getItems().size();
+		return menu.getFoodItems().size();
 	}
 	
 	public Object getValueAt(int row, int col) {
-		MenuItem food = menu.getItems().get(row);
+		MenuItem food = menu.getFoodItems().get(row);
 		if (col == 0) {
 			return food.getType();
 		}

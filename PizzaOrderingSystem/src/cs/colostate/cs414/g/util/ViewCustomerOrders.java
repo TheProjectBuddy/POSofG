@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Vector;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -75,7 +76,7 @@ public class ViewCustomerOrders extends JDialog implements ActionListener, Windo
 	}
 	
 	private void refresh() {
-		ArrayList< Order > orders = phoneOperator.getOrdersShallowCopyForCustomer(customer);
+		Vector< Order > orders = phoneOperator.getOrdersShallowCopyForCustomer(customer);
 		if (orders == null) {
 			tableModel.setRowCount(0);
 		}
@@ -84,7 +85,7 @@ public class ViewCustomerOrders extends JDialog implements ActionListener, Windo
 			tableModel.setRowCount(orders.size());
 			int i = 0;
 			for (Order o : orders) {
-				tableModel.setValueAt(new Integer(o.getOrderID()), i, 0);
+				tableModel.setValueAt(new Integer(o.getOrderId()), i, 0);
 				tableModel.setValueAt(o.getCurrentStage(), i, 1);
 				++i;
 			}

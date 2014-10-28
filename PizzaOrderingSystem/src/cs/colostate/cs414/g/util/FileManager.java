@@ -1,25 +1,21 @@
 package cs.colostate.cs414.g.util;
 
-import java.awt.EventQueue;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import cs.colostate.cs414.g.domain.Customer;
-import cs.colostate.cs414.g.domain.Menu;
 import cs.colostate.cs414.g.domain.Order;
-import cs.colostate.cs414.g.domain.PhoneOrder;
-import cs.colostate.cs414.g.ui.WelcomeWindow;
 
 public class FileManager {
 
-	public static void writeOrders(Map< String, ArrayList<Order>> orders, String file) throws IOException {
+	public static void writeOrders(Map<String, Vector<Order>> orders, String file) throws IOException {
 		FileOutputStream fos = new FileOutputStream(file);
 	    ObjectOutputStream oos = new ObjectOutputStream(fos);
 	    oos.writeObject(orders);
@@ -27,12 +23,12 @@ public class FileManager {
 	    oos.close();
 	}
 	
-	public static Map< String, ArrayList< Order > > readOrders(String file) throws IOException {
-		Map< String, ArrayList< Order > > orders = Collections.synchronizedMap(new HashMap< String, ArrayList< Order > >());
+	public static Map<String, Vector<Order>> readOrders(String file) throws IOException {
+		Map< String, Vector< Order > > orders = Collections.synchronizedMap(new HashMap< String, Vector< Order > >());
 		FileInputStream fis = new FileInputStream(file);
 	    ObjectInputStream ois = new ObjectInputStream(fis);
 	    try {
-			orders = Collections.synchronizedMap((Map<String, ArrayList<Order>>) ois.readObject());
+			orders = Collections.synchronizedMap((Map<String, Vector<Order>>) ois.readObject());
 			Order.orderCounter = ois.readInt();
 		} catch (ClassNotFoundException e) {
 			System.err.println("Error reading orders database.");

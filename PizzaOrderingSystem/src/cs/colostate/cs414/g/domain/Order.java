@@ -4,70 +4,34 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import cs.colostate.cs414.g.util.OrderStatus;
-import cs.colostate.cs414.g.util.TimeUtil;
+import cs.colostate.cs414.g.util.TimeRange;
 
 public class Order implements java.io.Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public int orderID;
-	public ArrayList<OrderItem> orderList = new ArrayList<OrderItem>();
-	public float total = 0;
-	public float amountDue;
-	public int numberOfItems;
+	
+	private static final long serialVersionUID = 5199787946298783352L;
+	private ArrayList< OrderItem > orderItems = new ArrayList< OrderItem >();
 	Customer customer;
 	private double timeCreated;
 	private double estimatedTime;
+	private int orderId;
+	
 	public static int orderCounter = 1;
 	
-	public Order(Customer customer){
+	public Order(Customer customer) {
 		this.customer = customer;
-		this.orderID = orderCounter++;
+		this.orderId = orderCounter++;
 	}
 	
-	public int getNumItems() {
-		return numberOfItems ;
+	public synchronized OrderItem addFood(MenuItem food) {
+		OrderItem newItem = new OrderItem(this, food);
+		orderItems.add(newItem);
+		return newItem;
 	}
-	
-	public void pay(double d, String type) {
-		Payment payment = new Payment(d, type);
-		this.amountDue -= payment.getAmount();
-	}
-	
-	public ArrayList<OrderItem> getOrderList() {
-		return this.orderList;
-	}
-	
-	public double getTotal() {
-		return this.total;
-	}
-	
-	public double getAmountDue() {
-		return this.amountDue;
-	}
-	
-	public boolean isPaid() {
-		if(amountDue >= 0)
-			return true ;
-		return false ;
-	}
-	
-	public boolean removeItem(OrderItem item) {
-		if (orderList.contains(item)) {
-		if (item.cancel()) {
-			orderList.remove(item);
-			return true;
-		}
-	}
-	
-	return false;
-	}
-	
+
 	public synchronized boolean cancelItem(OrderItem item) {
-		if (orderList.contains(item)) {
+		if (orderItems.contains(item)) {
 			if (item.cancel()) {
-				orderList.remove(item);
+				orderItems.remove(item);
 				return true;
 			}
 		}
@@ -75,95 +39,42 @@ public class Order implements java.io.Serializable{
 		return false;
 	}
 	
-	public synchronized OrderItem addItem(MenuItem item) {
-		OrderItem newItem = new OrderItem(this, item);
-		orderList.add(newItem);
-		return newItem;
-	}
-	
 	public synchronized void cancel() {
-		for (OrderItem oi : orderList) {
+		for (OrderItem oi : orderItems) {
 			oi.cancel();
 		}
-		orderList.clear();
+		orderItems.clear();
 	}
 	
 	public synchronized double getPrice() {
 		double total = 0.0;
-		for (OrderItem oi : orderList) {
-			total += oi.getItem().getPrice();
+		for (OrderItem oi : orderItems) {
+			total += oi.getFood().getPrice();
 		}
 		
 		return total;
 	}
+	
 	public double getNeededTime(){
 		double sum=0;
-		for (OrderItem item: orderList){
-			sum += item.getItem().getPrepTime();
-			sum += item.getItem().getCookTime();
+		for (OrderItem item: orderItems){
+			sum += item.getFood().getPrepTime();
+			sum += item.getFood().getCookTime();
 		}
 		return sum;
 	}
 	
-	public synchronized boolean isOrderCompleted() {
-		return getCurrentStage() == OrderStatus.COMPLETED;
-	}
-	public synchronized OrderStatus getCurrentStage() {
-		if (orderList.size() == 0) {
-			return OrderStatus.MODIFY;
-		}
-		
-		int lowestStage = 10000;
-		for (OrderItem item : orderList) {
-			if (item.getCurrentStage().ordinal() < lowestStage) {
-				lowestStage = item.getCurrentStage().ordinal();
-			}
-		}
-		
-		return OrderStatus.values()[lowestStage];
-}
-
-	public int getOrderID() {
-		return orderID;
-	}
-
-	public void setOrderID(int orderID) {
-		this.orderID = orderID;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public double getTimeCreated() {
-		return timeCreated;
-	}
-
-	public void setTimeCreated(double timeCreated) {
-		this.timeCreated = timeCreated;
-	}
-
-	public double getEstimatedTime() {
-		return estimatedTime;
-	}
-
-	public void setEstimatedTime(double estimatedTime) {
-		this.estimatedTime = estimatedTime;
-	}
-
-	public void setOrderList(ArrayList<OrderItem> orderList) {
-		this.orderList = orderList;
-	}
+	
+	/**
+	 * Calculate how long it took (or is taking, if the order is still in 
+	 * progress) for this order to complete 
+	 * @return the time it took for this order to complete (or is taking).
+	 */
 	public synchronized double calculateTotalTime() {
 		double max = 0.0;
 		max = getTimeCreated();
-		OrderStatus stage = this.getCurrentStage();
-		for (OrderItem oi : orderList) {
-			TreeMap< OrderStatus, TimeUtil > durations = oi.getStageTimes();
+		for (OrderItem oi : orderItems) {
+			TreeMap< OrderStatus, TimeRange > durations = oi.getStageTimes();
 			if (durations.size() > 0) {
 				OrderStatus lastStage = durations.lastKey();
 				double endTime = durations.get(lastStage).getEnd();
@@ -176,24 +87,117 @@ public class Order implements java.io.Serializable{
 		assert(max > getTimeCreated());
 		return (max - getTimeCreated());
 	}
+	
+	/**
+	 * Totals time spent preparing for this order
+	 * @return time spent preparing for this order
+	 */
 	public synchronized double getTimeSpentPreparing(){
 		double orderPrepTime=0;
-		for (OrderItem curItem: orderList){
-			TimeUtil prepWait=curItem.getStageTimes().get(OrderStatus.PREPARATION_WAITING);
-			TimeUtil prep=curItem.getStageTimes().get(OrderStatus.PREPARATION);
+		for (OrderItem curItem: orderItems){
+			TimeRange prepWait=curItem.getStageTimes().get(OrderStatus.PREPARATION_WAITING);
+			TimeRange prep=curItem.getStageTimes().get(OrderStatus.PREPARATION);
 			if (prep != null) orderPrepTime += prep.getDuration();
 			if (prepWait != null) orderPrepTime += prepWait.getDuration();
 		}
 		return orderPrepTime;
 	}
+	
+	/**
+	 * Totals time spent cooking for this order
+	 * @return time spent cooking for this order
+	 */
 	public synchronized double getTimeSpentCooking(){
 		double orderCookTime=0;
-		for (OrderItem curItem: orderList){
-			TimeUtil cookWait=curItem.getStageTimes().get(OrderStatus.COOKING_WAITING);
-			TimeUtil cook=curItem.getStageTimes().get(OrderStatus.COOKING);
+		for (OrderItem curItem: orderItems){
+			TimeRange cookWait=curItem.getStageTimes().get(OrderStatus.COOKING_WAITING);
+			TimeRange cook=curItem.getStageTimes().get(OrderStatus.COOKING);
 			if (cook != null) orderCookTime += cook.getDuration();
 			if (cookWait != null) orderCookTime += cookWait.getDuration();
 		}
 		return orderCookTime;
+	}
+	
+	/**
+	 * Is the order complete (ie, delivered)?
+	 * 
+	 * @return true if complete else false.
+	 */
+	public synchronized boolean isOrderCompleted() {
+		return getCurrentStage() == OrderStatus.COMPLETED;
+	}
+	
+	/**
+	 * Get the current stage of the order. This will be the current stage of the slowest item in the order.
+	 * @return the current stage.
+	 */
+	public synchronized OrderStatus getCurrentStage() {
+		if (orderItems.size() == 0) {
+			return OrderStatus.MODIFY;
+		}
+		
+		int lowestStage = 10000;
+		for (OrderItem item : orderItems) {
+			if (item.getCurrentStage().ordinal() < lowestStage) {
+				lowestStage = item.getCurrentStage().ordinal();
+			}
+		}
+		
+		return OrderStatus.values()[lowestStage];
+	}
+
+	/**
+	 * The time that the order was created.
+	 * @return the timeCreated
+	 */
+	public synchronized double getTimeCreated() {
+		return timeCreated;
+	}
+
+	/**
+	 * Set the time when the order was initially started/created.
+	 * @param timeCreated the timeCreated to set
+	 */
+	public synchronized void setTimeCreated(double timeCreated) {
+		this.timeCreated = timeCreated;
+	}
+
+	/**
+	 * Get the time when the order was initially started/created.
+	 * @return the estimatedTime
+	 */
+	public synchronized double getEstimatedTime() {
+		return estimatedTime;
+	}
+
+	/**
+	 * Set the estimated time it will take until this order is delivered.
+	 * @param estimatedTime the estimatedTime to set
+	 */
+	public synchronized void setEstimatedTime(double estimatedTime) {
+		this.estimatedTime = estimatedTime;
+	}
+
+	/**
+	 * Get a shallow copy of the list of items in the order.
+	 * @return the orderItems
+	 */
+	public synchronized ArrayList<OrderItem> getOrderItems() {
+		return new ArrayList< OrderItem >(orderItems);
+	}
+
+	/**
+	 * @return the customer
+	 */
+	public Customer getCustomer() {
+		return customer;
+	}
+	
+	/**
+	 * Get the order identification number.
+	 * @return the order ID.
+	 */
+	public int getOrderId() {
+		return orderId;
 	}
 }

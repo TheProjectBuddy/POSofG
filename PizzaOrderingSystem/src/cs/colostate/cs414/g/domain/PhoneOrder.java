@@ -1,53 +1,45 @@
 package cs.colostate.cs414.g.domain;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import cs.colostate.cs414.g.util.OrderStatus;
 
 public class PhoneOrder {
-
 	
 	private Map< String, Customer > customers = null;
-	private Map< String, ArrayList< Order > > orders = null;
+	private Map< String, Vector< Order > > orders = null;
 	
-	//constructor
-	public PhoneOrder(Map< String, Customer > customers, Map< String, ArrayList< Order > > orders) {
+	public PhoneOrder(Map< String, Customer > customers, Map< String, Vector< Order > > orders) {
 		this.customers = customers;
 		this.orders = orders;
 	}
+
 	public Customer getCustomerForPhoneNumber(String phoneNumber) {
 		return customers.get(phoneNumber);
 	}
-	
+
 	public void addCustomer(Customer newCustomer) {
 		customers.put(newCustomer.getPhoneNumber(), newCustomer);
-		orders.put(newCustomer.getPhoneNumber(), new ArrayList< Order >());
+		orders.put(newCustomer.getPhoneNumber(), new Vector< Order >());
 	}
 	
-	public ArrayList< Order > getOrdersShallowCopyForCustomer(Customer customer) {
+	public Vector< Order > getOrdersShallowCopyForCustomer(Customer customer) {
 		synchronized(orders) {
-			ArrayList< Order > ordersRef = orders.get(customer.getPhoneNumber()); 
+			Vector< Order > ordersRef = orders.get(customer.getPhoneNumber()); 
 			if (ordersRef == null) {
 				return null;
 			}
 			
 			synchronized(ordersRef) {
-				return new ArrayList< Order >(ordersRef);
+				return new Vector< Order >(ordersRef);
 			}
 		}
 	}
 	
-	/**
-	 * Gets the current Order for the customer searched by phone number
-	 * if there is no order, creates a new one
-	 * @param customer
-	 * @param createNewOrder
-	 * @return
-	 */
 	public Order getCurrentOrderForCustomer(Customer customer, boolean createNewOrder) {
-		ArrayList< Order > customersOrders = orders.get(customer.getPhoneNumber());
+		Vector< Order > customersOrders = orders.get(customer.getPhoneNumber());
 		synchronized(customersOrders) {
 			if (customersOrders != null && customersOrders.size() > 0) {
 				for (Order o : customersOrders) {
@@ -82,31 +74,32 @@ public class PhoneOrder {
 		Order order = getCurrentOrderForCustomer(customer, false);
 		return order;
 	}
+	
 	public boolean removeOrderItem(OrderItem item) {
 		return item.getOrder().cancelItem(item);
 	}
-	
+
 	public void estimateTime(Order newOrder){
 		double total=0;
 		synchronized(orders) {
-			Set< Map.Entry< String, ArrayList<Order > > > entrySet = orders.entrySet();
-			for (Map.Entry< String, ArrayList< Order > > kv : entrySet) {
-				ArrayList< Order > custOrders = kv.getValue();
+			Set< Map.Entry< String, Vector<Order > > > entrySet = orders.entrySet();
+
+			for (Map.Entry< String, Vector< Order > > kv : entrySet) {
+				Vector< Order > custOrders = kv.getValue();
 				synchronized(custOrders) {
 					for (Order curOrder : custOrders) {
 						synchronized(curOrder){
 							if (curOrder.getCurrentStage() != OrderStatus.COMPLETED){
 								double orderTotal =0;
 								OrderStatus stage;
-								
-								for (OrderItem curItem : curOrder.getOrderList()){
+								for (OrderItem curItem : curOrder.getOrderItems()){
 									stage = curItem.getCurrentStage();
 									switch (stage){
 										case PREPARATION_WAITING:
-											orderTotal += curItem.getItem().getPrepTime();
+											orderTotal += curItem.getFood().getPrepTime();
 											break;
 										case COOKING_WAITING:
-											orderTotal += curItem.getItem().getCookTime();
+											orderTotal += curItem.getFood().getCookTime();
 											break;
 										default: break;
 									}
@@ -122,5 +115,4 @@ public class PhoneOrder {
 		newOrder.setEstimatedTime(total);
 	}
 	
-
 }

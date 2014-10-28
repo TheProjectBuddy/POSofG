@@ -15,15 +15,11 @@ public class Login {
 	public static int isManager = 0;
 	public static boolean authenticate(String passwordProvided) {
 		if(passwordProvided.equals(password)) return true;
-		return false;
-		
-		
-		
+		return false;	
 	}
 
 
 	public static boolean checkExistingUsername(String userName) {
-		// TODO Auto-generated method stub
 		 File file = new File("employees.txt");
 		 try {
 			FileReader fileReader = new FileReader(file);
@@ -38,7 +34,7 @@ public class Login {
 				{
 					password = elements[3];
 					flag = true;
-					if(elements[1].equals("Store Manager")) isManager = 1;
+					if(elements[1].equalsIgnoreCase("Store Manager")) isManager = 1;
 					break;
 					
 				}
@@ -46,12 +42,10 @@ public class Login {
 			}
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println("employees.txt does not exist");
 			e.printStackTrace();
 		}
 		 catch (IOException e) {
-			// TODO: handle exception
 			 System.out.println("error while reading file");
 				e.printStackTrace();
 		}
