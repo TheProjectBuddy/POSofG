@@ -76,7 +76,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		buttonAdd.setBounds(34, 331, 117, 29);
 		buttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				ManagerWindow.this.setVisible(false);
+				
 				JTextField nameItem = new JTextField(20);
 			    JTextField itemPrice = new JTextField(5);
 			    JTextField toppingPrice = new JTextField(5);
@@ -150,17 +150,71 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		
 		buttonModify = new JButton("Modify Item");
 		buttonModify.setBounds(34, 331, 117, 29);
-		/*buttonAdd.addActionListener(new ActionListener() {
+		buttonModify.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent event) {
-				int selectedMenuRow = table.getSelectedRow();
+				ManagerWindow.this.setVisible(false);
+				int selectedMenuRow = menuTable.getSelectedRow();
 				if (selectedMenuRow != -1) {
 					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
-					OrderItem newItem = currentOrder.addItem(menu.instantiateFood(selectedFood));
-					newOrderItems.add(newItem);
-					orderTableModel.addRow(new Object[] { newItem, "$" + selectedFood.getPrice() });
+					ManagerWindow.this.setVisible(false);
+					JTextField nameItem = new JTextField(selectedFood.getName());
+					
+					nameItem.setText(selectedFood.name);
+				    JTextField itemPrice = new JTextField(5);
+				    
+				    
+				    JTextField toppingPrice = new JTextField(5);
+				    JTextField prepTime = new JTextField(5);
+				    JTextField cookTime = new JTextField(5);
+				    JTextField ovenSpace = new JTextField(5);
+				    JRadioButton pizza = new JRadioButton("Pizza");
+				    JRadioButton topping = new JRadioButton("topping");
+				    JRadioButton others = new JRadioButton("others");
+				    ButtonGroup buttonGroup = new ButtonGroup();
+				    buttonGroup.add(pizza);
+				    buttonGroup.add(topping);
+				    buttonGroup.add(others);
+				    
+				    JPanel myPanel = new JPanel(new GridLayout(12, 2));
+				      myPanel.add(new JLabel("Item Name: "));
+				      myPanel.add(nameItem);
+				      
+				      myPanel.add(new JLabel("Item Price:"));
+				      myPanel.add(itemPrice);
+				      
+				     
+				     
+				      myPanel.add(topping);
+				      myPanel.add(others);
+				      myPanel.add(new JLabel("Item Prep Time:"));
+				      myPanel.add(prepTime);
+				      myPanel.add(new JLabel("Item Cook Time:"));
+				      myPanel.add(cookTime);
+				      myPanel.add(new JLabel("Oven Space:"));
+				      myPanel.add(ovenSpace);
+				      JCheckBox box = new JCheckBox("Special?");
+				      myPanel.add(box);
+				      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+				               "Please Enter Details Of New Item", JOptionPane.OK_CANCEL_OPTION);
+				      if (result == JOptionPane.OK_OPTION) {
+				    	  
+				    	  MenuItemModification menuItemModification = new MenuItemModification();
+				    	  menuItemModification.modifyItem(nameItem, itemPrice, toppingPrice, pizza, topping, others, box, prepTime, cookTime, ovenSpace, selectedFood.itemID);
+				      }
+				      InputStream inputStream;
+					try {
+						inputStream = new FileInputStream(new File("menu.txt"));
+						Menu newMenu = new Menu(inputStream);
+					      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+					      addedItem.setVisible(true);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
-		});*/
+		});
 		contentPane.add(buttonModify);
 	
 		buttonDelete = new JButton("Delete Item");
