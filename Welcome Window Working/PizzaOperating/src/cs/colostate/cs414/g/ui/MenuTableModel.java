@@ -23,10 +23,12 @@ public class MenuTableModel extends AbstractTableModel
 	public Object getValueAt(int row, int col) {
 		MenuItem food = menu.getItems().get(row);
 		if (col == 0) {
+			
 			return food.getType();
 		}
 		else {
-			return "$" + food.getPrice();
+			if(food.special == 0) return "$" + food.getPrice();
+			else return "$(Special)" + food.getPrice();
 		}
 	}
 	

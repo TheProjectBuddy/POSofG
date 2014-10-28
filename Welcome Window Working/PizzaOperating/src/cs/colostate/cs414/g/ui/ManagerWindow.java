@@ -76,7 +76,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		buttonAdd.setBounds(34, 331, 117, 29);
 		buttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				
+				ManagerWindow.this.setVisible(false);
 				JTextField nameItem = new JTextField(20);
 			    JTextField itemPrice = new JTextField(5);
 			    JTextField toppingPrice = new JTextField(5);
@@ -157,7 +157,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				int selectedMenuRow = menuTable.getSelectedRow();
 				if (selectedMenuRow != -1) {
 					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
-					ManagerWindow.this.setVisible(false);
+					
 					JTextField nameItem = new JTextField(selectedFood.getName());
 					
 					nameItem.setText(selectedFood.name);
@@ -179,22 +179,29 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				    JPanel myPanel = new JPanel(new GridLayout(12, 2));
 				      myPanel.add(new JLabel("Item Name: "));
 				      myPanel.add(nameItem);
+				      nameItem.setText(selectedFood.toString());
 				      
 				      myPanel.add(new JLabel("Item Price:"));
 				      myPanel.add(itemPrice);
-				      
+				      itemPrice.setText(Double.toString(selectedFood.getPrice()));
 				     
 				     
 				      myPanel.add(topping);
 				      myPanel.add(others);
 				      myPanel.add(new JLabel("Item Prep Time:"));
 				      myPanel.add(prepTime);
+				      prepTime.setText(Double.toString(selectedFood.getPrepTime()));
+				     
 				      myPanel.add(new JLabel("Item Cook Time:"));
 				      myPanel.add(cookTime);
+				      cookTime.setText(Double.toString(selectedFood.getCookTime()));
 				      myPanel.add(new JLabel("Oven Space:"));
 				      myPanel.add(ovenSpace);
+				      ovenSpace.setText(Integer.toString(selectedFood.getOvenSpace()));
 				      JCheckBox box = new JCheckBox("Special?");
 				      myPanel.add(box);
+				      if(selectedFood.special == 0) box.setSelected(false);
+				      else box.setSelected(true);
 				      int result = JOptionPane.showConfirmDialog(null, myPanel, 
 				               "Please Enter Details Of New Item", JOptionPane.OK_CANCEL_OPTION);
 				      if (result == JOptionPane.OK_OPTION) {

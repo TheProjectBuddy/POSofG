@@ -86,9 +86,23 @@ public class MenuItemModification
 				LineRead = bufferedReader.readLine();
 			}
 			bufferedReader.close();
-			
+			System.out.println(updated[itemID-1]);
 			FileWriter fileWriter = new FileWriter(file);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			String lineToWrite;
+			String starting = null ;
+			if(topping.isSelected()) starting = "1";
+			else if(others.isSelected()) starting = "2";
+			String name = nameItem.getText();
+			String price = itemPrice.getText();
+			
+			String end = "|0";
+			if(box.isSelected()) end = "|1";
+			
+			if(starting.equals("2")) lineToWrite = starting+"|"+name+"|"+price+"|"+prepTime.getText()+"|"+cookTime.getText()+"|"+ovenSpace.getText()+end;
+			else lineToWrite = starting+"|"+name;
+			
+			System.out.println(lineToWrite+"|"+itemID);
 			for(int i=0; i<100; i++)
 			{
 				
@@ -96,20 +110,7 @@ public class MenuItemModification
 					{
 						if(i == (itemID-1))
 						{
-							String lineToWrite;
-							String starting = null ;
-							if(topping.isSelected()) starting = "1";
-							else if(others.isSelected()) starting = "2";
-							String name = nameItem.getText();
-							String price = itemPrice.getText();
 							
-							String end = "|0";
-							if(box.isSelected()) end = "|1";
-							
-							if(starting.equals("2")) lineToWrite = starting+"|"+name+"|"+price+"|"+prepTime.getText()+"|"+cookTime.getText()+"|"+ovenSpace.getText()+end;
-							else lineToWrite = starting+"|"+name;
-							
-							System.out.println(lineToWrite+"|"+itemID);
 							bufferedWriter.write(lineToWrite+"|"+itemID+"\n");
 							
 						}

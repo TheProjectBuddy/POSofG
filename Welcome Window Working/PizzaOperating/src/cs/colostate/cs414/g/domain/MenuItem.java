@@ -10,15 +10,16 @@ public class MenuItem {
 	private double prepTime;
 	private double cookTime;
 	private int ovenSpace;
+	public int special=0;
 
-
-	public MenuItem(String type, double price, double prepTime, double cookTime, int ovenSpace, int itemID) {
+	public MenuItem(String type, double price, double prepTime, double cookTime, int ovenSpace, int itemID, int special) {
 		this.type = type;
 		this.price = price;
 		this.prepTime = prepTime;
 		this.cookTime = cookTime;
 		this.ovenSpace = ovenSpace;
 		this.itemID = itemID;
+		this.special = special;
 	}
 	public int getItemID() {
 		return itemID;
@@ -73,7 +74,7 @@ public class MenuItem {
 		this.price = price;
 	}
 	public MenuItem copy() {
-		return new MenuItem(type, price, prepTime, cookTime, ovenSpace, itemID);
+		return new MenuItem(type, price, prepTime, cookTime, ovenSpace, itemID, special);
 	}
 	
 	public String toString() {
