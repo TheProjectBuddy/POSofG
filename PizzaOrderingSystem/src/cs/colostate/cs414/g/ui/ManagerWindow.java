@@ -53,7 +53,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		};
 		orderTrackingModel.setColumnCount(8);
 		orderTrackingModel.setColumnIdentifiers(new String[] {
-			"Order #", "Customer Name", "Delivery Location", "Order Cost", "Time Order Taken", "Estimated Delivery Time", "Actual Delivery Time", "Status"
+			"Order #", "Customer Name", "Location", "Order Cost", "Time Order Taken", "Estimated Delivery Time", "Actual Delivery Time", "Status"
 		});
 		this.refreshOrderTrackingTable();
 		orderTrackingTable = new JTable(orderTrackingModel);

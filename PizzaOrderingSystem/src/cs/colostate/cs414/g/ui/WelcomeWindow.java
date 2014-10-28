@@ -66,7 +66,7 @@ public class WelcomeWindow extends JFrame{
 			}
 		});
 		panel.add(buttonEmployee);
-		if(Login.isManager == 1){
+		//if(Login.isManager == 1){
 		buttonManager = new JButton("Manager");
 		buttonManager.addActionListener( new ActionListener () {
 			public void actionPerformed(ActionEvent arg0) {
@@ -75,7 +75,7 @@ public class WelcomeWindow extends JFrame{
 			}
 		});
 		panel.add(buttonManager);
-		}
+		//}
 		buttonExit = new JButton("Exit");
 		buttonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
