@@ -79,7 +79,7 @@ public class MenuItem {
 		return this.getType();
 	}
 	public boolean cancel() {
- // TODO Auto-generated method stub 
-		return false; 
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

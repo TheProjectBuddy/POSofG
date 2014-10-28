@@ -1,5 +1,8 @@
 package cs.colostate.cs414.g.ui;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -7,34 +10,46 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
 import cs.colostate.cs414.g.domain.*;
+import cs.colostate.cs414.g.util.Stage;
 public class ManagerWindow  extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private JTable orderTrackingTable;
-	private JTable reportTable;
+	private JTable menuTable;
+	private JLabel labelMenu;
 	private JScrollPane scrollPane;
-	private JScrollPane scrollPane_1;
-	private Timer refreshTimer;
+	private JButton buttonAdd, buttonModify, buttonDelete;
 	
-	private DefaultTableModel orderTrackingModel;
-	private DefaultTableModel reportModel;
+	
+	private DefaultTableModel menuTableModel;
+
 
 	DecimalFormat moneyFormatter = new DecimalFormat("$0.00");
-	DateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public ManagerWindow() {
+	public ManagerWindow(final Stage startStage, final Menu menu) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 712, 410);
 		contentPane = new JPanel();
@@ -43,47 +58,122 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		
 		scrollPane = new JScrollPane();
+		labelMenu = new JLabel("Menu");
+		labelMenu.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		labelMenu.setHorizontalAlignment(SwingConstants.CENTER);
+		labelMenu.setBounds(133, 25, 61, 16);
+		labelMenu.setForeground(Color.BLUE);
+		contentPane.add(labelMenu);
+		buttonAdd = new JButton("Add New Item");
+		buttonAdd.setBounds(34, 331, 117, 29);
+		buttonAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				ManagerWindow.this.setVisible(false);
+				JTextField nameItem = new JTextField(20);
+			    JTextField itemPrice = new JTextField(5);
+			    JTextField toppingPrice = new JTextField(5);
+			    JTextField prepTime = new JTextField(5);
+			    JTextField cookTime = new JTextField(5);
+			    JTextField ovenSpace = new JTextField(5);
+			    JRadioButton pizza = new JRadioButton("Pizza");
+			    JRadioButton topping = new JRadioButton("topping");
+			    JRadioButton others = new JRadioButton("others");
+			    ButtonGroup buttonGroup = new ButtonGroup();
+			    buttonGroup.add(pizza);
+			    buttonGroup.add(topping);
+			    buttonGroup.add(others);
+			    
+			    JPanel myPanel = new JPanel(new GridLayout(12, 2));
+			      myPanel.add(new JLabel("Item Name: "));
+			      myPanel.add(nameItem);
+			      
+			      myPanel.add(new JLabel("Item Price:"));
+			      myPanel.add(itemPrice);
+			      
+			     
+			     
+			      myPanel.add(topping);
+			      myPanel.add(others);
+			      myPanel.add(new JLabel("Item Prep Time:"));
+			      myPanel.add(prepTime);
+			      myPanel.add(new JLabel("Item Cook Time:"));
+			      myPanel.add(cookTime);
+			      myPanel.add(new JLabel("Oven Space:"));
+			      myPanel.add(ovenSpace);
+			      JCheckBox box = new JCheckBox("Special?");
+			      myPanel.add(box);
+			      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+			               "Please Enter Details Of New Item", JOptionPane.OK_CANCEL_OPTION);
+			      if (result == JOptionPane.OK_OPTION) {
+			    	  
+			    	  MenuItemModification menuItemModification = new MenuItemModification();
+			    	  menuItemModification.addNewItem(nameItem, itemPrice, toppingPrice, pizza, topping, others, box, prepTime, cookTime, ovenSpace);
+			      }
+			      ManagerWindow addedItem = new ManagerWindow(startStage, menu);
+			      addedItem.setVisible(true);
+			}
+		});
+		contentPane.add(buttonAdd);
 		contentPane.add(scrollPane);
 		
-		orderTrackingModel = new DefaultTableModel() {
+		menuTable = new JTable(new MenuTableModel(menu));
+		menuTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		// disable moving of columns in tables
+		menuTable.getTableHeader().setReorderingAllowed(false);
+		scrollPane.setViewportView(menuTable);
+		
+		menuTableModel = new DefaultTableModel() {
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
-		orderTrackingModel.setColumnCount(8);
-		orderTrackingModel.setColumnIdentifiers(new String[] {
-			"Order #", "Customer Name", "Order Cost","Status"
-		});
-		this.refreshOrderTrackingTable();
-		orderTrackingTable = new JTable(orderTrackingModel);
-		scrollPane.setViewportView(orderTrackingTable);
+		menuTableModel.setColumnCount(8);
 		
-		scrollPane_1 = new JScrollPane();
-		contentPane.add(scrollPane_1);
 		
-		reportModel = new DefaultTableModel() {
-			public boolean isCellEditable(int row, int column) {
-				return false;
+		
+		buttonModify = new JButton("Modify Item");
+		buttonModify.setBounds(34, 331, 117, 29);
+		/*buttonAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				int selectedMenuRow = table.getSelectedRow();
+				if (selectedMenuRow != -1) {
+					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
+					OrderItem newItem = currentOrder.addItem(menu.instantiateFood(selectedFood));
+					newOrderItems.add(newItem);
+					orderTableModel.addRow(new Object[] { newItem, "$" + selectedFood.getPrice() });
+				}
 			}
-		};
-		reportModel.setColumnCount(3);
-		this.refreshReportTable();
-		reportTable = new JTable(reportModel);
-		scrollPane_1.setViewportView(reportTable);
+		});*/
+		contentPane.add(buttonModify);
+	
+		buttonDelete = new JButton("Delete Item");
+		buttonDelete.setBounds(34, 331, 117, 29);
+		/*buttonAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				int selectedMenuRow = table.getSelectedRow();
+				if (selectedMenuRow != -1) {
+					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
+					OrderItem newItem = currentOrder.addItem(menu.instantiateFood(selectedFood));
+					newOrderItems.add(newItem);
+					orderTableModel.addRow(new Object[] { newItem, "$" + selectedFood.getPrice() });
+				}
+			}
+		});*/
+		contentPane.add(buttonDelete);
 		
-		refreshTimer = new Timer(250, this);
-		refreshTimer.start();
+		
+		
+		
+		
+		
+		
+		
+	
 	}
 	
 	/**
 	 * The timer event-action.
 	 */
-	public void actionPerformed(ActionEvent event) {
-		if (this.isVisible()) {
-			this.refreshOrderTrackingTable();
-			this.refreshReportTable();
-		}
-	}
 	
 	/**
 	 * Set the row data for a particular table model
@@ -105,85 +195,16 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 	/**
 	 * Update the data in the order tracking table
 	 */
-	private void refreshOrderTrackingTable() {
-
-		ArrayList< Order > orders = PizzaStore.getOrdersList();
-		
-		int row = 0;
-		for (Order order : orders) {
-			//if (order.isOrderCompleted() == false) continue;
-			Object[] rowData = new Object[] {
-				order.getOrderID(),
-				order.getCustomer().getName(),
-				moneyFormatter.format(order.getPrice()),
-				timeFormatter.format(order.getTimeCreated()),
-				timeFormatter.format(order.getEstimatedTime()),
-				order.getCurrentStage()
-			};
-			
-			setRow(orderTrackingModel, row, rowData);
-			row += 1;
-		}
-	}
+	
 	
 	/**
 	 * Update the data in the manager report table.
-	 */
-	private void refreshReportTable() {
-		ArrayList< Order > orders = PizzaStore.getOrdersList();
-		int totalOrders = orders.size();
+	*/
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
 		
-		setRow(reportModel, 0, new Object[] { "Total Number of Orders: " + totalOrders });
-		
-		if (totalOrders > 1) {
-			double averageCost = 0.0;
-			
-			double maxPrepTime = -1.0; int maxPrepId = -1;
-			double averagePrepTime = 0.0; 
-			
-			double maxCookTime = -1.0; int maxCookId = -1;
-			double averageCookTime = 0.0;
-			
-			double maxTotalTime = -1.0; int maxTotalId = -1;
-			double averageTotalTime = 0.0;
-			
-			int count = 0;
-			for (Order order : orders) {
-				if (order.isOrderCompleted() == false) {
-					continue;
-				}
-				count += 1;
-				
-				averageCost += order.getPrice();
-			}
-			
-			if (count > 0) {
-				averageCost /= count;
-				averagePrepTime /= count;
-				averageCookTime /= count;
-				averageTotalTime /= count;
-				
-				setRow(reportModel, 1, new Object[] { "Average cost: " + moneyFormatter.format(averageCost) });
-				
-				setRow(reportModel, 2, new Object[] {
-						"Average Prep Time: " + timeFormatter.format(averagePrepTime),
-						"Max Prep Time: " + timeFormatter.format(maxPrepTime),
-						"Max Prep Order #: " + maxPrepId
-				});
-				
-				setRow(reportModel, 3, new Object[] {
-						"Average Cook Time: " + timeFormatter.format(averageCookTime),
-						"Max Cook Time: " + timeFormatter.format(maxCookTime),
-						"Max Cook Order #: " + maxCookId
-				});
-				
-				setRow(reportModel, 4, new Object[] {
-						"Average Total Time: " + timeFormatter.format(averageTotalTime),
-						"Max Total Time: " + timeFormatter.format(maxTotalTime),
-						"Max Total Order #: " + maxTotalId
-				});
-			}
-		}
 	}
 
 }

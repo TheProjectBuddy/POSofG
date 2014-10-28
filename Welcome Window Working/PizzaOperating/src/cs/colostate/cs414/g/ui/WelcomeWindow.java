@@ -34,15 +34,15 @@ public class WelcomeWindow extends JFrame{
 	private JLabel labelPleasePickAn;
 
 	PhoneOperatorWindow phoneOperatorWindow = null;
-	ManagerWindow mw = new ManagerWindow();
-
+	
+	ManagerWindow mw;
 
 	/**
 	 * Create the frame.
 	 */
 	public WelcomeWindow(PhoneOrder phoneOrder, Menu menu, Stage startStage, int isManager) {
 		phoneOperatorWindow = new PhoneOperatorWindow(this, phoneOrder, menu, startStage);
-		
+		mw  = new ManagerWindow(startStage, menu);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 632, 429);
 		contentPane = new JPanel();
