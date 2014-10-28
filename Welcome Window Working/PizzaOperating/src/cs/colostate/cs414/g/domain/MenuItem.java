@@ -12,12 +12,13 @@ public class MenuItem {
 	private int ovenSpace;
 
 
-	public MenuItem(String type, double price, double prepTime, double cookTime, int ovenSpace) {
+	public MenuItem(String type, double price, double prepTime, double cookTime, int ovenSpace, int itemID) {
 		this.type = type;
 		this.price = price;
 		this.prepTime = prepTime;
 		this.cookTime = cookTime;
 		this.ovenSpace = ovenSpace;
+		this.itemID = itemID;
 	}
 	public int getItemID() {
 		return itemID;
@@ -72,7 +73,7 @@ public class MenuItem {
 		this.price = price;
 	}
 	public MenuItem copy() {
-		return new MenuItem(type, price, prepTime, cookTime, ovenSpace);
+		return new MenuItem(type, price, prepTime, cookTime, ovenSpace, itemID);
 	}
 	
 	public String toString() {
