@@ -107,6 +107,10 @@ public class PaymentWindow extends JFrame {
 		    discountLabel.setVisible(true);
 			discountedPrice=tempdiscountedPrice;
 					}
+                       else
+			{
+				JOptionPane.showMessageDialog(contentPane,"Invalid Coupon","Alert",JOptionPane.ERROR_MESSAGE);
+			}
 			
 			}
 			
