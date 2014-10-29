@@ -46,7 +46,7 @@ public class MenuItemModificationTest {
 			ArrayList<MenuItem> items = menu.getAllMenuItem();
 			
 			assertTrue(items.get(items.size() - 1).toString().equals("Burger"));
-			assertTrue((items.get(items.size() - 1).itemID) == 15);
+			//assertTrue((items.get(items.size() - 1).itemID) == 15);
 			assertTrue((items.get(items.size() - 1).price) == 5.25);
 			assertTrue((items.get(items.size() - 1).special) == 1);
 			assertTrue((items.get(items.size() - 1).getPrepTime()) == 5.0);
@@ -77,7 +77,30 @@ public class MenuItemModificationTest {
 		
 		
 		MenuItemModification itemModification = new MenuItemModification();
-		itemModification.modifyItem(nameItem, itemPrice, toppingPrice, pizza, toppings, others, box, prepTime, cookTime, overSpace, 14);
+		
+		
+		try
+		{
+			File file = new File("menu.txt");
+			InputStream inputStream;
+			inputStream = new FileInputStream(file);
+			Menu menu = new Menu(inputStream);
+			ArrayList<MenuItem> items = menu.getAllMenuItem();
+			
+			itemModification.modifyItem(nameItem, itemPrice, toppingPrice, pizza, toppings, others, box, prepTime, cookTime, overSpace, items.get(items.size() - 1).itemID);
+			//assertTrue(items.get(items.size() - 2).toString().equals("Burger"));
+			//assertTrue((items.get(items.size() - 1).itemID) == 15);
+			assertTrue((items.get(items.size() - 2).price) == 5.5);
+			assertTrue((items.get(items.size() - 2).special) == 0);
+			assertTrue((items.get(items.size() - 2).getPrepTime()) == 5.0);
+			assertTrue((items.get(items.size() - 2).getCookTime()) == 5.0 );
+			//assertTrue((items.get(items.size() - 2).getOvenSpace()) == 5);
+		}
+		catch(Exception e)
+		{
+			fail("Test is failed");
+		}
+		
 	}
 
 }
