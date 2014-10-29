@@ -27,6 +27,14 @@ public class Menu {
 		this.creatingManager = creatingManager;
 	}
 	
+	public ArrayList<MenuItem> getAllMenuItem() {
+		return allMenuItem;
+	}
+
+	public void setAllMenuItem(ArrayList<MenuItem> allMenuItem) {
+		this.allMenuItem = allMenuItem;
+	}
+
 	public Menu(InputStream input) throws Exception {
 		InputStreamReader reader = new InputStreamReader(input);
 		BufferedReader br = new BufferedReader(reader);
