@@ -9,6 +9,7 @@ public class Pizza extends MenuItem implements java.io.Serializable
 	private double toppingPrice;
 	private ArrayList< Topping > toppings = new ArrayList< Topping >();
 	int ID;
+	int special;
 	public enum Size
 	{
 		SMALL,
@@ -16,10 +17,11 @@ public class Pizza extends MenuItem implements java.io.Serializable
 		LARGE
 	}
 	
-	public Pizza(Size size, double price, double toppingPrice, double prepTime, double cookTime, int ovenSpace, int ID) {
-		super("Pizza", price, prepTime, cookTime, ovenSpace, ID);
+	public Pizza(Size size, double price, double toppingPrice, double prepTime, double cookTime, int ovenSpace, int ID, int special) {
+		super("Pizza", price, prepTime, cookTime, ovenSpace, ID, special);
 		this.ID = ID;
 		this.size = size;
+		this.special = special;
 		this.toppingPrice = toppingPrice;
 	}
 	
@@ -69,7 +71,7 @@ public class Pizza extends MenuItem implements java.io.Serializable
 	}
 	
 	public MenuItem copy() {
-		Pizza newPizza = new Pizza(size, getPrice(), toppingPrice, getPrepTime(), getCookTime(), getOvenSpace(), ID);
+		Pizza newPizza = new Pizza(size, getPrice(), toppingPrice, getPrepTime(), getCookTime(), getOvenSpace(), ID, special);
 		for(Topping t : toppings) {
 			newPizza.addTopping(new Topping(t));
 		}

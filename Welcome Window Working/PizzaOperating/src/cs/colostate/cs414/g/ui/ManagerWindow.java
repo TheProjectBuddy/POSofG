@@ -76,7 +76,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		buttonAdd.setBounds(34, 331, 117, 29);
 		buttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				
+				ManagerWindow.this.setVisible(false);
 				JTextField nameItem = new JTextField(20);
 			    JTextField itemPrice = new JTextField(5);
 			    JTextField toppingPrice = new JTextField(5);
@@ -155,9 +155,63 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				ManagerWindow.this.setVisible(false);
 				int selectedMenuRow = menuTable.getSelectedRow();
-				if (selectedMenuRow != -1) {
+				if(selectedMenuRow != -1 && (selectedMenuRow == 0 || selectedMenuRow == 1 || selectedMenuRow == 2))
+				{
 					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
-					ManagerWindow.this.setVisible(false);
+					
+					JTextField nameItem = new JTextField(selectedFood.getName());
+					
+					nameItem.setText(selectedFood.name);
+				    JTextField itemPrice = new JTextField(5);
+				    
+				    
+				    JTextField toppingPrice = new JTextField(5);
+				    
+				    
+				    JPanel myPanel = new JPanel(new GridLayout(8, 2));
+				      myPanel.add(new JLabel("Item Name: "));
+				      myPanel.add(nameItem);
+				      nameItem.setText(selectedFood.toString());
+				      
+				      myPanel.add(new JLabel("Item Price:"));
+				      myPanel.add(itemPrice);
+				      itemPrice.setText(Double.toString(selectedFood.getPrice()));
+				      
+				      myPanel.add(new JLabel("Topping Price:"));
+				      myPanel.add(toppingPrice);
+				      if(selectedMenuRow == 0) toppingPrice.setText("1");
+				      else if(selectedMenuRow == 1) toppingPrice.setText("1.5");
+				      else if(selectedMenuRow == 2) toppingPrice.setText("2");
+				     
+				      JCheckBox box = new JCheckBox("Special?");
+				      myPanel.add(box);
+				      if(selectedFood.special == 0) box.setSelected(false);
+				      else box.setSelected(true);
+				      
+				      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+				               "Please Enter Details Of New Item", JOptionPane.OK_CANCEL_OPTION);
+				      if (result == JOptionPane.OK_OPTION) {
+				    	  String prepTime = Double.toString(selectedFood.getPrepTime());
+				    	  String cookTime = Double.toString(selectedFood.getCookTime());
+				    	  String overSpace = Integer.toString(selectedFood.getOvenSpace());;
+				    	  MenuItemModification menuItemModification = new MenuItemModification();
+				    	  menuItemModification.modifyPizza(nameItem, itemPrice, toppingPrice, box, selectedFood.itemID, prepTime, cookTime, overSpace);
+				      }
+				      InputStream inputStream;
+					try {
+						inputStream = new FileInputStream(new File("menu.txt"));
+						Menu newMenu = new Menu(inputStream);
+					      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+					      addedItem.setVisible(true);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if (selectedMenuRow != -1 && selectedMenuRow != 0 && selectedMenuRow != 1 && selectedMenuRow != 2) 
+				{
+					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
+					
 					JTextField nameItem = new JTextField(selectedFood.getName());
 					
 					nameItem.setText(selectedFood.name);
@@ -179,22 +233,30 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				    JPanel myPanel = new JPanel(new GridLayout(12, 2));
 				      myPanel.add(new JLabel("Item Name: "));
 				      myPanel.add(nameItem);
+				      nameItem.setText(selectedFood.toString());
 				      
 				      myPanel.add(new JLabel("Item Price:"));
 				      myPanel.add(itemPrice);
-				      
+				      itemPrice.setText(Double.toString(selectedFood.getPrice()));
 				     
 				     
 				      myPanel.add(topping);
+				      others.setSelected(true);
 				      myPanel.add(others);
 				      myPanel.add(new JLabel("Item Prep Time:"));
 				      myPanel.add(prepTime);
+				      prepTime.setText(Double.toString(selectedFood.getPrepTime()));
+				     
 				      myPanel.add(new JLabel("Item Cook Time:"));
 				      myPanel.add(cookTime);
+				      cookTime.setText(Double.toString(selectedFood.getCookTime()));
 				      myPanel.add(new JLabel("Oven Space:"));
 				      myPanel.add(ovenSpace);
+				      ovenSpace.setText(Integer.toString(selectedFood.getOvenSpace()));
 				      JCheckBox box = new JCheckBox("Special?");
 				      myPanel.add(box);
+				      if(selectedFood.special == 0) box.setSelected(false);
+				      else box.setSelected(true);
 				      int result = JOptionPane.showConfirmDialog(null, myPanel, 
 				               "Please Enter Details Of New Item", JOptionPane.OK_CANCEL_OPTION);
 				      if (result == JOptionPane.OK_OPTION) {
@@ -222,7 +284,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 		buttonDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				int selectedMenuRow = menuTable.getSelectedRow();
-				if (selectedMenuRow != -1) {
+				if (selectedMenuRow != -1 && selectedMenuRow != 0 && selectedMenuRow !=1  && selectedMenuRow != 2) {
 					MenuItem selectedFood = menu.getItems().get(selectedMenuRow);
 					ManagerWindow.this.setVisible(false);
 					 int result = JOptionPane.showConfirmDialog(null, "You want to delete selected item?", 
@@ -242,6 +304,11 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}
+				else if(selectedMenuRow == 0 || selectedMenuRow == 1 || selectedMenuRow == 2)
+				{
+					JOptionPane.showConfirmDialog(null, "You cannot delete selected item?", 
+				               "Are you sure?", JOptionPane.OK_CANCEL_OPTION);
 				}
 			}
 		});

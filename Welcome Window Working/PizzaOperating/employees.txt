@@ -1,2 +1,4 @@
 Varsha Arun-Store Manager-varsha-pizza123
-Sandeep K-Employee-sandeep-pizza123
+Sandeep K-Store Manager-sandeep-pizza123
+Harshil Shah-Store Manager-harshil-pizza123
+Harshil Shah-Employee-harshil123-pizza123
