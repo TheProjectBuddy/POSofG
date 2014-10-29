@@ -20,6 +20,7 @@ public class SummaryWindow extends JFrame {
 	private JLabel labelcardNum;
 	private JLabel thanks;
 	
+private JButton buttonExit;
 	/**
 	 * 
 	 */
@@ -110,7 +111,18 @@ public class SummaryWindow extends JFrame {
 		labelcustomerName.setBounds(350,90,200,50);
 		labelcustomerName.setText(cOrder.getCustomer().getName());
 		contentPane.add(labelcustomerName);
-		
+
+
+ buttonExit =new JButton("EXIT");
+	    buttonExit.setSize(100,50);
+		buttonExit.setBounds(250,400,100,50);
+		buttonExit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				System.exit(0);
+			}
+		});
+		contentPane.add(buttonExit);		
 	
 		
 		thanks=new JLabel("Thank you");
