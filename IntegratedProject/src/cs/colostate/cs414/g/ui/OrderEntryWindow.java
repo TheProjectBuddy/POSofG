@@ -201,7 +201,7 @@ public class OrderEntryWindow extends JFrame {
 				if (!isModifying && currentOrder.getOrderItems().size() == 0) {
 					return;
 				}
-				//estimate time
+				/*//estimate time
 				phoneOperator.estimateTime(currentOrder);
 				double estimatedTime = currentOrder.getEstimatedTime();
 				int days =(int) estimatedTime/60/24;
@@ -222,6 +222,10 @@ public class OrderEntryWindow extends JFrame {
 				
 				WindowEvent windowClosing = new WindowEvent(OrderEntryWindow.this, WindowEvent.WINDOW_CLOSING);
 				OrderEntryWindow.this.dispatchEvent(windowClosing);
+				*/
+				OrderEntryWindow.this.setVisible(false); 	 	
+				PaymentWindow paymentWindow= new PaymentWindow(OrderEntryWindow.this,currentOrder); 	 	
+				paymentWindow.setVisible(true); 
 			}
 		});
 		contentPane.add(buttonFinish);
