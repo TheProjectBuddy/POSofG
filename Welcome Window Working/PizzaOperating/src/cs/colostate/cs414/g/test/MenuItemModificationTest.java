@@ -102,5 +102,36 @@ public class MenuItemModificationTest {
 		}
 		
 	}
+	
+	@Test
+	public void testDeleteItem()
+	{
+		MenuItemModification itemModification = new MenuItemModification();
+		
+		
+		try
+		{
+			File file = new File("menu.txt");
+			InputStream inputStream;
+			inputStream = new FileInputStream(file);
+			Menu menu = new Menu(inputStream);
+			ArrayList<MenuItem> items = menu.getAllMenuItem();
+			System.out.println(items.get(items.size() - 1).itemID);
+			
+			itemModification.deleteItem(items.get(items.size() - 1).itemID);
+			
+			File fileU = new File("menu.txt");
+			InputStream inputStreamU;
+			inputStreamU = new FileInputStream(fileU);
+			Menu menuU = new Menu(inputStreamU);
+			ArrayList<MenuItem> itemsU = menuU.getAllMenuItem();
+			assertTrue((itemsU.get(itemsU.size() - 1).itemID) == (items.get(items.size() - 1).itemID - 1) );
+		}
+		catch(Exception e)
+		{
+			fail("Test is failed");
+		}
+	}
+	
 
 }
