@@ -1,6 +1,7 @@
 package cs.colostate.cs414.g.ui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,13 +10,15 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import cs.colostate.cs414.g.domain.Login;
 import cs.colostate.cs414.g.domain.Menu;
 import cs.colostate.cs414.g.domain.PhoneOrder;
+import cs.colostate.cs414.g.util.LoginUtil;
 import cs.colostate.cs414.g.util.Stage;
 
 public class WelcomeWindow extends JFrame{
@@ -30,6 +33,7 @@ public class WelcomeWindow extends JFrame{
 	private JPanel panel;
 	private JButton buttonEmployee;
 	private JButton buttonManager;
+	private JButton buttonCustomer;
 	private JButton buttonExit;
 	private JLabel labelPleasePickAn;
 
@@ -42,7 +46,6 @@ public class WelcomeWindow extends JFrame{
 	 */
 	public WelcomeWindow(PhoneOrder phoneOrder, Menu menu, Stage startStage) {
 		phoneOperatorWindow = new PhoneOperatorWindow(this, phoneOrder, menu, startStage);
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 632, 429);
 		contentPane = new JPanel();
@@ -61,21 +64,51 @@ public class WelcomeWindow extends JFrame{
 		buttonEmployee = new JButton("Employee");
 		buttonEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+		        //LoginDialog loginDlg = new LoginDialog();
+                //loginDlg.setVisible(true);
+                // if logon successfully
+                //if(loginDlg.isSucceeded()&& LoginUtil.getUser(LoginUtil.userName)==1){
+				
+				String userName = JOptionPane.showInputDialog(null, "Please Enter Your Username", "Login Details - Username", 0);
+				JPasswordField pf = new JPasswordField();
+				String password = new String();
+				int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (okCxl == JOptionPane.OK_OPTION) {
+				  password = new String(pf.getPassword());
+				}
+				System.out.println("here");
+				if(LoginUtil.authenticate(userName, password)){
+					phoneOperatorWindow.present();
+					System.out.println("there");
+					WelcomeWindow.this.setVisible(false);
+				}
+			}
+		});
+		panel.add(buttonEmployee);
+		buttonManager = new JButton("Manager");
+		buttonManager.addActionListener( new ActionListener () {
+			public void actionPerformed(ActionEvent arg0) {
+				String userName = JOptionPane.showInputDialog(null, "Please Enter Your Username", "Login Details - Username", 0);
+				JPasswordField pf = new JPasswordField();
+				String password = new String();
+				int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (okCxl == JOptionPane.OK_OPTION) {
+				   password = new String(pf.getPassword());
+				}
+				if(LoginUtil.authenticate(userName, password)){
+				mw.setVisible(true);
+				}
+			}
+		});
+		panel.add(buttonManager);
+		buttonCustomer = new JButton("Customer");
+		buttonCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				phoneOperatorWindow.present();
 				WelcomeWindow.this.setVisible(false);
 			}
 		});
-		panel.add(buttonEmployee);
-		//if(Login.isManager == 1){
-		buttonManager = new JButton("Manager");
-		buttonManager.addActionListener( new ActionListener () {
-			public void actionPerformed(ActionEvent arg0) {
-
-				mw.setVisible(true);
-			}
-		});
-		panel.add(buttonManager);
-		//}
+		panel.add(buttonCustomer);
 		buttonExit = new JButton("Exit");
 		buttonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {

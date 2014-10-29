@@ -146,6 +146,7 @@ public class PhoneOperatorWindow extends JFrame {
 	}
 	
 	public void present() {
+		System.out.println("herere");
 		numberDialog.setVisible(true);
 	}
 	

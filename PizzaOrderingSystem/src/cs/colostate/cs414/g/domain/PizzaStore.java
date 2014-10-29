@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import cs.colostate.cs414.g.util.FileManager;
+import cs.colostate.cs414.g.util.LoginUtil;
 import cs.colostate.cs414.g.util.MainUtil;
 import cs.colostate.cs414.g.util.TimeSystem;
 
@@ -120,16 +121,16 @@ public class PizzaStore {
 	
 	public static void saveDatabaseInfo() {
 		try {
-			File customerFile = new File("customers.txt");
-			File orderFile = new File("orders.txt");
+			File customerFile = new File("customers.db");
+			File orderFile = new File("orders.db");
 			if (customerFile.exists()) {
 				customerFile.delete();
 			}
 			if (orderFile.exists()) {
 				orderFile.delete();
 			}
-			FileManager.writeCustomers(customers, "customers.txt");
-			FileManager.writeOrders(orders, "orders.txt");
+			FileManager.writeCustomers(customers, "customers.db");
+			FileManager.writeOrders(orders, "orders.db");
 		} catch (IOException e) {
 			System.err.println("Error writing database(s).");
 			e.printStackTrace(System.err);

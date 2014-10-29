@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({ OrderTest.class, OrderItemTest.class, ChefTest.class })
+@SuiteClasses({ OrderTest.class, ChefTest.class })
 public class TestAll {
 
 }
