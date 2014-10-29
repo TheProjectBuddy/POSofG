@@ -133,5 +133,44 @@ public class MenuItemModificationTest {
 		}
 	}
 	
+	@Test
+	public void testModifyPizza()
+	{
+		JTextField nameItem = new JTextField("SMALL Pizza"); 
+		JTextField itemPrice = new JTextField("25");
+		JTextField toppingPrice= new JTextField("1"); 
+		JCheckBox box = new JCheckBox();
+		box.setSelected(true);
+		int itemID = 1;
+		String prepTime = "15.2";
+		String cookTime = "2.5";
+		String ovenSpace = "3";
+		
+MenuItemModification itemModification = new MenuItemModification();
+		
+		
+		try
+		{
+			File file = new File("menu.txt");
+			InputStream inputStream;
+			inputStream = new FileInputStream(file);
+			Menu menu = new Menu(inputStream);
+			ArrayList<MenuItem> items = menu.getAllMenuItem();
+			
+			itemModification.modifyPizza(nameItem, itemPrice, toppingPrice, box, itemID, prepTime, cookTime, ovenSpace);
+			assertTrue(items.get(0).toString().equals("SMALL Pizza"));
+			assertTrue((items.get(0).itemID) == 1);
+			assertTrue((items.get(0).price) == 25);
+			assertTrue((items.get(0).special) == 1);
+			assertTrue((items.get(0).getPrepTime()) == 15.2);
+			assertTrue((items.get(0).getCookTime()) == 2.5 );
+			assertTrue((items.get(0).getOvenSpace()) == 3);
+		}
+		catch(Exception e)
+		{
+			fail("Test is failed");
+		}
+	}
+	
 
 }
