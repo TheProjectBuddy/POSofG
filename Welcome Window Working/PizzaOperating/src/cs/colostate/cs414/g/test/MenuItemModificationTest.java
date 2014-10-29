@@ -46,7 +46,7 @@ public class MenuItemModificationTest {
 			ArrayList<MenuItem> items = menu.getAllMenuItem();
 			
 			assertTrue(items.get(items.size() - 1).toString().equals("Burger"));
-			assertTrue((items.get(items.size() - 1).itemID) == 14);
+			assertTrue((items.get(items.size() - 1).itemID) == 15);
 			assertTrue((items.get(items.size() - 1).price) == 5.25);
 			assertTrue((items.get(items.size() - 1).special) == 1);
 			assertTrue((items.get(items.size() - 1).getPrepTime()) == 5.0);
@@ -57,6 +57,27 @@ public class MenuItemModificationTest {
 		{
 			fail("Test is failed");
 		}
+	}
+	
+	@Test
+	public void testModifyItem()
+	{
+		JTextField nameItem = new JTextField("Burger"); 
+		JTextField itemPrice = new JTextField("5.5");
+		JTextField toppingPrice = new JTextField("1.5");
+		JRadioButton pizza = new JRadioButton("Pizza");
+		JRadioButton toppings = new JRadioButton("toppings"); 
+		JRadioButton others = new JRadioButton("others");
+		others.setSelected(true);
+		JCheckBox box = new JCheckBox("Special");
+		box.setSelected(false);
+		JTextField prepTime = new JTextField("5.0");
+		JTextField cookTime = new JTextField("5.0"); 
+		JTextField overSpace = new JTextField("5");
+		
+		
+		MenuItemModification itemModification = new MenuItemModification();
+		itemModification.modifyItem(nameItem, itemPrice, toppingPrice, pizza, toppings, others, box, prepTime, cookTime, overSpace, 14);
 	}
 
 }
