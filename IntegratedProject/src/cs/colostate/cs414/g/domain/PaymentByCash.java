@@ -2,18 +2,18 @@ package cs.colostate.cs414.g.domain;
 
 public class PaymentByCash extends Payment {
 	
-	private double cashGiven;
+	private double price;
 
 	public PaymentByCash(double d, String type) {
 		super(d, type);
+		this.price=d;
+		
 		// TODO Auto-generated constructor stub
 	}
 	
-	public double getReturnAmount(double finalPrice,double cashGiven)
+	public double getReturnAmount(double cashGiven)
 	{
-		this.cashGiven=cashGiven;
-          		
-		return cashGiven-finalPrice;
+          return cashGiven-this.price;
 	}
 
 }
