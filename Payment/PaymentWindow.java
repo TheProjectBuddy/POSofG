@@ -1,8 +1,5 @@
 package cs.colostate.cs414.g.ui;
 
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,31 +11,33 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import cs.colostate.cs414.g.domain.*;
-import cs.colostate.cs414.g.util.*;
+import cs.colostate.cs414.g.domain.Order;
+import cs.colostate.cs414.g.domain.Payment;
 public class PaymentWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JPanel panel;
 	private JButton buttonByCash;
 	private JButton buttonByCard;
 	private JButton buttonApplyCoupon;
+	private JButton buttonBack;
     private JLabel priceLabel;
     private JLabel labelPrice;
-    private JLabel labeldiscountedcost;
-    private JLabel labelCurrentCustomer;
+    
     private JLabel couponLabel;
     private JLabel labelDiscount;
     private JLabel discountLabel;
     private JTextField couponField;
-    private OrderEntryWindow orderWindow = null;
     private Payment payment;
-    private Customer customer = null;
+    
 	private double discountedPrice;
 	
     public PaymentWindow(OrderEntryWindow orderWindow, Order cOrder)
     {
-    	this.orderWindow=orderWindow;
+    	final OrderEntryWindow orderWindow1=orderWindow;
     	final Order currentOrder=cOrder;
     	final double price= currentOrder.getPrice();
     //	final double discountedPrice;
@@ -141,8 +140,16 @@ public class PaymentWindow extends JFrame {
         
         contentPane.add(buttonByCard);
         
-       
-        
+       buttonBack=new JButton("Back");
+       buttonBack.setBounds(250, 250, 100, 50);
+       buttonBack.addActionListener(new ActionListener(){
+    	   public void actionPerformed(ActionEvent e)
+    	   {
+    		PaymentWindow.this.setVisible(false);   
+    		orderWindow1.setVisible(true);   
+    	   }
+       });
+       contentPane.add(buttonBack);
     }
     public String getCoupon()
     {

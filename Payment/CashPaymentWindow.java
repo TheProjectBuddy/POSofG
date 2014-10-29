@@ -10,8 +10,12 @@ import cs.colostate.cs414.g.domain.*;
 
 public class CashPaymentWindow extends JFrame {
 	
-	private PaymentWindow paymentWindow;
-    private JPanel contentPane;
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
     private JLabel labelPrice;
     private JLabel labelCash;
     private JLabel priceLabel;
@@ -19,11 +23,12 @@ public class CashPaymentWindow extends JFrame {
     private JLabel labelReturn;
     private JButton buttonOk;
     private JButton buttonDone;
+    private JButton buttonBack;
     private JTextField cashField;
     private double finalPrice;
-	public CashPaymentWindow(PaymentWindow paymentWindow, Order cOrder ,Double price )
+	public CashPaymentWindow(final PaymentWindow paymentWindow, Order cOrder ,Double price )
 	{
-		this.paymentWindow=paymentWindow;
+	
 		final Order currentOrder=cOrder;
 		final PaymentByCash paymentByCash= new PaymentByCash(price,"InStore");
 		finalPrice=price;
@@ -77,7 +82,7 @@ public class CashPaymentWindow extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				double temp=Double.parseDouble(getAmount());
-				double temp1=paymentByCash.getReturnAmount(finalPrice,temp);
+				double temp1=paymentByCash.getReturnAmount(temp);
 				returnLabel.setText("$"+Double.toString(temp1));
 				
 			}
@@ -97,7 +102,19 @@ public class CashPaymentWindow extends JFrame {
 		
 		});
 		contentPane.add(buttonDone);
+
+		   buttonBack=new JButton("Back");
+	       buttonBack.setBounds(450, 200, 100, 50);
+	       buttonBack.addActionListener(new ActionListener(){
+	    	   public void actionPerformed(ActionEvent e)
+	    	   {
+	    		paymentWindow.setVisible(true);   
+	    		CashPaymentWindow.this.setVisible(false);   
+	    	   }
+	       });
+	       contentPane.add(buttonBack);
 	}
+	
 
 public String getAmount()
 {

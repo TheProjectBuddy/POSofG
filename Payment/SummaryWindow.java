@@ -2,11 +2,19 @@ package cs.colostate.cs414.g.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import cs.colostate.cs414.g.domain.*;
+import cs.colostate.cs414.g.domain.Order;
+import cs.colostate.cs414.g.domain.PaymentByCard;
+import cs.colostate.cs414.g.domain.PaymentByCash;
 
 public class SummaryWindow extends JFrame {
 	
@@ -19,8 +27,7 @@ public class SummaryWindow extends JFrame {
 	private JLabel labelcustomerName;
 	private JLabel labelcardNum;
 	private JLabel thanks;
-	
-private JButton buttonExit;
+	private JButton buttonExit;
 	/**
 	 * 
 	 */
@@ -70,11 +77,22 @@ private JButton buttonExit;
 		labelcardNum.setText("************"+payByCard.getCardNO());
 		contentPane.add(labelcardNum);
 		
+		buttonExit =new JButton("EXIT");
+	    buttonExit.setSize(100,50);
+		buttonExit.setBounds(450,325,100,50);
+		buttonExit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				System.exit(0);
+			}
+		});
+		
 		thanks=new JLabel("Thank you");
 		thanks.setFont(new Font("Lucida Grande", Font.ITALIC, 26));
 		thanks.setHorizontalAlignment(SwingConstants.CENTER);
 		thanks.setSize(300,200);
-		contentPane.add(thanks, BorderLayout.SOUTH);
+		thanks.setBounds(250, 250, 200, 100);
+		contentPane.add(thanks);
 		
 	
 	}
@@ -111,9 +129,8 @@ private JButton buttonExit;
 		labelcustomerName.setBounds(350,90,200,50);
 		labelcustomerName.setText(cOrder.getCustomer().getName());
 		contentPane.add(labelcustomerName);
-
-
- buttonExit =new JButton("EXIT");
+		
+	    buttonExit =new JButton("EXIT");
 	    buttonExit.setSize(100,50);
 		buttonExit.setBounds(250,400,100,50);
 		buttonExit.addActionListener(new ActionListener(){
@@ -122,9 +139,7 @@ private JButton buttonExit;
 				System.exit(0);
 			}
 		});
-		contentPane.add(buttonExit);		
-	
-		
+		contentPane.add(buttonExit);
 		thanks=new JLabel("Thank you");
 		thanks.setFont(new Font("Lucida Grande", Font.ITALIC, 26));
 		thanks.setHorizontalAlignment(SwingConstants.CENTER);

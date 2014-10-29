@@ -10,8 +10,12 @@ import cs.colostate.cs414.g.domain.*;
 
 public class CardPaymentWindow extends JFrame {
 	
-	private PaymentWindow paymentWindow;
-    private JPanel contentPane;
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
     private JLabel labelPrice;
     private JLabel labelCardNo;
     private JLabel priceLabel;
@@ -20,14 +24,15 @@ public class CardPaymentWindow extends JFrame {
     private JLabel labelName;
     private JButton buttonOk;
     private JButton buttonAuthenticate;
+    private JButton buttonBack;
     private JTextField cardNoField;
     private JTextField cvvField;
     private JTextField expiryField;
     private JTextField nameField;
    
-	public CardPaymentWindow(PaymentWindow paymentWindow, Order cOrder ,Double price )
+	public CardPaymentWindow(final PaymentWindow paymentWindow, Order cOrder ,Double price )
 	{
-		this.paymentWindow=paymentWindow;
+		
 		final Order currentOrder=cOrder;
 		final double finalprice=price;
 		final PaymentByCard paymentByCard= new PaymentByCard(price,"InStore");
@@ -133,6 +138,18 @@ public class CardPaymentWindow extends JFrame {
         	}
         });
         contentPane.add(buttonAuthenticate);
+        
+           buttonBack=new JButton("Back");
+	       buttonBack.setBounds(500, 275, 100, 50);
+	       buttonBack.addActionListener(new ActionListener(){
+	    	   public void actionPerformed(ActionEvent e)
+	    	   {
+	    		paymentWindow.setVisible(true);   
+	    		CardPaymentWindow.this.setVisible(false);   
+	    	   }
+	       });
+	       contentPane.add(buttonBack);
+
 		
 	}
 	public String getCardNo()
