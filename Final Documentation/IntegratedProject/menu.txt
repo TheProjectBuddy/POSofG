@@ -7,7 +7,4 @@
 1|Onions|7
 1|Peppers|8
 1|Mushrooms|9
-2|pp|90|5|5|5|0|10
 2|Pizza Logs|5|0.5|10.0|1|1|11
-
-2|Do you mind|5.25|5.0|5.0|3|1|13
