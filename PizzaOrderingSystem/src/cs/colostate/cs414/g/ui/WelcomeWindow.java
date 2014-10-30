@@ -20,6 +20,7 @@ import cs.colostate.cs414.g.domain.Menu;
 import cs.colostate.cs414.g.domain.PhoneOrder;
 import cs.colostate.cs414.g.util.LoginUtil;
 import cs.colostate.cs414.g.util.Stage;
+import cs.colostate.cs414.g.util.ViewCustomerOrders;
 
 public class WelcomeWindow extends JFrame{
 
@@ -33,18 +34,20 @@ public class WelcomeWindow extends JFrame{
 	private JPanel panel;
 	private JButton buttonEmployee;
 	private JButton buttonManager;
+	private JButton buttonChef;
 	private JButton buttonCustomer;
 	private JButton buttonExit;
 	private JLabel labelPleasePickAn;
 
 	PhoneOperatorWindow phoneOperatorWindow = null;
-	ManagerWindow mw = new ManagerWindow();
+	ManagerWindow mw ;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public WelcomeWindow(PhoneOrder phoneOrder, Menu menu, Stage startStage) {
+	public WelcomeWindow(final PhoneOrder phoneOrder, Menu menu, Stage startStage) {
+		mw = new ManagerWindow(startStage, menu);
 		phoneOperatorWindow = new PhoneOperatorWindow(this, phoneOrder, menu, startStage);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 632, 429);
@@ -61,7 +64,7 @@ public class WelcomeWindow extends JFrame{
 		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
 		
-		buttonEmployee = new JButton("Employee");
+		buttonEmployee = new JButton("Cashier");
 		buttonEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 		        //LoginDialog loginDlg = new LoginDialog();
@@ -76,10 +79,8 @@ public class WelcomeWindow extends JFrame{
 				if (okCxl == JOptionPane.OK_OPTION) {
 				  password = new String(pf.getPassword());
 				}
-				System.out.println("here");
 				if(LoginUtil.authenticate(userName, password)){
 					phoneOperatorWindow.present();
-					System.out.println("there");
 					WelcomeWindow.this.setVisible(false);
 				}
 			}
@@ -101,6 +102,16 @@ public class WelcomeWindow extends JFrame{
 			}
 		});
 		panel.add(buttonManager);
+		buttonChef = new JButton("Chef");
+		buttonChef.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(phoneOperatorWindow.customer!=null){
+					UpdateOrderStatusWindow dialog = new UpdateOrderStatusWindow (phoneOrder,phoneOperatorWindow.customer);
+				dialog.setVisible(true);
+				}
+			}
+		});
+		panel.add(buttonChef);
 		buttonCustomer = new JButton("Customer");
 		buttonCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

@@ -14,6 +14,7 @@ public class Order implements java.io.Serializable{
 	private double timeCreated;
 	private double estimatedTime;
 	private int orderId;
+	public double total;
 	
 	public static int orderCounter = 1;
 	
@@ -47,11 +48,11 @@ public class Order implements java.io.Serializable{
 	}
 	
 	public synchronized double getPrice() {
-		double total = 0.0;
+		total = 0.0;
 		for (OrderItem oi : orderItems) {
 			total += oi.getFood().getPrice();
 		}
-		
+		setTotal(total);
 		return total;
 	}
 	
@@ -200,4 +201,13 @@ public class Order implements java.io.Serializable{
 	public int getOrderId() {
 		return orderId;
 	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	
 }

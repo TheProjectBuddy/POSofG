@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -57,6 +60,8 @@ public class OrderEntryWindow extends JFrame {
 	public OrderEntryWindow(final Stage startStage, final Menu menu, 
 			final PhoneOrder phoneOperator, final Customer customer, 
 			final PhoneOperatorWindow operatorWindow) {
+		
+		
 		final Order lastOrder = phoneOperator.getLastOrder(customer.getPhoneNumber());
 		final Order currentOrder = phoneOperator.getCurrentOrderForCustomer(customer, true);
 		final ArrayList< OrderItem > newOrderItems = new ArrayList< OrderItem >();
@@ -189,14 +194,14 @@ public class OrderEntryWindow extends JFrame {
 		contentPane.add(buttonAddTopping);
 		
 		buttonFinish = new JButton("Finish");
-		buttonFinish.setForeground(Color.BLACK);
+		buttonFinish.setForeground(Color.BLUE);
 		buttonFinish.setBounds(228, 331, 117, 29);
 		buttonFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (!isModifying && currentOrder.getOrderItems().size() == 0) {
 					return;
 				}
-				//estimate time
+				/*//estimate time
 				phoneOperator.estimateTime(currentOrder);
 				double estimatedTime = currentOrder.getEstimatedTime();
 				int days =(int) estimatedTime/60/24;
@@ -217,6 +222,10 @@ public class OrderEntryWindow extends JFrame {
 				
 				WindowEvent windowClosing = new WindowEvent(OrderEntryWindow.this, WindowEvent.WINDOW_CLOSING);
 				OrderEntryWindow.this.dispatchEvent(windowClosing);
+				*/
+				OrderEntryWindow.this.setVisible(false); 	 	
+				PaymentWindow paymentWindow= new PaymentWindow(OrderEntryWindow.this,currentOrder); 	 	
+				paymentWindow.setVisible(true); 
 			}
 		});
 		contentPane.add(buttonFinish);
@@ -252,6 +261,8 @@ public class OrderEntryWindow extends JFrame {
 		
 		isModifying = lastOrder == currentOrder;
 		
+		// Add the items to the order (that were either just created from the 
+		// preference, or because you are editing an order.
 		for (OrderItem item :currentOrder.getOrderItems()) {
 			orderTableModel.addRow(new Object[] { item, "$" + item.getFood().getPrice() });
 		}

@@ -1,4 +1,4 @@
-package cs.colostate.cs414.g.tests;
+package cs.colostate.cs414.g.test;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ public class OrderTest {
 	@Before
 	public void setUp() throws Exception {
 		cust = new Customer("555-555-5555", "Customer 1");
-		item = new MenuItem("Test Item", 9.99, 10, 1, 1);
+		item = new MenuItem("Test Item", 9.99, 10, 1, 1, 1, 4);
 	}
 
 	@Test

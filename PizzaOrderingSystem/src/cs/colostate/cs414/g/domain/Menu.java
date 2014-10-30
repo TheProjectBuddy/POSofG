@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
-public class Menu {
+public class Menu implements java.io.Serializable{
 	private ArrayList< MenuItem > foodItems = null;
 	private ArrayList< Topping > toppings = null;
 	public Menu(InputStream input) throws Exception {
@@ -27,9 +27,9 @@ public class Menu {
 				splits[i] = splits[i].trim();
 			}
 			
-			final int NUM_PIZZA_PARAMS = 7;
-			final int NUM_TOPPINGS_PARAMS = 2;
-			final int NUM_OTHER_PARAMS = 6;
+			final int NUM_PIZZA_PARAMS = 9;
+			final int NUM_TOPPINGS_PARAMS = 3;
+			final int NUM_OTHER_PARAMS = 8;
 			if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
 				// must be a pizza
 				Pizza.Size size;
@@ -51,8 +51,9 @@ public class Menu {
 				double prepTime = Double.parseDouble(splits[4]);
 				double cookTime = Double.parseDouble(splits[5]);
 				int ovenSpace = Integer.parseInt(splits[6]);
-				foods.add(new Pizza(size, price, pricePerToppings, 
-						prepTime, cookTime, ovenSpace));
+				int ID = Integer.parseInt(splits[splits.length-1]);
+				int special = Integer.parseInt(splits[splits.length-2]);
+				foods.add(new Pizza(size, price, pricePerToppings, prepTime, cookTime, ovenSpace, ID, special));
 			}
 			else if (splits.length == NUM_TOPPINGS_PARAMS && splits[0].equals("1")) {
 				toppings.add(new Topping(splits[1]));
@@ -63,8 +64,9 @@ public class Menu {
 				double prepTime = Double.parseDouble(splits[3]);
 				double cookTime = Double.parseDouble(splits[4]);
 				int ovenSpace = Integer.parseInt(splits[5]);
-				foods.add(new MenuItem(name, price, prepTime, 
-						cookTime, ovenSpace));
+				int ID = Integer.parseInt(splits[splits.length-1]);
+				int special = Integer.parseInt(splits[splits.length-2]);
+				foods.add(new MenuItem(name, price, prepTime, cookTime, ovenSpace, ID, special));
 			}
 			else {
 				throw new Exception("Unable to parse menu file -- error found.");
