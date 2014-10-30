@@ -16,7 +16,7 @@ import cs.colostate.cs414.g.domain.MenuItem;
 public class MenuItemTest {
 
 	@Test
-	public void test() 
+	public void testParsing() 
 	{
 		
 		try

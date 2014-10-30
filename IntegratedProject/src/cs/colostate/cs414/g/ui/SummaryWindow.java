@@ -79,11 +79,11 @@ public class SummaryWindow extends JFrame {
 		
 		buttonExit =new JButton("EXIT");
 	    buttonExit.setSize(100,50);
-		buttonExit.setBounds(450,325,100,50);
+		buttonExit.setBounds(400,325,100,50);
 		buttonExit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				System.exit(0);
+				SummaryWindow.this.setVisible(false);
 			}
 		});
 		
@@ -132,11 +132,11 @@ public class SummaryWindow extends JFrame {
 		
 	    buttonExit =new JButton("EXIT");
 	    buttonExit.setSize(100,50);
-		buttonExit.setBounds(250,400,100,50);
+		buttonExit.setBounds(400,325,100,50);
 		buttonExit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				System.exit(0);
+				SummaryWindow.this.setVisible(false);
 			}
 		});
 		contentPane.add(buttonExit);

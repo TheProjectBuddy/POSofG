@@ -3,10 +3,11 @@ package cs.colostate.cs414.g.domain;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Menu {
+public class Menu implements Serializable {
 	private ArrayList< MenuItem > foodItems = null;
 	private ArrayList< Topping > toppings = null;
 	public Menu(InputStream input) throws Exception {

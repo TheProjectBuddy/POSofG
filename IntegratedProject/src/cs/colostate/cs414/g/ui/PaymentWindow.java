@@ -36,7 +36,7 @@ public class PaymentWindow extends JFrame {
     
 	private double discountedPrice;
 	
-    public PaymentWindow(OrderEntryWindow orderWindow, Order cOrder)
+    public PaymentWindow(OrderEntryWindow orderWindow, final Order cOrder)
     {
     	final OrderEntryWindow orderWindow1=orderWindow;
     	final Order currentOrder=cOrder;
@@ -107,6 +107,7 @@ public class PaymentWindow extends JFrame {
 		    labelDiscount.setVisible(true);
 		    discountLabel.setVisible(true);
 			discountedPrice=tempdiscountedPrice;
+			cOrder.total=tempdiscountedPrice;
 					}
                        else
 			{
@@ -125,7 +126,7 @@ public class PaymentWindow extends JFrame {
 		buttonByCash.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-		   PaymentWindow.this.setVisible(false);
+		   //PaymentWindow.this.setVisible(false);
 		   CashPaymentWindow cashPaymentWindow=new CashPaymentWindow(PaymentWindow.this,currentOrder,discountedPrice);
 		   cashPaymentWindow.setVisible(true);
 			}
@@ -137,7 +138,7 @@ public class PaymentWindow extends JFrame {
         buttonByCard.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-		   PaymentWindow.this.setVisible(false);
+		   //PaymentWindow.this.setVisible(false);
 		   CardPaymentWindow cardPaymentWindow=new CardPaymentWindow(PaymentWindow.this,currentOrder,discountedPrice);
 		   cardPaymentWindow.setVisible(true);
 			}

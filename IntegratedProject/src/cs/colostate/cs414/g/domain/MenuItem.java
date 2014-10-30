@@ -1,6 +1,8 @@
 package cs.colostate.cs414.g.domain;
 
-public class MenuItem {
+import java.io.Serializable;
+
+public class MenuItem implements Serializable{
 	
 	public int itemID;
 	public double price;

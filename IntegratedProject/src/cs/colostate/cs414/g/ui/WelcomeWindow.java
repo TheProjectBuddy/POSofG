@@ -89,6 +89,7 @@ public class WelcomeWindow extends JFrame{
 		buttonManager = new JButton("Manager");
 		buttonManager.addActionListener( new ActionListener () {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				String userName = JOptionPane.showInputDialog(null, "Please Enter Your Username", "Login Details - Username", 0);
 				JPasswordField pf = new JPasswordField();
 				String password = new String();
