@@ -83,6 +83,9 @@ public class CashPaymentWindow extends JFrame {
 			{
 				double temp=Double.parseDouble(getAmount());
 				double temp1=paymentByCash.getReturnAmount(temp);
+				if(temp1<0)
+				JOptionPane.showMessageDialog(contentPane,"Amount not sufficient","Alert", JOptionPane.ERROR_MESSAGE);
+				else
 				returnLabel.setText("$"+Double.toString(temp1));
 				
 			}
