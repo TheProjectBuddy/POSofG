@@ -29,6 +29,17 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+        
+        Button button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this, Delivery.class);
+				startActivity(intent);
+			}
+		});
     }
     
 

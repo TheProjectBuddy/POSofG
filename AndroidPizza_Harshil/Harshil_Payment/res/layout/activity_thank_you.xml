@@ -9,13 +9,23 @@
     tools:context="com.example.harshil_payment.ThankYou" >
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Thanks For Using App!" />
-    
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:text="Thanks For Using App"
+         />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Your Order Will Be Ready To Pick Up In Few Minutes!" />
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="Your Order Will Be Ready In Few Minutes"
+        android:textColor="@id/textView1"
+         />
 
 </RelativeLayout>
