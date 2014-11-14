@@ -3,20 +3,20 @@ package cs.colostate.cs414.a5.g.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
-import java.util.ArrayList;
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
-import cs.colostate.cs414.g.domain.Customer;
+import cs.colostate.cs414.a5.g.util.MenuUtil;
+import cs.colostate.cs414.g.domain.Menu;
 import cs.colostate.cs414.g.domain.MenuItem;
-import cs.colostate.cs414.g.domain.Order;
-import cs.colostate.cs414.g.domain.OrderItem;
+import cs.colostate.cs414.g.domain.Topping;
 
-public class OrderController implements HttpHandler{
+public class MenuController implements HttpHandler {
 
+	private Menu menuList = MenuUtil.getMenuItems();
+	
+	public MenuController(){}
 	public void handle(HttpExchange exchange) throws IOException {
-URI uri = exchange.getRequestURI();
+		URI uri = exchange.getRequestURI();
 		
 		String query = uri.getQuery();
 		if (query != null)
@@ -33,38 +33,34 @@ URI uri = exchange.getRequestURI();
 	}
 	private void parseQuery(String query) {
 		String[] subs = query.split("&");
-		Order order = null;
-		ArrayList<OrderItem> orderItems = null;
-		for (String parameter : subs)
-		{	
-			//key is on the left and value is on the right, so we split this
-			String[] values = parameter.split("=");
-			if (values[0].equals("customer"))
-			{
-				order = new Order(new Customer(values[1]));
-			}
-			else if (values[0].equals("orderId"))
-			{
-				order.setOrderId(Integer.parseInt(values[1]));
-			}
-			else if (values[0].equals("orderItems")){
-				orderItems = new ArrayList<OrderItem>();
-				String[] items = values[1].split("-");
-				for (String item : items)
-				{
-					
-				}
-			}
+		
 	}
-	}
+
 
 	//Turns the ArrayList<Pizza> into an XML representation
 	private String getXml() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		buffer.append("<order>");
+		buffer.append("<menu>");
 
-		buffer.append("</order>");
+		for(MenuItem menu: menuList.getFoodItems()){
+				buffer.append("<menuitem>");
+				buffer.append("<"+menu.getType()+">");
+				buffer.append("<price>");
+					buffer.append(menu.getPrice());
+				buffer.append("</price>");
+				buffer.append("</"+menu.getType()+">");
+				buffer.append("</menuitem>");
+			}
+			buffer.append("<toppings>");
+			for(Topping topping:menuList.getToppings()){
+				buffer.append("<topping>");
+				buffer.append(topping.getType());
+				buffer.append("</topping>");
+			}
+			buffer.append("</toppings>");
+		
+		buffer.append("</menu>");
 		System.out.println(buffer.toString());
 		return buffer.toString();
 	}
