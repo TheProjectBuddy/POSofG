@@ -30,6 +30,10 @@
             android:name=".Delivery"
             android:label="@string/title_activity_delivery" >
         </activity>
+        <activity
+            android:name=".PaymentCard"
+            android:label="@string/title_activity_payment_card" >
+        </activity>
     </application>
 
 </manifest>

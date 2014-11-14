@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_thank_you">ThankYou</string>
     <string name="title_activity_delivery">Delivery</string>
+    <string name="title_activity_payment_card">PaymentCard</string>
 
 </resources>

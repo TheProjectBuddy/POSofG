@@ -26,6 +26,17 @@ public class Delivery extends Activity {
 				startActivity(intent3);
 			}
 		});
+        
+        Button button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent4 = new Intent(Delivery.this, PaymentCard.class);
+				startActivity(intent4);
+			}
+		});
 	}
 
 	@Override

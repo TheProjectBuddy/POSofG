@@ -21,7 +21,8 @@ public class MainActivity extends ActionBarActivity {
 		signin.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0)
 			{
-				Toast.makeText(getApplicationContext(),"Signin",Toast.LENGTH_LONG).show();
+				Intent intent3=new Intent(MainActivity.this,SignInActivity.class);
+				startActivity(intent3);
 			}
 			
 		});
@@ -30,8 +31,8 @@ public class MainActivity extends ActionBarActivity {
 		signup.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0)
 			{
-				Intent intent= new Intent(MainActivity.this,SignupActivity.class);
-				startActivity(intent);
+				Intent intent2= new Intent(MainActivity.this,SignupActivity.class);
+				startActivity(intent2);
 			}
 			
 		});
