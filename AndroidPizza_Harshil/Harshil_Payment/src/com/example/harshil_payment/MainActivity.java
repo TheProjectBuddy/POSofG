@@ -25,8 +25,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(MainActivity.this, ThankYou.class);
-				startActivity(intent);
+				Intent intent1 = new Intent(MainActivity.this, ThankYou.class);
+				startActivity(intent1);
 			}
 		});
         
@@ -36,8 +36,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(MainActivity.this, Delivery.class);
-				startActivity(intent);
+				Intent intent2 = new Intent(MainActivity.this, Delivery.class);
+				startActivity(intent2);
 			}
 		});
     }
