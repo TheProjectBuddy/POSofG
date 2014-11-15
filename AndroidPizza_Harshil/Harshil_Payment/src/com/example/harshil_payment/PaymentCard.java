@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.view.Menu;
@@ -66,6 +67,8 @@ public class PaymentCard extends Activity {
 			    if(flag)
 			    {
 				   Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+				   Intent intent1 = new Intent(PaymentCard.this, ThankYou.class);
+				   startActivity(intent1);
 			    }
 			    else
 			    {
