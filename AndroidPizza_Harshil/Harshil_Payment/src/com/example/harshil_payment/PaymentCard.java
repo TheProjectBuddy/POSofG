@@ -16,14 +16,6 @@ import android.widget.Toast;
 
 public class PaymentCard extends Activity {
 	
-	public Boolean validateExpiry(String expiry) throws ParseException, java.text.ParseException
-	{
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/yy");
-		simpleDateFormat.setLenient(false);
-		Date date= simpleDateFormat.parse(expiry);
-		boolean expired = !date.before(new Date());
-		return expired;
-	}
 
 
 	@Override
@@ -37,6 +29,7 @@ public class PaymentCard extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
 				Boolean flag=true;
 			    EditText editText = (EditText) findViewById(R.id.editText1);
 			    String cardName = editText.getText().toString();
@@ -49,29 +42,37 @@ public class PaymentCard extends Activity {
 			    
 			    EditText editText4 = (EditText) findViewById(R.id.editText4);
 			    String expireDate = editText4.getText().toString();
+			    if(cardName.isEmpty() || cardNo.isEmpty() || cvv.isEmpty() || expireDate.isEmpty()) flag=false;
+			    else if(cardNo.charAt(0)=='0' || cardNo.length()!=16 || !cardNo.matches("-?\\d+(.\\d+)?"))	flag=false;
+			    else if(cvv.length()!=3 || !cvv.matches("-?\\d+(.\\d+)?"))	flag=false;
 			    
-			    if(cardNo.charAt(0)=='0')	flag=false;
-
-			    try {
-					if(!(validateExpiry(expireDate)))	flag=false;
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (java.text.ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				if(!(cvv.matches("[0-9]+")))	flag=false;
-		        if(!(expireDate.charAt(2)=='/'))flag=false;
-				if(cardNo.isEmpty()||cvv.isEmpty()||expireDate.isEmpty() || cardNo.length()!=16)flag=false;
-				
-				if(flag)
+			    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/yy");
+				simpleDateFormat.setLenient(false);
+				Date date;
+				try 
 				{
-					Toast.makeText(getApplicationContext(),"String",Toast.LENGTH_LONG).show();
+					date = simpleDateFormat.parse(expireDate);
+					boolean expired = date.before(new Date());
+					if(expired)
+					{
+						flag=false;
+					}
+				} 
+				catch (java.text.ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
+				
+			    if(flag)
+			    {
+				   Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+			    }
+			    else
+			    {
+			    	 Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_LONG).show();
+			    }
 			}
+			
 		});
 	}
 
