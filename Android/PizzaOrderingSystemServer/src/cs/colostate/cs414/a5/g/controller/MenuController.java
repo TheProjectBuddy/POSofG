@@ -45,11 +45,13 @@ public class MenuController implements HttpHandler {
 
 		for(MenuItem menu: menuList.getFoodItems()){
 				buffer.append("<menuitem>");
-				buffer.append("<"+menu.getType()+">");
-				buffer.append("<price>");
+					buffer.append("<type>");
+					buffer.append(menu.getType());
+					buffer.append("</type>");
+				
+					buffer.append("<price>");
 					buffer.append(menu.getPrice());
-				buffer.append("</price>");
-				buffer.append("</"+menu.getType()+">");
+					buffer.append("</price>");
 				buffer.append("</menuitem>");
 			}
 			buffer.append("<toppings>");

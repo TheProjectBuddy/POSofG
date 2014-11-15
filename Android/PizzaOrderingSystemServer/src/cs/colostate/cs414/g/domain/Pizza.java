@@ -14,9 +14,9 @@ public class Pizza extends MenuItem implements java.io.Serializable
 	
 	public enum Size
 	{
-		SMALL,
-		MEDIUM,
-		LARGE
+		small,
+		medium,
+		large
 	}
 	
 	public Pizza(Size size, double price, double toppingPrice, int ID, int special) {
@@ -64,7 +64,7 @@ public class Pizza extends MenuItem implements java.io.Serializable
 
 	@Override
 	public String getType() {
-		return size+super.getType();
+		return size.toString();
 	}
 	
 	public MenuItem copy() {
