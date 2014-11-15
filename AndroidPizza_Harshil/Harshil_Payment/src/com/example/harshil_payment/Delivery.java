@@ -2,6 +2,7 @@ package com.example.harshil_payment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +36,16 @@ public class Delivery extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent4 = new Intent(Delivery.this, PaymentCard.class);
 				startActivity(intent4);
+			}
+		});
+        
+        Button button3 = (Button) findViewById(R.id.button3);
+        button3.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				System.out.println("Called");
+				//AsyncTask result=new ReduceCouponCall().execute("XYZ");
 			}
 		});
 	}
