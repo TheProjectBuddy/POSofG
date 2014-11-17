@@ -1,5 +1,7 @@
 package com.example.harshil_payment;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Delivery extends Activity {
 
@@ -48,6 +52,18 @@ public class Delivery extends Activity {
 				EditText editText = (EditText) findViewById(R.id.editText2);
 			    String couponNumber = editText.getText().toString();
 				AsyncTask result=new ReduceCouponCall().execute(couponNumber);
+				try 
+				{
+					String discount = (String) result.get();
+					TextView textView = (TextView) findViewById(R.id.textView3);
+					textView.setText("Your New Amount: "+discount);
+					Toast.makeText(getApplicationContext(),discount,Toast.LENGTH_LONG).show();
+				} 
+				catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
 			}
 		});
 	}

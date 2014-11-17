@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -18,14 +19,18 @@ public class CouponReducerController implements HttpHandler{
 		System.out.println(uri);
 		String[] parts = uri.toString().split("=");
 		String couponNumber = parts[1];
-		readFile(couponNumber);
+		String response = readFile(couponNumber);
 		
-		
+		arg0.sendResponseHeaders(200, response.length());
+		OutputStream stream =arg0.getResponseBody();
+		stream.write(response.getBytes());
+		stream.close();
 		
 	}
-	public void readFile(String couponCode)
+	public String readFile(String couponCode)
 	{
 		File file = new File("coupon.txt");
+		String discount="";
 		try 
 		{
 			FileReader fileReader = new FileReader(file);
@@ -37,8 +42,8 @@ public class CouponReducerController implements HttpHandler{
 				if(elements[0].equals(couponCode))
 				{
 					
-					Float discount = Float.parseFloat(elements[1]);
-					System.out.println("Discount:"+discount);
+					discount = (elements[1]);
+					
 					break;
 					
 				}
@@ -51,7 +56,7 @@ public class CouponReducerController implements HttpHandler{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return discount;
 
 	}
 }
