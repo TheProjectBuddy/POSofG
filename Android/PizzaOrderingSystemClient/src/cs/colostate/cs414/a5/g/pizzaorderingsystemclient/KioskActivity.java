@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +33,13 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
-public class KioskActivity extends Activity implements OnClickListener {
+public class KioskActivity extends Activity implements OnClickListener,RadioGroup.OnCheckedChangeListener{
+	
+	private static final int MY_BUTTON1 = 9000;
+	private static final int MY_BUTTON2 = 9001;
+	private static final int MY_BUTTON3 = 9002;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,16 +93,23 @@ public class KioskActivity extends Activity implements OnClickListener {
 			Button btn1 = new Button(this);
 			btn1.setText("Add to Order");
 			btn1.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-			btn1.setId(1);
+			btn1.setId(MY_BUTTON1);
 			btn1.setOnClickListener(this);
 	        ll.addView(btn1);
 	        
 	        Button btn2 = new Button(this);
-			btn2.setText("Place Order");
+			btn2.setText("View Order");
 			btn2.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-			btn2.setId(2);
+			btn2.setId(MY_BUTTON2);
 			btn2.setOnClickListener(this);
 	        ll.addView(btn2);
+	        
+	        Button btn3 = new Button(this);
+	        btn3.setText("Place Order");
+	        btn3.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+	        btn3.setId(MY_BUTTON3);
+	        btn3.setOnClickListener(this);
+	        ll.addView(btn3);
 	        
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -128,7 +141,23 @@ public class KioskActivity extends Activity implements OnClickListener {
 	
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	Toast toast;
+    Log.w("Button clicked..", "View Id: " + v.getId());
+    switch (v.getId()) {
+    case MY_BUTTON1:
+        toast = Toast.makeText(this, "Added to Order!!", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 25, 400);
+        toast.show();
+        
+        break;
+    case MY_BUTTON2:
+    	
+    	break;
 
+    }}
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId) {
+		// TODO Auto-generated method stub
+		
 	}
 }
