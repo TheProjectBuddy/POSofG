@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class Delivery extends Activity {
 
@@ -44,8 +45,9 @@ public class Delivery extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				System.out.println("Called");
-				//AsyncTask result=new ReduceCouponCall().execute("XYZ");
+				EditText editText = (EditText) findViewById(R.id.editText2);
+			    String couponNumber = editText.getText().toString();
+				AsyncTask result=new ReduceCouponCall().execute(couponNumber);
 			}
 		});
 	}

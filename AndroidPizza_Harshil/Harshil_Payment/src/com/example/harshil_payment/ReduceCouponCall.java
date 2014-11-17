@@ -12,7 +12,7 @@ public class ReduceCouponCall extends AsyncTask<String,String,String>
 	@Override
 	protected String doInBackground(String... arg0) {
 		// TODO Auto-generated method stub
-		String url="http://10.0.2.2:8000/coupon"+"?"+arg0[0];
+		String url="http://10.0.2.2:8000/coupon"+"?number="+arg0[0];
 		HttpGet httpget= new HttpGet(url);
 		HttpClient httpclient= new DefaultHttpClient();
 		
