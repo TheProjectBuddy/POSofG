@@ -4,24 +4,16 @@ import java.io.Serializable;
 
 public class MenuItem implements Serializable{
 	
-	public int itemID;
 	public double price;
 	public String description;
 	public String name;
 	private String type;
 	public int special=0;
 
-	public MenuItem(String type, double price, int itemID, int special) {
+	public MenuItem(String type, double price, int special) {
 		this.type = type;
 		this.price = price;
-		this.itemID = itemID;
 		this.special = special;
-	}
-	public int getItemID() {
-		return itemID;
-	}
-	public void setItemID(int itemID) {
-		this.itemID = itemID;
 	}
 	public double getPrice() {
 		return price;
@@ -52,7 +44,7 @@ public class MenuItem implements Serializable{
 		this.price = price;
 	}
 	public MenuItem copy() {
-		return new MenuItem(type, price, itemID, special);
+		return new MenuItem(type, price, special);
 	}
 	
 	public String toString() {

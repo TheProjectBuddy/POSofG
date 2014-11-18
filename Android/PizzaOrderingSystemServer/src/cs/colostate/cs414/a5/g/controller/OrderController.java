@@ -39,6 +39,8 @@ URI uri = exchange.getRequestURI();
 		{	
 			//key is on the left and value is on the right, so we split this
 			String[] values = parameter.split("=");
+			for(String str: values)
+			System.out.println(str+" ");
 			if (values[0].equals("customer"))
 			{
 				order = new Order(new Customer(values[1]));
@@ -47,15 +49,12 @@ URI uri = exchange.getRequestURI();
 			{
 				order.setOrderId(Integer.parseInt(values[1]));
 			}
-			else if (values[0].equals("orderItems")){
+			else if (values[0].equals("type")){
 				orderItems = new ArrayList<OrderItem>();
-				String[] items = values[1].split("-");
-				for (String item : items)
-				{
-					
-				}
+					orderItems.add(new OrderItem(order, new MenuItem(values[1], Double.parseDouble(values[2]),0)));
 			}
 	}
+		//System.out.println(orderItems.toString());
 	}
 
 	//Turns the ArrayList<Pizza> into an XML representation

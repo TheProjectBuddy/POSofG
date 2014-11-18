@@ -39,13 +39,15 @@ public class KioskActivity extends Activity implements OnClickListener,
 	private static final int MY_BUTTON1 = 9000;
 	private static final int MY_BUTTON2 = 9001;
 	private static final int MY_BUTTON3 = 9002;
-	private static final int MAX = 100;
+
 	public String uriString = new String();
+	
 	final RadioButton[] rb = new RadioButton[4];
 	RadioGroup rg;
 	final ArrayList<String> toppingsSelected = new ArrayList<String>();
 	final ArrayList<String> othersSelected = new ArrayList<String>();
 
+	public static int orderId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -129,7 +131,7 @@ public class KioskActivity extends Activity implements OnClickListener,
 							othersSelected
 									.add(getCharacterDataFromElement(otherLine));
 						} else {
-							othersSelected.remove(v.getId());
+							othersSelected.remove(v);
 						}
 
 					}
@@ -193,7 +195,7 @@ public class KioskActivity extends Activity implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 		Toast toast;
-		uriString = "";
+		uriString = "customer=guest&orderId="+orderId;
 		Log.w("Button clicked..", "View Id: " + v.getId());
 		switch (v.getId()) {
 		case MY_BUTTON1:
@@ -217,7 +219,8 @@ public class KioskActivity extends Activity implements OnClickListener,
 		case MY_BUTTON2:
 
 			break;
-
+		case MY_BUTTON3:
+			orderId ++;
 		}
 	}
 

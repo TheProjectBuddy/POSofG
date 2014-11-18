@@ -29,9 +29,9 @@ public class Menu implements Serializable {
 				splits[i] = splits[i].trim();
 			}
 			
-			final int NUM_PIZZA_PARAMS = 7;
+			final int NUM_PIZZA_PARAMS = 6;
 			final int NUM_TOPPINGS_PARAMS = 3;
-			final int NUM_OTHER_PARAMS = 8;
+			final int NUM_OTHER_PARAMS = 4;
 			if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
 				// must be a pizza
 				Pizza.Size size;
@@ -50,9 +50,8 @@ public class Menu implements Serializable {
 				
 				double price = Double.parseDouble(splits[2]);
 				double pricePerToppings = Double.parseDouble(splits[3]);
-				int ID = Integer.parseInt(splits[splits.length-1]);
 				int special = Integer.parseInt(splits[splits.length-2]);
-				foods.add(new Pizza(size, price, pricePerToppings, ID, special));
+				foods.add(new Pizza(size, price, pricePerToppings, special));
 			}
 			else if (splits.length == NUM_TOPPINGS_PARAMS && splits[0].equals("1")) {
 				toppings.add(new Topping(splits[1]));
@@ -60,9 +59,8 @@ public class Menu implements Serializable {
 			else if (splits.length == NUM_OTHER_PARAMS && splits[0].equals("2")) {
 				String name = splits[1];
 				double price = Double.parseDouble(splits[2]);
-				int ID = Integer.parseInt(splits[splits.length-1]);
-				int special = Integer.parseInt(splits[splits.length-2]);
-				foods.add(new MenuItem(name, price, ID, special));
+				int special = Integer.parseInt(splits[splits.length-1]);
+				foods.add(new MenuItem(name, price,special));
 			}
 			else {
 				throw new Exception("Unable to parse menu file -- error found.");

@@ -12,7 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
 
-public class GetMenu extends AsyncTask{
+public class GetMenu extends AsyncTask<Object, Object, Object>{
 
 	@Override
 	protected Object doInBackground(Object... params) {
@@ -31,7 +31,6 @@ public class GetMenu extends AsyncTask{
 				
 				InputStream instream = entity.getContent();
 				result = convertToString(instream);
-				System.out.println(result);
 				instream.close();
 			}
 	} 
