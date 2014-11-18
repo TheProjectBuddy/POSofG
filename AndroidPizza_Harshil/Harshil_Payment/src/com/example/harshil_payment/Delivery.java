@@ -1,5 +1,6 @@
 package com.example.harshil_payment;
 
+import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
@@ -19,8 +20,15 @@ public class Delivery extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_delivery);
+		
+		final double d = 12.3;
+		TextView textView2 = (TextView) findViewById(R.id.textView3);
+		textView2.setText("Your Amount: "+Double.toString(d));
 		
 		Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new OnClickListener() {
@@ -55,9 +63,14 @@ public class Delivery extends Activity {
 				try 
 				{
 					String discount = (String) result.get();
+					double discountAmount = Double.parseDouble(discount);
+					double newPrice = d - discountAmount;
 					TextView textView = (TextView) findViewById(R.id.textView3);
-					textView.setText("Your New Amount: "+discount);
-					Toast.makeText(getApplicationContext(),discount,Toast.LENGTH_LONG).show();
+					DecimalFormat df = new DecimalFormat("#.##");   
+					//df.format(newPrice);
+					textView.setText("Your New Amount: "+df.format(newPrice));
+					
+					Toast.makeText(getApplicationContext(),"Your Discount Is Applied Successfully",Toast.LENGTH_LONG).show();
 				} 
 				catch (Exception e)
 				{
