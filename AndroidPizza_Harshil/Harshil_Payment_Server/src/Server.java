@@ -19,10 +19,11 @@ public class Server {
 		
 		CouponReducerController coupon= new CouponReducerController();
 		RedeemCalculationController redeem = new RedeemCalculationController();
+		RedeemUpdateController redeemUpdateController = new RedeemUpdateController();
 		
 		server.createContext("/coupon", coupon);
 		server.createContext("/redeem", redeem);
-		
+		server.createContext("/redeemUpdate", redeemUpdateController);
 		server.start();
 	}
 

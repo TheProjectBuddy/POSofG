@@ -32,9 +32,9 @@ public class Delivery extends Activity {
 		final double d = 12.3;
 		
 		String discountRedeem;
-		
+		final String customerID = "1";
 		//customerID
-		AsyncTask redeemResult = new RedeemPointCall().execute("1");
+		final AsyncTask redeemResult = new RedeemPointCall().execute(customerID);
 		try 
 		{
 			
@@ -65,11 +65,45 @@ public class Delivery extends Activity {
 					TextView textView6 = (TextView) findViewById(R.id.textView1);
 					String[] redeemElements = textView6.getText().toString().split(" ");
 					
-					Toast.makeText(getApplicationContext(),redeemElements[2],Toast.LENGTH_LONG).show();
+					double amount = Double.parseDouble(elements[1]);
+					double points = Double.parseDouble(redeemElements[2]);
+					points = points/20;
+					amount = amount - points;
+					
+					DecimalFormat df = new DecimalFormat("#.##"); 
+					DecimalFormat df1 = new DecimalFormat("#"); 
+					//Toast.makeText(getApplicationContext(),Double.toString(amount),Toast.LENGTH_LONG).show();
+					textView5.setText("Your New Amount:"+(df.format(amount)));
+					textView6.setText("You Have 0 Redeem Points Left Now!");
+					//Toast.makeText(getApplicationContext(),redeemElements[2],Toast.LENGTH_LONG).show();
 				}
 				else
 				{
-					
+					try 
+					{
+						TextView textView8 = (TextView) findViewById(R.id.textView3);
+						String[] elements = textView8.getText().toString().split(":");
+						String newdiscountRedeem = (String) redeemResult.get();
+						
+						double amount = Double.parseDouble(elements[1]);
+					//	Toast.makeText(getApplicationContext(),textView8.getText().toString(),Toast.LENGTH_LONG).show();
+						double points = Double.parseDouble(newdiscountRedeem);
+						points = points/20;
+						amount = amount + points;
+						points = points*20;
+						DecimalFormat df = new DecimalFormat("#.##"); 
+						DecimalFormat df1 = new DecimalFormat("#"); 
+						//Toast.makeText(getApplicationContext(),Double.toString(amount),Toast.LENGTH_LONG).show();
+						textView8.setText("Your New Amount:"+(df.format(amount)));
+						
+						TextView textView9 = (TextView) findViewById(R.id.textView1);
+						textView9.setText("You Have "+df1.format(points)+" Redeem Points Left Now!");
+					}
+					catch (Exception e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
 				}
 			}
 		});
@@ -84,6 +118,18 @@ public class Delivery extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent3 = new Intent(Delivery.this, ThankYou.class);
+				intent3.putExtra("customerID", customerID);
+				TextView textView10 = (TextView) findViewById(R.id.textView3);
+				String[] elements = textView10.getText().toString().split(":");
+				
+				TextView textView11 = (TextView) findViewById(R.id.textView1);
+				String[] redeemElements = textView11.getText().toString().split(" ");
+				
+				double amount = Double.parseDouble(elements[1]);
+				double points = Double.parseDouble(redeemElements[2]);
+				
+				double newPoints = (points) + (amount * 2);
+				intent3.putExtra("customerPoints", Double.toString(newPoints));
 				startActivity(intent3);
 			}
 		});
@@ -95,6 +141,18 @@ public class Delivery extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent4 = new Intent(Delivery.this, PaymentCard.class);
+				intent4.putExtra("customerID", customerID);
+				TextView textView10 = (TextView) findViewById(R.id.textView3);
+				String[] elements = textView10.getText().toString().split(":");
+				
+				TextView textView11 = (TextView) findViewById(R.id.textView1);
+				String[] redeemElements = textView11.getText().toString().split(" ");
+				
+				double amount = Double.parseDouble(elements[1]);
+				double points = Double.parseDouble(redeemElements[2]);
+				
+				double newPoints = (points) + (amount * 2);
+				intent4.putExtra("customerPoints", Double.toString(newPoints));
 				startActivity(intent4);
 			}
 		});
@@ -112,12 +170,20 @@ public class Delivery extends Activity {
 				double beforeDisc = Double.parseDouble(elements[1]);
 				
 				Button buttonApply = (Button) findViewById(R.id.button3);
-				buttonApply.setEnabled(false);
+				
 				try 
 				{
 					String discount = (String) result.get();
 					double discountAmount = Double.parseDouble(discount);
 					double newPrice = beforeDisc - discountAmount;
+					if(discount.equals(""))
+					{
+						
+					}
+					else
+					{
+						buttonApply.setEnabled(false);
+					}
 					
 					TextView textView = (TextView) findViewById(R.id.textView3);
 					DecimalFormat df = new DecimalFormat("#.##");   

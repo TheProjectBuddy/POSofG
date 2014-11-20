@@ -1,6 +1,7 @@
 package com.example.harshil_payment;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,15 +13,21 @@ public class ThankYou extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_thank_you);
+		
+		Bundle extras = getIntent().getExtras();
+		String customerID = extras.getString("customerID");
+		String redeemPoints = extras.getString("customerPoints");
+		Toast.makeText(getApplicationContext(),"Thank you!",Toast.LENGTH_LONG).show();
+		final AsyncTask redeemResult = new RedeemUpdateCall().execute(customerID, redeemPoints);
 	}
 	
-	@Override
-	public void onBackPressed() 
+	//@Override
+	/*public void onBackPressed() 
 	{
 		Toast.makeText(getApplicationContext(),"You Cannot Go Back Now! Call Pizza Store If Need Help",Toast.LENGTH_LONG).show();
 		
 	}
-
+*/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

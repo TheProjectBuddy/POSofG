@@ -23,7 +23,7 @@ public class PaymentCard extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_payment_card);
-		
+		final Bundle extras = getIntent().getExtras();
 		Button buttonPayment = (Button) findViewById(R.id.button2);
 		buttonPayment.setOnClickListener(new OnClickListener() {
 			
@@ -108,6 +108,7 @@ public class PaymentCard extends Activity {
 				   Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
 				   
 				   Intent intent1 = new Intent(PaymentCard.this, ThankYou.class);
+				   intent1.putExtras(extras);
 				   startActivity(intent1);
 			    }
 			    else
