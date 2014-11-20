@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +30,52 @@ public class Delivery extends Activity {
 		setContentView(R.layout.activity_delivery);
 		
 		final double d = 12.3;
+		
+		String discountRedeem;
+		
+		//customerID
+		AsyncTask redeemResult = new RedeemPointCall().execute("1");
+		try 
+		{
+			
+			 discountRedeem = (String) redeemResult.get();
+			//Toast.makeText(getApplicationContext(),discountRedeem,Toast.LENGTH_LONG).show();
+		} 
+		catch (Exception e1) 
+		{
+			discountRedeem = "";
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		
 		TextView textView2 = (TextView) findViewById(R.id.textView3);
 		textView2.setText("Your Amount: "+Double.toString(d));
+		
+		CheckBox redeemCheck = (CheckBox) findViewById(R.id.checkBox1);
+		redeemCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				if(isChecked)
+				{
+					TextView textView5 = (TextView) findViewById(R.id.textView3);
+					String[] elements = textView5.getText().toString().split(":");
+					
+					TextView textView6 = (TextView) findViewById(R.id.textView1);
+					String[] redeemElements = textView6.getText().toString().split(" ");
+					
+					Toast.makeText(getApplicationContext(),redeemElements[2],Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					
+				}
+			}
+		});
+		
+		TextView textView4 = (TextView) findViewById(R.id.textView1);
+		textView4.setText("You Have "+discountRedeem+" Redeem Points");
 		
 		Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new OnClickListener() {
@@ -60,11 +107,18 @@ public class Delivery extends Activity {
 				EditText editText = (EditText) findViewById(R.id.editText2);
 			    String couponNumber = editText.getText().toString();
 				AsyncTask result=new ReduceCouponCall().execute(couponNumber);
+				TextView textView7 = (TextView) findViewById(R.id.textView3);
+				String[] elements = textView7.getText().toString().split(":");
+				double beforeDisc = Double.parseDouble(elements[1]);
+				
+				Button buttonApply = (Button) findViewById(R.id.button3);
+				buttonApply.setEnabled(false);
 				try 
 				{
 					String discount = (String) result.get();
 					double discountAmount = Double.parseDouble(discount);
-					double newPrice = d - discountAmount;
+					double newPrice = beforeDisc - discountAmount;
+					
 					TextView textView = (TextView) findViewById(R.id.textView3);
 					DecimalFormat df = new DecimalFormat("#.##");   
 					//df.format(newPrice);
@@ -77,6 +131,7 @@ public class Delivery extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
+				
 			}
 		});
 	}
