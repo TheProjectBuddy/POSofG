@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class ThankYou extends Activity {
 
@@ -11,6 +12,13 @@ public class ThankYou extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_thank_you);
+	}
+	
+	@Override
+	public void onBackPressed() 
+	{
+		Toast.makeText(getApplicationContext(),"You Cannot Go Back Now! Call Pizza Store If Need Help",Toast.LENGTH_LONG).show();
+		
 	}
 
 	@Override

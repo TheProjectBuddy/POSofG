@@ -43,10 +43,48 @@ public class PaymentCard extends Activity {
 			    
 			    EditText editText4 = (EditText) findViewById(R.id.editText4);
 			    String expireDate = editText4.getText().toString();
-			    if(cardName.isEmpty() || cardNo.isEmpty() || cvv.isEmpty() || expireDate.isEmpty()) flag=false;
-			    else if(cardNo.charAt(0)=='0' || cardNo.length()!=16 || !cardNo.matches("-?\\d+(.\\d+)?"))	flag=false;
-			    else if(cvv.length()!=3 || !cvv.matches("-?\\d+(.\\d+)?"))	flag=false;
 			    
+			    if(cardName.isEmpty() || cardNo.isEmpty() || cvv.isEmpty() || expireDate.isEmpty())
+			    {
+			    	if(cardName.isEmpty())
+			    	{
+			    		Toast.makeText(getApplicationContext(),"Your Name Should Not Be Empty.",Toast.LENGTH_LONG).show();
+			    	}
+			    	else
+			    	{
+			    		if(cardNo.isEmpty())
+				    	{
+				    		Toast.makeText(getApplicationContext(),"Your Card Number Should Not Be Empty.",Toast.LENGTH_LONG).show();
+				    	}
+			    		else
+			    		{
+			    			if(cvv.isEmpty())
+					    	{
+					    		Toast.makeText(getApplicationContext(),"Your Security Code Should Not Be Empty.",Toast.LENGTH_LONG).show();
+					    	}
+			    			else
+			    			{
+			    				Toast.makeText(getApplicationContext(),"Your Card Expiration Date Should Not Be Empty.",Toast.LENGTH_LONG).show();
+			    			}
+			    		}
+			    	}
+			    	flag=false;
+			    }
+			    else if(cardNo.charAt(0)=='0' || cardNo.length()!=16 || !cardNo.matches("-?\\d+(.\\d+)?"))
+			    {
+			    	Toast.makeText(getApplicationContext(),"Enter Valid Card Number (It Should Be 16 Digit Number Only)",Toast.LENGTH_LONG).show();
+			   		flag=false;
+			   	}
+			    else if(cvv.length()!=3 || !cvv.matches("-?\\d+(.\\d+)?"))	
+			    {
+			    	Toast.makeText(getApplicationContext(),"Enter Valid CVV (It Should Be Only 3 Digit Number)",Toast.LENGTH_LONG).show();
+			    	flag=false;
+			    }
+			    else if(expireDate.charAt(2) != '/')
+			    {
+			    	Toast.makeText(getApplicationContext(),"Enter Valid Expiry Date(It Should Be Of MM/YY Format Only",Toast.LENGTH_LONG).show();
+			   		flag=false;
+			    }
 			    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/yy");
 				simpleDateFormat.setLenient(false);
 				Date date;
@@ -56,6 +94,7 @@ public class PaymentCard extends Activity {
 					boolean expired = date.before(new Date());
 					if(expired)
 					{
+						Toast.makeText(getApplicationContext(),"You Have Entered Already Expired Date",Toast.LENGTH_LONG).show();
 						flag=false;
 					}
 				} 
@@ -67,12 +106,13 @@ public class PaymentCard extends Activity {
 			    if(flag)
 			    {
 				   Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+				   
 				   Intent intent1 = new Intent(PaymentCard.this, ThankYou.class);
 				   startActivity(intent1);
 			    }
 			    else
 			    {
-			    	 Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_LONG).show();
+			    	 //Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_LONG).show();
 			    }
 			}
 			
