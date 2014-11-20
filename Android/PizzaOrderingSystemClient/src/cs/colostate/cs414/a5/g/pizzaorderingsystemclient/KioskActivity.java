@@ -29,6 +29,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -46,8 +47,9 @@ public class KioskActivity extends Activity implements OnClickListener,
 	RadioGroup rg;
 	final ArrayList<String> toppingsSelected = new ArrayList<String>();
 	final ArrayList<String> othersSelected = new ArrayList<String>();
-
-	public static int orderId;
+	final ArrayList<CheckBox> selectedcheckBox = new ArrayList<CheckBox>();
+	
+	public static int orderId = 1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,11 +90,12 @@ public class KioskActivity extends Activity implements OnClickListener,
 			}
 			ll.addView(rg);
 
+			
 			NodeList toppingsList = doc.getElementsByTagName("topping");
 
 			Log.w("Toppings length", toppingsList.getLength() + "");
 			for (int i = 0; i < toppingsList.getLength(); i++) {
-				CheckBox cb = new CheckBox(this);
+				final CheckBox cb = new CheckBox(this);
 				final Element tpg = (Element) toppingsList.item(i);
 				cb.setText(getCharacterDataFromElement(tpg));
 				cb.setId(i);
@@ -104,10 +107,8 @@ public class KioskActivity extends Activity implements OnClickListener,
 						if (((CheckBox) v).isChecked()) {
 							toppingsSelected
 									.add(getCharacterDataFromElement(tpg));
-						} else {
-							toppingsSelected.remove(v.getId());
-						}
-
+							selectedcheckBox.add(cb);
+						} 
 					}
 				});
 
@@ -116,7 +117,7 @@ public class KioskActivity extends Activity implements OnClickListener,
 
 			NodeList nodesOther = doc.getElementsByTagName("others");
 			for (int i = 0; i < nodesOther.getLength(); i++) {
-				CheckBox chkbx = new CheckBox(this);
+				final CheckBox chkbx = new CheckBox(this);
 				Element others = (Element) nodesOther.item(i);
 				NodeList otherName = others.getElementsByTagName("other");
 				final Element otherLine = (Element) otherName.item(0);
@@ -130,9 +131,8 @@ public class KioskActivity extends Activity implements OnClickListener,
 						if (((CheckBox) v).isChecked()) {
 							othersSelected
 									.add(getCharacterDataFromElement(otherLine));
-						} else {
-							othersSelected.remove(v);
-						}
+							selectedcheckBox.add(chkbx);
+						} 
 
 					}
 				});
@@ -199,22 +199,40 @@ public class KioskActivity extends Activity implements OnClickListener,
 		Log.w("Button clicked..", "View Id: " + v.getId());
 		switch (v.getId()) {
 		case MY_BUTTON1:
+	
 			int selectedId = rg.getCheckedRadioButtonId();
-
+		
 			// Which Pizza is selected?
+			
 			RadioButton rbtn = new RadioButton(this);
 			rbtn = (RadioButton) findViewById(selectedId);
 			// form uri of order
+			if(rbtn == null){
+				//No pizza is selected
+				for (String str : othersSelected) {
+					uriString += "&other=" + str;
+				}
+			}
+			else{
 			uriString += "&type=" + (String) rbtn.getText();
 			// Which toppings are selected?
 			for (String str : toppingsSelected) {
 				uriString += "&topping=" + str;
 			}
-
+			for (String str : othersSelected) {
+				uriString += "&other=" + str;
+			}
+			}
 			AsyncTask result2 = new SendOrder().execute(uriString);
+			
+				rg.clearCheck();
+				for(CheckBox c: selectedcheckBox)
+					c.setChecked(false);
+					
 			toast = Toast.makeText(this, "Added to Order!!", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.TOP, 25, 400);
 			toast.show();
+			
 			break;
 		case MY_BUTTON2:
 
@@ -223,19 +241,8 @@ public class KioskActivity extends Activity implements OnClickListener,
 			orderId ++;
 		}
 	}
-
+	
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		switch (checkedId) {
-		// case 1: //small
-		// uriString.
-		// break;
-		// case 2: //medium
-		// break;
-		// case 3://large
-		// break;
-
-		}
-		//
 	}
 }

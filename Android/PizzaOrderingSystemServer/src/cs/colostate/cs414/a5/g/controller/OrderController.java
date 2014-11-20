@@ -35,12 +35,12 @@ URI uri = exchange.getRequestURI();
 		String[] subs = query.split("&");
 		Order order = null;
 		ArrayList<OrderItem> orderItems = null;
+	for(String s:subs)
+		System.out.println(s);
 		for (String parameter : subs)
 		{	
 			//key is on the left and value is on the right, so we split this
 			String[] values = parameter.split("=");
-			for(String str: values)
-			System.out.println(str+" ");
 			if (values[0].equals("customer"))
 			{
 				order = new Order(new Customer(values[1]));
@@ -54,7 +54,8 @@ URI uri = exchange.getRequestURI();
 					orderItems.add(new OrderItem(order, new MenuItem(values[1], Double.parseDouble(values[2]),0)));
 			}
 	}
-		//System.out.println(orderItems.toString());
+		for(OrderItem o : orderItems)
+			System.out.println("OrderItems "+o.getFood().getName());
 	}
 
 	//Turns the ArrayList<Pizza> into an XML representation

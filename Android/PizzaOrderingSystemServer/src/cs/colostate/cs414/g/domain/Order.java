@@ -14,7 +14,7 @@ public class Order implements java.io.Serializable{
 	
 	public Order(Customer customer) {
 		this.customer = customer;
-		//this.orderId = orderCounter++;
+		this.orderId = orderCounter++;
 	}
 	
 	public synchronized OrderItem addFood(MenuItem food) {
