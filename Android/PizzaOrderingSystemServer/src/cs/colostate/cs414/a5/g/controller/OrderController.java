@@ -64,7 +64,8 @@ public class OrderController implements HttpHandler {
 				orderItems.add(new OrderItem(order, pizza));
 				order.addFood(pizza);
 			} else if (values[0].equals("other")) {
-				menuItem = new MenuItem(values[1], MenuUtil.getPrice(values[1]), 0);
+				menuItem = new MenuItem(values[1],
+						MenuUtil.getPrice(values[1]), 0);
 				order.addFood(menuItem);
 			}
 
@@ -77,25 +78,26 @@ public class OrderController implements HttpHandler {
 		buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		buffer.append("<order>");
 		for (OrderItem oi : order.getOrderItems()) {
-			if(oi.getFood() instanceof Pizza){
+			if (oi.getFood() instanceof Pizza) {
 				Pizza pizza = (Pizza) oi.getFood();
-				
+
 				buffer.append("<orderitem>");
 				buffer.append("<pizza>");
 				buffer.append(oi.getFood().getType());
 				buffer.append("</pizza>");
 				buffer.append("<toppings>");
-				for(Topping tpg: pizza.getToppings()){
+				for (Topping tpg : pizza.getToppings()) {
 					buffer.append("<topping>");
 					buffer.append(tpg.getType());
 					buffer.append("</topping>");
 				}
 				buffer.append("</toppings>");
 				buffer.append("</orderitem>");
+			} else {
+				buffer.append("<orderitem>");
+				buffer.append(oi.getFood().getType());
+				buffer.append("</orderitem>");
 			}
-			buffer.append("<orderitem>");
-			buffer.append(oi.getFood().getType());
-			buffer.append("</orderitem>");
 		}
 		buffer.append("<total>");
 		buffer.append(order.getPrice());

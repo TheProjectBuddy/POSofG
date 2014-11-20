@@ -14,5 +14,21 @@ public class OrderActivity extends Activity {
 		Intent intent = getIntent();
 		String resultXML = intent.getStringExtra("OrderString");
 		Log.w("From OrderActivity",resultXML);
+		/**
+		 * <order>
+   <orderitem>
+      <pizza>SMALL</pizza>
+      <toppings>
+         <topping>Tomato</topping>
+         <topping>Jalapeno</topping>
+      </toppings>
+   </orderitem>
+   <orderitem>SMALL</orderitem>
+   <orderitem>Salad</orderitem>
+   <total>12.5</total>
+</order>
+		 */
+		
+		
 	}
 }
