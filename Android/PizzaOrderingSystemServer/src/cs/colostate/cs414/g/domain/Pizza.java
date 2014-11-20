@@ -32,7 +32,7 @@ public class Pizza extends MenuItem implements java.io.Serializable
 	}
 
 	public double getPrice() {
-		return super.getPrice() + toppingPrice;
+		return super.getPrice();
 	}
 
 	public void addTopping(Topping topping) {

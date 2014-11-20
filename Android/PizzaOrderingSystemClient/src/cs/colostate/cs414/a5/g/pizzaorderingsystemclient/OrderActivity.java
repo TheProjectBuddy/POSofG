@@ -156,7 +156,7 @@ public class OrderActivity extends Activity implements OnClickListener{
 				
 				try {
 					orderString = (String) result.get();
-					Log.w("String after remove", orderString);
+					Log.w("After remove", orderString);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

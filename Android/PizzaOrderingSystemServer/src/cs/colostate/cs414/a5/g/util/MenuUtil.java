@@ -66,7 +66,7 @@ public class MenuUtil {
 				}
 				final int NUM_PIZZA_PARAMS = 6;
 				if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
-					if (splits[1].equals(type))
+					if (splits[1].equalsIgnoreCase(type))
 					 pricePerToppings = Double.parseDouble(splits[3]);	
 				}
 			}
@@ -110,7 +110,7 @@ public class MenuUtil {
 				}
 				final int NUM_OTHER_PARAMS = 4;
 				if (splits.length == NUM_OTHER_PARAMS && splits[0].equals("2")) {
-					if (splits[1].equals(string))
+					if (splits[1].equalsIgnoreCase(string))
 					 price = Double.parseDouble(splits[2]);	
 				}
 			}
@@ -155,7 +155,7 @@ public class MenuUtil {
 				}
 				final int NUM_PIZZA_PARAMS = 6;
 				if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
-					if (splits[1].equals(string))
+					if (splits[1].equalsIgnoreCase(string))
 					 price = Double.parseDouble(splits[2]);	
 				}
 			}

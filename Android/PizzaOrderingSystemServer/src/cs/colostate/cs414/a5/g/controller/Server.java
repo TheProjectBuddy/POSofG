@@ -13,6 +13,7 @@ public class Server {
 	 */
 	public static void main(String[] args) throws IOException {
 		
+		System.out.println("My Pizza Store server running.....");
 		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 8000);
 
 		MenuController menu = new MenuController();

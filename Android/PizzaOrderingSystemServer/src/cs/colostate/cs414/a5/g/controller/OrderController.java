@@ -20,6 +20,9 @@ import cs.colostate.cs414.g.domain.Topping;
 public class OrderController implements HttpHandler {
 	Order order = null;
 	Menu menu = MenuUtil.getMenuItems();
+	ArrayList<OrderItem> orderItems = null;
+	MenuItem menuItem = null;
+	Pizza pizza = null;
 
 	public void handle(HttpExchange exchange) throws IOException {
 		URI uri = exchange.getRequestURI();
@@ -39,11 +42,7 @@ public class OrderController implements HttpHandler {
 
 	private void parseQuery(String query) {
 		String[] subs = query.split("&");
-		ArrayList<OrderItem> orderItems = null;
-		MenuItem menuItem = null;
-		Pizza pizza = null;
-		OrderItem roi = null;
-		
+
 		for (String parameter : subs) {
 			// key is on the left and value is on the right, so we split this
 			String[] values = parameter.split("=");
@@ -55,9 +54,10 @@ public class OrderController implements HttpHandler {
 			} else if (values[0].equals("type")) {
 				// Pizza
 				String[] str = values[1].split("-");
+				
 				orderItems = new ArrayList<OrderItem>();
 				pizza = new Pizza(Pizza.Size.valueOf(str[0]),
-						Double.parseDouble(str[1]),
+						MenuUtil.getPricePizza(str[0]),
 						MenuUtil.getPricePerTopping(str[0]), 0);
 				for (int i = 2; i < str.length; i++) {
 					Topping topping = new Topping(str[i]);
@@ -69,30 +69,32 @@ public class OrderController implements HttpHandler {
 				menuItem = new MenuItem(values[1],
 						MenuUtil.getPrice(values[1]), 0);
 				order.addFood(menuItem);
-			}
-			else if(values[0].equals("remove")){
-				System.out.println("Value "+values[1]);
-				if(values[1].contains("-")){
-					//it is a pizza
-					System.out.println("here");
+			} else if (values[0].equals("remove")) {
+				ArrayList<OrderItem> temp = new ArrayList<OrderItem>();
+
+				if (values[1].contains("-")) {
+					// it is a pizza
+
 					String[] removeP = values[1].split("-");
-					for(String s: removeP)
-						System.out.println("s----"+s);
-					Pizza removePizza = new Pizza(Pizza.Size.valueOf(removeP[0]), MenuUtil.getPricePizza(removeP[0]), MenuUtil.getPricePerTopping(removeP[0]), 0);
-					roi = new OrderItem(order, removePizza);
-					order.cancelItem(roi);
+					//removeP[0] = SMALL rest toppings
+					temp.addAll(order.getOrderItems());
+
+					Pizza removePizza = new Pizza(
+							Pizza.Size.valueOf(removeP[0]),
+							MenuUtil.getPricePizza(removeP[0]),
+							MenuUtil.getPricePerTopping(removeP[0]), 0);
+					for (int index = 1; index < removeP.length; index++)
+						removePizza.addTopping(new Topping(removeP[index]));
 					
-					for (OrderItem o : order.getOrderItems()){
+					order.getOrderItems().remove(new OrderItem(order, removePizza));
+					
+					System.out.println(order.getOrderItems().toString());
+					
+				} else {
+
+					for (OrderItem o : order.getOrderItems()) {
 						MenuItem m = o.getFood();
-						System.out.println("Item----"+m.getType());
-					}
-				}
-				else{
-					roi = new OrderItem(order,new MenuItem(values[1], MenuUtil.getPrice(values[1]), 0));
-					order.cancelItem(roi);
-					for (OrderItem o : order.getOrderItems()){
-						MenuItem m = o.getFood();
-						System.out.println("Item oter----"+m.getType());
+						System.out.println("Item oter----" + m.getType());
 					}
 				}
 			}

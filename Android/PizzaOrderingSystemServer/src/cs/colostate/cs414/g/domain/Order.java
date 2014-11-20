@@ -54,6 +54,10 @@ public class Order implements java.io.Serializable{
 		return new ArrayList< OrderItem >(orderItems);
 	}
 
+	
+	public void setOrderItems(ArrayList<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
 	/**
 	 * @return the customer
 	 */

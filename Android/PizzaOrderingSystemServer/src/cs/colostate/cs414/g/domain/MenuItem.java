@@ -48,7 +48,7 @@ public class MenuItem implements Serializable{
 	}
 	
 	public String toString() {
-		return this.getType();
+		return this.getType()+this.getPrice();
 	}
 	public boolean cancel() {
 		// TODO Auto-generated method stub
