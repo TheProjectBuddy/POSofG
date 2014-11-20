@@ -14,9 +14,9 @@ public class Pizza extends MenuItem implements java.io.Serializable
 	
 	public enum Size
 	{
-		small,
-		medium,
-		large
+		SMALL,
+		MEDIUM,
+		LARGE
 	}
 	
 	public Pizza(Size size, double price, double toppingPrice, int special) {

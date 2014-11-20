@@ -4,5 +4,6 @@
     <string name="app_name">My Pizza Store</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="size">Pizza Type</string>
+    <string name="price">Total Price</string>
 </resources>

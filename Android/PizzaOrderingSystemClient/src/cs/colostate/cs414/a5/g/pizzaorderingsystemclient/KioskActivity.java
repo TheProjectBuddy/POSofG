@@ -19,6 +19,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +30,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -48,10 +48,12 @@ public class KioskActivity extends Activity implements OnClickListener,
 	final ArrayList<String> toppingsSelected = new ArrayList<String>();
 	final ArrayList<String> othersSelected = new ArrayList<String>();
 	final ArrayList<CheckBox> selectedcheckBox = new ArrayList<CheckBox>();
-	
+	public static String orderString = null;
 	public static int orderId = 1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		uriString = "customer=guest&orderId="+orderId;
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_kiosk);
 		AsyncTask result = new GetMenu().execute();
@@ -148,7 +150,7 @@ public class KioskActivity extends Activity implements OnClickListener,
 			ll.addView(btn1);
 
 			Button btn2 = new Button(this);
-			btn2.setText("View Order");
+			btn2.setText("View/Modify Order");
 			btn2.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 					LayoutParams.WRAP_CONTENT));
 			btn2.setId(MY_BUTTON2);
@@ -195,8 +197,6 @@ public class KioskActivity extends Activity implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 		Toast toast;
-		uriString = "customer=guest&orderId="+orderId;
-		Log.w("Button clicked..", "View Id: " + v.getId());
 		switch (v.getId()) {
 		case MY_BUTTON1:
 	
@@ -208,7 +208,9 @@ public class KioskActivity extends Activity implements OnClickListener,
 			rbtn = (RadioButton) findViewById(selectedId);
 			// form uri of order
 			if(rbtn == null){
-				//No pizza is selected
+				//No pizza is selected, check if other items are selected?
+				for(CheckBox c : selectedcheckBox)
+					System.out.println(c.getText());
 				for (String str : othersSelected) {
 					uriString += "&other=" + str;
 				}
@@ -217,24 +219,43 @@ public class KioskActivity extends Activity implements OnClickListener,
 			uriString += "&type=" + (String) rbtn.getText();
 			// Which toppings are selected?
 			for (String str : toppingsSelected) {
-				uriString += "&topping=" + str;
+				uriString += "-" + str;
 			}
+			//which other items
 			for (String str : othersSelected) {
 				uriString += "&other=" + str;
 			}
 			}
 			AsyncTask result2 = new SendOrder().execute(uriString);
+			try {
+				orderString = (String) result2.get();
+				Log.w("String after add to order is", orderString);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 				rg.clearCheck();
 				for(CheckBox c: selectedcheckBox)
 					c.setChecked(false);
 					
+				othersSelected.clear();
+				toppingsSelected.clear();
+				
 			toast = Toast.makeText(this, "Added to Order!!", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.TOP, 25, 400);
 			toast.show();
-			
+			uriString = "";
 			break;
 		case MY_BUTTON2:
+//			//View Order - Should display a new window with all the orders places and should be able to Modify it.
+			Intent intent = new Intent(this, OrderActivity.class);
+			Log.w("Inside Kiosk ",orderString);
+			intent.putExtra("OrderString", orderString);
+			startActivityForResult(intent, 1);
 
 			break;
 		case MY_BUTTON3:

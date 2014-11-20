@@ -10,11 +10,13 @@ public class Order implements java.io.Serializable{
 	private int orderId;
 	public double total;
 	
-	public static int orderCounter = 1;
+	public static int orderCounter;
 	
+	public Order(){
+		
+	}
 	public Order(Customer customer) {
 		this.customer = customer;
-		this.orderId = orderCounter++;
 	}
 	
 	public synchronized OrderItem addFood(MenuItem food) {

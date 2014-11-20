@@ -35,14 +35,14 @@ public class Menu implements Serializable {
 			if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
 				// must be a pizza
 				Pizza.Size size;
-				if (splits[1].equals("small")) {
-					size = Pizza.Size.small;
+				if (splits[1].equals("Small")) {
+					size = Pizza.Size.SMALL;
 				}
-				else if (splits[1].equals("medium")) {
-					size = Pizza.Size.medium;
+				else if (splits[1].equals("Medium")) {
+					size = Pizza.Size.MEDIUM;
 				}
-				else if (splits[1].equals("large")) {
-					size = Pizza.Size.large;
+				else if (splits[1].equals("Large")) {
+					size = Pizza.Size.LARGE;
 				}
 				else {
 					throw new Exception("Unable to parse pizza size.");

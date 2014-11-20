@@ -58,7 +58,7 @@ public class MenuController implements HttpHandler {
 				else{
 					buffer.append("<others>");
 					buffer.append("<other>");
-					buffer.append(menu.getType().toLowerCase());
+					buffer.append(menu.getType());
 					buffer.append("</other>");
 					buffer.append("<price>");
 					buffer.append(menu.getPrice());
