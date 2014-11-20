@@ -23,8 +23,7 @@ public class OrderActivity extends Activity {
          <topping>Jalapeno</topping>
       </toppings>
    </orderitem>
-   <orderitem>SMALL</orderitem>
-   <orderitem>Salad</orderitem>
+  <orderitem>Salad</orderitem>
    <total>12.5</total>
 </order>
 		 */
