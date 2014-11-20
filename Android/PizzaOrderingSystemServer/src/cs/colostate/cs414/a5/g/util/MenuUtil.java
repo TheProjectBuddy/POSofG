@@ -124,4 +124,49 @@ public class MenuUtil {
 		return price;
 	
 	}
+
+	public static double getPricePizza(String string) {
+
+		double price =0.0;
+		FileInputStream menuFileStream = null;
+		try {
+			File file = new File("menu"); 
+			menuFileStream = new FileInputStream(file);
+		}
+		catch (FileNotFoundException e) {
+			System.err.println("Unable to open menu file. Exiting...");
+			System.exit(1);
+		}
+		InputStreamReader reader = new InputStreamReader(menuFileStream);
+		BufferedReader br = new BufferedReader(reader);
+		
+		String line = null;
+		
+		try {
+			while ((line = br.readLine()) != null) {
+				if (line.trim().length() == 0 || (line.length() > 0 && 
+						line.charAt(0) == '#')) {
+					continue;
+				}
+				
+				String[] splits = line.split("\\|");
+				for (int i = 0; i < splits.length; ++i) {
+					splits[i] = splits[i].trim();
+				}
+				final int NUM_PIZZA_PARAMS = 6;
+				if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
+					if (splits[1].equals(string))
+					 price = Double.parseDouble(splits[2]);	
+				}
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return price;
+	
+	}
 }

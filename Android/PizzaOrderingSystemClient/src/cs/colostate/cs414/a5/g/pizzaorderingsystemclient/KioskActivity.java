@@ -209,8 +209,6 @@ public class KioskActivity extends Activity implements OnClickListener,
 			// form uri of order
 			if(rbtn == null){
 				//No pizza is selected, check if other items are selected?
-				for(CheckBox c : selectedcheckBox)
-					System.out.println(c.getText());
 				for (String str : othersSelected) {
 					uriString += "&other=" + str;
 				}

@@ -42,6 +42,8 @@ public class OrderController implements HttpHandler {
 		ArrayList<OrderItem> orderItems = null;
 		MenuItem menuItem = null;
 		Pizza pizza = null;
+		OrderItem roi = null;
+		
 		for (String parameter : subs) {
 			// key is on the left and value is on the right, so we split this
 			String[] values = parameter.split("=");
@@ -67,6 +69,32 @@ public class OrderController implements HttpHandler {
 				menuItem = new MenuItem(values[1],
 						MenuUtil.getPrice(values[1]), 0);
 				order.addFood(menuItem);
+			}
+			else if(values[0].equals("remove")){
+				System.out.println("Value "+values[1]);
+				if(values[1].contains("-")){
+					//it is a pizza
+					System.out.println("here");
+					String[] removeP = values[1].split("-");
+					for(String s: removeP)
+						System.out.println("s----"+s);
+					Pizza removePizza = new Pizza(Pizza.Size.valueOf(removeP[0]), MenuUtil.getPricePizza(removeP[0]), MenuUtil.getPricePerTopping(removeP[0]), 0);
+					roi = new OrderItem(order, removePizza);
+					order.cancelItem(roi);
+					
+					for (OrderItem o : order.getOrderItems()){
+						MenuItem m = o.getFood();
+						System.out.println("Item----"+m.getType());
+					}
+				}
+				else{
+					roi = new OrderItem(order,new MenuItem(values[1], MenuUtil.getPrice(values[1]), 0));
+					order.cancelItem(roi);
+					for (OrderItem o : order.getOrderItems()){
+						MenuItem m = o.getFood();
+						System.out.println("Item oter----"+m.getType());
+					}
+				}
 			}
 
 		}
@@ -94,9 +122,9 @@ public class OrderController implements HttpHandler {
 				buffer.append("</toppings>");
 				buffer.append("</orderitem>");
 			} else {
-				buffer.append("<orderitem>");
+				buffer.append("<otheritem>");
 				buffer.append(oi.getFood().getType());
-				buffer.append("</orderitem>");
+				buffer.append("</otheritem>");
 			}
 		}
 		buffer.append("<total>");
