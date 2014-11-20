@@ -2,12 +2,14 @@ package com.example.harshil_payment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -16,8 +18,11 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        final double d = 12.3;
         
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new OnClickListener() {
@@ -25,7 +30,27 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				final String customerID = "1";
+				double point = 0;
+				//customerID
+				final AsyncTask redeemResult = new RedeemPointCall().execute(customerID);
+				try 
+				{
+					
+					 String discountRedeem = (String) redeemResult.get();
+					 point = Double.parseDouble(discountRedeem) + d*2;
+					 
+					 //Toast.makeText(getApplicationContext(),discountRedeem,Toast.LENGTH_LONG).show();
+				} 
+				catch (Exception e1) 
+				{
+					
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				Intent intent1 = new Intent(MainActivity.this, ThankYou.class);
+				intent1.putExtra("customerID", customerID);
+				intent1.putExtra("customerPoints", Double.toString(point));
 				startActivity(intent1);
 			}
 		});
@@ -36,6 +61,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				 
 				Intent intent2 = new Intent(MainActivity.this, Delivery.class);
 				startActivity(intent2);
 			}
