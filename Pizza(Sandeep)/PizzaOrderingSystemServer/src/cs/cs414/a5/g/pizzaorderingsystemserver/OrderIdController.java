@@ -17,6 +17,7 @@ public class OrderIdController implements HttpHandler {
 		
 		orderId++;
 		String response=""+orderId;
+		//System.out.println(orderId);
 		exchange.sendResponseHeaders(200, response.length());
 		OutputStream stream =exchange.getResponseBody();
 		stream.write(response.getBytes());

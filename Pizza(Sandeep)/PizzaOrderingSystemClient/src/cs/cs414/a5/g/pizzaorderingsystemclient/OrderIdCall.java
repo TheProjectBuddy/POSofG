@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class OrderIdCall extends AsyncTask {
 
@@ -21,7 +22,7 @@ public class OrderIdCall extends AsyncTask {
 		String url="http://10.0.2.2:8000/orderid";
 		HttpGet httpget= new HttpGet(url);
 		HttpClient httpclient= new DefaultHttpClient();
-		
+		Log.w("ENTERED","ORDER ID CALL");
 		
 		HttpResponse response;
 		try {

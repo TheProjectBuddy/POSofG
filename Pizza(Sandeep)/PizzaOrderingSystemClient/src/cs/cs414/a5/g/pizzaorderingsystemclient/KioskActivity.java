@@ -58,11 +58,23 @@ public static int orderId = 1;
 @Override
 protected void onCreate(Bundle savedInstanceState) {
 //uriString = "customer=guest&orderId="+orderId;
-Intent intent=getIntent();
-uriString="customer="+intent.getStringExtra("GName");
+
 //Toast.makeText(getApplicationContext(), uriString, Toast.LENGTH_LONG).show();
 super.onCreate(savedInstanceState);
 setContentView(R.layout.activity_kiosk);
+
+Intent intent=getIntent();
+uriString="customer="+intent.getStringExtra("GName");
+
+AsyncTask idresult=new OrderIdCall().execute();
+try{
+	String id=(String)idresult.get();
+	uriString+="&orderId="+id;
+	Toast.makeText(getApplicationContext(), uriString, Toast.LENGTH_LONG).show();
+}catch(Exception e)
+{
+	e.printStackTrace();
+}
 AsyncTask result = new GetMenu().execute();
 try {
 	String string = (String) result.get();
@@ -264,7 +276,8 @@ case MY_BUTTON2:
 
 	break;
 case MY_BUTTON3:
-	orderId ++;
+	
+	break;
 } 
 }
 
