@@ -20,7 +20,7 @@ public class SignupController implements HttpHandler{
 		parseRequest(uri.getQuery());
 		//System.out.println(uri.getQuery());
 		
-		String response="";
+		String response="Signup Successful!";
 		
 		exchange.sendResponseHeaders(200, response.length());
 		OutputStream stream =exchange.getResponseBody();

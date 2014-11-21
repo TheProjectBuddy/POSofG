@@ -1,5 +1,6 @@
 package cs.cs414.a5.g.pizzaorderingsystemclient;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -39,7 +40,8 @@ public class SignInActivity extends ActionBarActivity {
 					e.printStackTrace();
 				} 
 				Toast.makeText(getApplicationContext(), response ,Toast.LENGTH_LONG).show();
-				
+				Intent intent=new Intent(SignInActivity.this,KioskActivity.class);
+				startActivity(intent);
 			}
 		});
 		

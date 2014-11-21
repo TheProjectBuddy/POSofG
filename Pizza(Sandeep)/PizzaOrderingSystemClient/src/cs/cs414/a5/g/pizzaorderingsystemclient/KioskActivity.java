@@ -54,7 +54,7 @@ final ArrayList<String> toppingsSelected = new ArrayList<String>();
 final ArrayList<String> othersSelected = new ArrayList<String>();
 final ArrayList<CheckBox> selectedcheckBox = new ArrayList<CheckBox>();
 public static String orderString = null;
-public static int orderId = 1;
+//public static int orderId = 1;
 @Override
 protected void onCreate(Bundle savedInstanceState) {
 //uriString = "customer=guest&orderId="+orderId;
