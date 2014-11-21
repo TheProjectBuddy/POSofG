@@ -86,20 +86,56 @@ public class OrderController implements HttpHandler {
 					for (int index = 1; index < removeP.length; index++)
 						removePizza.addTopping(new Topping(removeP[index]));
 					
-					order.getOrderItems().remove(new OrderItem(order, removePizza));
+					for(int i=0;i<temp.size();i++){
+						if(temp.get(i).getFood() instanceof Pizza){
+							boolean result = compareItem(temp.get(i).getFood(),removePizza);
+							if(result == true){
+								temp.remove(i);
+							}
+						}
+					}
 					
-					System.out.println(order.getOrderItems().toString());
+					System.out.println(temp.toString());
+					order.setOrderItems(temp);
+					//temp.clear();
 					
 				} else {
-
-					for (OrderItem o : order.getOrderItems()) {
-						MenuItem m = o.getFood();
-						System.out.println("Item oter----" + m.getType());
+					//other item
+					temp.addAll(order.getOrderItems());
+					for(int i=0;i<temp.size();i++){
+						if(temp.get(i).getFood().getType().contains(values[1])){
+							temp.remove(i);
+						}
 					}
+					System.out.println(temp.toString());
+					order.setOrderItems(temp);
+					//temp.clear();
 				}
 			}
 
 		}
+	}
+
+	private boolean compareItem(MenuItem menuItem, Pizza removePizza) {
+		Pizza pizza = (Pizza) menuItem;
+		String pizzaTop = new String();
+		String removeTopp = new String();
+		
+		for(int i=0;i<pizza.getToppings().size();i++){
+			pizzaTop+=pizza.getToppings().get(i).getType();
+		}
+		
+		for(int i=0;i<removePizza.getToppings().size();i++){
+			removeTopp+=removePizza.getToppings().get(i).getType();
+		}
+		
+		if(pizza.getType() == removePizza.getType()){
+			if(pizzaTop.equalsIgnoreCase(removeTopp)){
+				return  true;
+			}
+		}
+		
+		return false;
 	}
 
 	// Turns the ArrayList<Pizza> into an XML representation
