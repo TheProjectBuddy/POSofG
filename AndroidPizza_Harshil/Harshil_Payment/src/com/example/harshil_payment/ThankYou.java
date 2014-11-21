@@ -21,13 +21,13 @@ public class ThankYou extends Activity {
 		final AsyncTask redeemResult = new RedeemUpdateCall().execute(customerID, redeemPoints);
 	}
 	
-	//@Override
-	/*public void onBackPressed() 
+	@Override
+	public void onBackPressed() 
 	{
 		Toast.makeText(getApplicationContext(),"You Cannot Go Back Now! Call Pizza Store If Need Help",Toast.LENGTH_LONG).show();
 		
 	}
-*/
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
