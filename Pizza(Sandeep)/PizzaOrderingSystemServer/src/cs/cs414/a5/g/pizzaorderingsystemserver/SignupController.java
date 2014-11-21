@@ -31,23 +31,22 @@ public class SignupController implements HttpHandler{
 
 	private void parseRequest(String query) {
 		
-		//String[] splits=query.split("&");
+		String[] splits=query.split("&");
 		//for(int i=0;i<splits.length;i++)
 		//System.out.println(splits[i]);
-		System.out.println(query);
-		/*File file = new File("CustomerLogins");
+		//System.out.println(query);
+		File file = new File("CustomerLogins");
 		try 
 		{
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String LineRead = bufferedReader.readLine();
+			System.out.println(LineRead);
 			int count = 0;
 			String[] updated = new String[100];
 			while(LineRead != null)
 			{
-				
-				
-				updated[count] = LineRead;
+			    updated[count] = LineRead;
 				count++;
 				LineRead = bufferedReader.readLine();
 			}
@@ -74,7 +73,7 @@ public class SignupController implements HttpHandler{
 			
 		}
 		
-		*/
+		
 	
 	}
 

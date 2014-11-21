@@ -15,15 +15,23 @@ public class Server {
 		
 		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 8000);
 
-		MenuController menu = new MenuController();
+		
+        MenuController menu = new MenuController();
 		
 		OrderController order= new OrderController();
 		
+		OrderIdController orderid=new OrderIdController();
+		
 		SignupController signup= new SignupController();
+		
+		SigninController signin=new SigninController();
 		
 		server.createContext("/order",order);
 		server.createContext("/menu",menu);
+		server.createContext("/orderid",orderid);
 		server.createContext("/signup",signup);
+		server.createContext("/signin",signin);
+		
 		server.start();
 	}
 
