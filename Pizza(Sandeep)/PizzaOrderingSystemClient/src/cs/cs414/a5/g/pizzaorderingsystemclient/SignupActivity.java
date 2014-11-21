@@ -29,16 +29,16 @@ public class SignupActivity extends ActionBarActivity {
                 String response = null;
                 
 				EditText nameText = (EditText) findViewById(R.id.editText1);
-				String name = nameText.getText().toString();
-				
+				String name = nameText.getText().toString().trim();
+				name=name.replace(" ","+");
 
 				EditText emailText = (EditText) findViewById(R.id.editText2);
 				String email = emailText.getText().toString();
 				
 
 				EditText addressText = (EditText) findViewById(R.id.editText3);
-				String address = addressText.getText().toString();
-				
+				String address = addressText.getText().toString().trim();
+				address=address.replace(" ","+");
 
 				EditText userText = (EditText) findViewById(R.id.editText4);
 				String username = userText.getText().toString();
@@ -76,6 +76,7 @@ public class SignupActivity extends ActionBarActivity {
 					Toast.makeText(getApplicationContext(), response ,Toast.LENGTH_LONG).show();
 				
 				   Intent intent=new Intent(SignupActivity.this,KioskActivity.class);
+				   intent.putExtra("GName",name.replace("+"," "));
 				   startActivity(intent);
 				}
 				

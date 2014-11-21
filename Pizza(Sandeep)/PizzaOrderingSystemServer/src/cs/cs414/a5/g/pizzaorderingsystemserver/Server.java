@@ -22,6 +22,8 @@ public class Server {
 		
 		OrderIdController orderid=new OrderIdController();
 		
+		LogsController log= new LogsController();
+		
 		SignupController signup= new SignupController();
 		
 		SigninController signin=new SigninController();
@@ -31,6 +33,7 @@ public class Server {
 		server.createContext("/orderid",orderid);
 		server.createContext("/signup",signup);
 		server.createContext("/signin",signin);
+		server.createContext("/log",log);
 		
 		server.start();
 	}

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,10 +40,22 @@ public class SignInActivity extends ActionBarActivity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
-				Toast.makeText(getApplicationContext(), response ,Toast.LENGTH_LONG).show();
+				
+				if(!(response==null))
+				{
+				//Toast.makeText(getApplicationContext(), response ,Toast.LENGTH_LONG).show();
 				Intent intent=new Intent(SignInActivity.this,KioskActivity.class);
+				intent.putExtra("GName",response.replace("+"," "));
 				startActivity(intent);
 			}
+				else
+				{
+					Toast toast;
+					toast=Toast.makeText(getApplicationContext(),"Login Failed" ,Toast.LENGTH_LONG);
+				    toast.setGravity(Gravity.CENTER, 0,0);
+				    toast.show();
+				}
+				}
 		});
 		
 			

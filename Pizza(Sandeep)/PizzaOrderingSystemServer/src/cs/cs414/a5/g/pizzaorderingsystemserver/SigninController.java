@@ -1,28 +1,35 @@
 package cs.cs414.a5.g.pizzaorderingsystemserver;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileNotFoundException;
+//import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
+import java.util.Scanner;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import cs.cs414.a5.g.util.DataUtil;
+
 public class SigninController implements HttpHandler{
 
+	String name;
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		URI uri= exchange.getRequestURI();
 		
 		
-		String response="";
+		String response=null;
 		Boolean r=authenticate(uri.getQuery());;
 		if(r==true)
-		response="Authenticated";
-		else
-		response="Authentication Failed";
+		{
+		response=name;
+		DataUtil.setLoggedin(r);
+		}
+		
 		exchange.sendResponseHeaders(200, response.length());
 		OutputStream stream =exchange.getResponseBody();
 		stream.write(response.getBytes());
@@ -30,7 +37,7 @@ public class SigninController implements HttpHandler{
 		
 	}
 
-	private Boolean authenticate(String query) 
+	private Boolean authenticate(String query) throws FileNotFoundException 
 	{
 		
 		boolean flag=false;
@@ -41,18 +48,18 @@ public class SigninController implements HttpHandler{
 		System.out.println(username);
 		System.out.println(password);
 		File file=new File("CustomerLogins");
+		Scanner scanner=new Scanner(file);
 		try {
-			FileReader fileReader = new FileReader(file);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			//FileReader fileReader = new FileReader(file);
+			//BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
-			String newLine = bufferedReader.readLine();
-		//	if(newLine==null)
-		//    newLine=bufferedReader.readLine();
+			while(scanner.hasNext())
 			
-			while(newLine != null)
+			
+			//while(newLine != null)
 			
 			{
-			
+				String newLine = scanner.nextLine();
 				elements = newLine.split("\\|");
 				
 				for(int i=0;i<elements.length;i++)
@@ -69,6 +76,7 @@ public class SigninController implements HttpHandler{
 					if(elements[4].equals(password))
 					{
 					    flag = true;	
+					    name=elements[0];
 					}
 					else
 					{
@@ -79,10 +87,10 @@ public class SigninController implements HttpHandler{
 				}
 				
 				
-				newLine = bufferedReader.readLine();
+				//newLine = bufferedReader.readLine();
 				
 			}
-			bufferedReader.close();
+		//	bufferedReader.close();
 			
 				
 		} catch (Exception e) {
@@ -91,7 +99,7 @@ public class SigninController implements HttpHandler{
 			e.printStackTrace();
 		}
 		
-			
+			scanner.close();
 		return flag;
 		
 	}

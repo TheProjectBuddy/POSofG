@@ -276,6 +276,15 @@ case MY_BUTTON2:
 
 	break;
 case MY_BUTTON3:
+	AsyncTask logResult=new LogCall().execute();
+	try{
+		String loggedin=(String)logResult.get();
+		Toast.makeText(getApplicationContext(), loggedin, Toast.LENGTH_LONG).show();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
 	
 	break;
 } 

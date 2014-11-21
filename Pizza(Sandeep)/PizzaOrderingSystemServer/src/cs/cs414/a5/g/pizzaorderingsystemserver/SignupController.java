@@ -12,24 +12,35 @@ import java.net.URI;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import cs.cs414.a5.g.util.DataUtil;
+
 public class SignupController implements HttpHandler{
 
+	String name;
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		URI uri= exchange.getRequestURI();
-		parseRequest(uri.getQuery());
+		
+		
+		Boolean success=parseRequest(uri.getQuery());
 		//System.out.println(uri.getQuery());
-		
+		if(success==true)
+		{
 		String response="Signup Successful!";
-		
+        DataUtil.setLoggedin(success);
 		exchange.sendResponseHeaders(200, response.length());
 		OutputStream stream =exchange.getResponseBody();
 		stream.write(response.getBytes());
 		stream.close();
+		}
+		else
+		{
+			System.out.println("Signup unsucessful!");
+		}
 		
 	}
 
-	private void parseRequest(String query) {
+	private Boolean parseRequest(String query) {
 		
 		String[] splits=query.split("&");
 		//for(int i=0;i<splits.length;i++)
@@ -67,10 +78,14 @@ public class SignupController implements HttpHandler{
 			}
 			bufferedWriter.write(count+"\n");
 			bufferedWriter.close();
+			
+			return true;
 		}
 		catch(Exception e)
 		{
-			
+		
+		    e.printStackTrace();
+			return false;
 		}
 		
 		
