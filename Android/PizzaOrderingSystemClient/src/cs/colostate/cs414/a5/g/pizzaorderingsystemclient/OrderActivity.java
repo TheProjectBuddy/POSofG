@@ -22,12 +22,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class OrderActivity extends Activity implements OnClickListener{
 	
@@ -147,7 +149,7 @@ public class OrderActivity extends Activity implements OnClickListener{
 		@Override
 		public void onClick(View v) {
 			//Only 1 button to remove items
-			
+			Toast toast;
 			removeItem = "&remove=";
 			for(CheckBox c: selectedcheckBox){
 				removeItem += (String) c.getText();
@@ -157,6 +159,14 @@ public class OrderActivity extends Activity implements OnClickListener{
 				try {
 					orderString = (String) result.get();
 					Log.w("After remove", orderString);
+					selectedcheckBox.clear();
+					Intent intent = getIntent();
+					intent.putExtra("OrderString", orderString);
+					finish();
+					toast = Toast.makeText(this, "Removed Item!!", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.TOP, 25, 400);
+					toast.show();
+					startActivity(intent);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

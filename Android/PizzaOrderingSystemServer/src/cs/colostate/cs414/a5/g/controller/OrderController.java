@@ -71,6 +71,7 @@ public class OrderController implements HttpHandler {
 				order.addFood(menuItem);
 			} else if (values[0].equals("remove")) {
 				ArrayList<OrderItem> temp = new ArrayList<OrderItem>();
+				temp.clear();
 
 				if (values[1].contains("-")) {
 					// it is a pizza
@@ -94,10 +95,7 @@ public class OrderController implements HttpHandler {
 							}
 						}
 					}
-					
-					System.out.println(temp.toString());
 					order.setOrderItems(temp);
-					//temp.clear();
 					
 				} else {
 					//other item
@@ -107,9 +105,7 @@ public class OrderController implements HttpHandler {
 							temp.remove(i);
 						}
 					}
-					System.out.println(temp.toString());
 					order.setOrderItems(temp);
-					//temp.clear();
 				}
 			}
 
