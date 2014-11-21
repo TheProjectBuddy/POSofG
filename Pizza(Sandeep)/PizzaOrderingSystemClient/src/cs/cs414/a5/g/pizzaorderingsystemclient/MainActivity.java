@@ -2,8 +2,11 @@ package cs.cs414.a5.g.pizzaorderingsystemclient;
 
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +44,42 @@ public class MainActivity extends ActionBarActivity {
 		guest.setOnClickListener(new OnClickListener(){
 			public void onClick(View arg0)
 			{
-				Toast.makeText(getApplicationContext(),"Continuing as Guest",Toast.LENGTH_LONG).show();
+				setName();
+			}
+
+			private void setName() {
+				AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
+				LayoutInflater inflater= getLayoutInflater();
+				final View myView= inflater.inflate(R.layout.login_dialog, null);
+				builder.setTitle("Info");
+				builder.setMessage("Enter Name:");
+				builder.setView(myView);
+				 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {  
+					    public void onClick(DialogInterface dialog, int whichButton) {  
+					        //String value = input.getText().toString();
+					        EditText mUserText;
+					        mUserText = (EditText) myView.findViewById(R.id.editText1);
+					        String name = mUserText.getText().toString();
+					       // Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
+					        Intent intent=new Intent(MainActivity.this,KioskActivity.class);
+					        intent.putExtra("GName",name);
+					        startActivity(intent);
+					                          
+					       }  
+					     });  
+
+					    builder.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+
+					        public void onClick(DialogInterface dialog, int which) {
+					        	//Toast.makeText(getApplicationContext(),"Skipped",Toast.LENGTH_LONG).show();
+					        	Intent intent=new Intent(MainActivity.this,KioskActivity.class);
+						        intent.putExtra("GName","Guest");
+						        startActivity(intent);
+					        }
+					    });		    
+                builder.create();
+				builder.show();
+				
 			}
 			
 		});

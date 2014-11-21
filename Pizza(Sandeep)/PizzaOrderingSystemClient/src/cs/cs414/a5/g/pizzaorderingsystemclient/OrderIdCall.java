@@ -12,41 +12,42 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
 
-public class SigninCall extends AsyncTask<String,String,String> {
+public class OrderIdCall extends AsyncTask {
 
 	@Override
-	protected String doInBackground(String... message){
-		String result=null;
-		String url="http://10.0.2.2:8000/signin"+"?"+message[0];
+	protected Object doInBackground(Object... params) {
+        String result=null;
+		
+		String url="http://10.0.2.2:8000/orderid";
 		HttpGet httpget= new HttpGet(url);
 		HttpClient httpclient= new DefaultHttpClient();
+		
+		
 		HttpResponse response;
-		//String response;
 		try {
 			response=httpclient.execute(httpget);
 			HttpEntity entity=response.getEntity();
+			
 			if(entity!=null)
 			{
+				
 				InputStream istream=entity.getContent();
 				
 				result=convertToString(istream);
 				
 				istream.close();
 			}
-		} 
-		catch (Exception e) {
-			
-			e.printStackTrace();
-		} 
-		
-		
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.toString());
+		}
 		return result;
-		
-		
 	}
+
 	private String convertToString(InputStream is) {
-		//buffered reader reads the input stream
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		
+BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		
 		//StringBuffer creates the string efficiently
 		StringBuffer buff = new StringBuffer();
@@ -57,7 +58,7 @@ public class SigninCall extends AsyncTask<String,String,String> {
 			line = reader.readLine();
 			while (line != null) 
 			{
-				buff.append(line + "\n");
+				buff.append(line);
 				line = reader.readLine();
 			}
 			is.close();
@@ -69,5 +70,6 @@ public class SigninCall extends AsyncTask<String,String,String> {
 		} 
 		return buff.toString();
 	}
+	}
 
-}
+

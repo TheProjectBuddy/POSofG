@@ -32,6 +32,18 @@
             android:name=".SignInActivity"
             android:label="@string/title_activity_sign_in" >
         </activity>
+        <activity
+            android:name=".GuestActivity"
+            android:label="@string/title_activity_guest" >
+        </activity>
+        <activity
+            android:name=".KioskActivity"
+            android:label="@string/title_activity_kiosk" >
+        </activity>
+        <activity
+            android:name=".OrderActivity"
+            android:label="@string/title_activity_order" >
+        </activity>
     </application>
 
 </manifest>

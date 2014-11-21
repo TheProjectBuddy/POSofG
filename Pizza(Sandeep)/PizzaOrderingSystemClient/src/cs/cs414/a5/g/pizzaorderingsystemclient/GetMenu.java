@@ -12,36 +12,34 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
 
-public class SigninCall extends AsyncTask<String,String,String> {
+public class GetMenu extends AsyncTask<Object, Object, Object>{
 
 	@Override
-	protected String doInBackground(String... message){
-		String result=null;
-		String url="http://10.0.2.2:8000/signin"+"?"+message[0];
-		HttpGet httpget= new HttpGet(url);
-		HttpClient httpclient= new DefaultHttpClient();
+	protected Object doInBackground(Object... params) {
+		String result = null;
+		String url = "http://10.0.2.2:8000/menu";
+		
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpGet httpget = new HttpGet(url); 
+
 		HttpResponse response;
-		//String response;
 		try {
-			response=httpclient.execute(httpget);
-			HttpEntity entity=response.getEntity();
-			if(entity!=null)
-			{
-				InputStream istream=entity.getContent();
+			response = httpclient.execute(httpget);
+			HttpEntity entity = response.getEntity();
+
+			if (entity != null) {
 				
-				result=convertToString(istream);
-				
-				istream.close();
+				InputStream instream = entity.getContent();
+				result = convertToString(instream);
+				instream.close();
 			}
-		} 
-		catch (Exception e) {
-			
-			e.printStackTrace();
-		} 
-		
-		
+	} 
+		catch (Exception e) 
+		{
+			System.out.println(e.toString());
+		}
+
 		return result;
-		
 		
 	}
 	private String convertToString(InputStream is) {
