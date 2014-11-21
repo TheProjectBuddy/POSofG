@@ -29,9 +29,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class KioskActivity extends Activity implements OnClickListener,
@@ -90,8 +92,24 @@ public class KioskActivity extends Activity implements OnClickListener,
 				rg.setOnCheckedChangeListener(this);
 				temp = "";
 			}
+			
+			TextView tv1 = new TextView(this);
+			tv1.setText("Pizza Type");
+			tv1.setTextSize(26);
+			ll.addView(tv1);
+			
+			ImageView iv = new ImageView(this);
+			iv.setBackgroundResource(R.drawable.pizza_line);
+			ll.addView(iv);
+			
 			ll.addView(rg);
 
+			
+			TextView tv2 = new TextView(this);
+			tv2.setText("Toppings");
+			tv2.setTextSize(20);
+			ll.addView(tv2);
+			
 			
 			NodeList toppingsList = doc.getElementsByTagName("topping");
 
@@ -116,7 +134,16 @@ public class KioskActivity extends Activity implements OnClickListener,
 
 				ll.addView(cb);
 			}
-
+			ImageView iv2 = new ImageView(this);
+			iv2.setBackgroundResource(R.drawable.pizza_line);
+			ll.addView(iv2);
+			
+			TextView tv3 = new TextView(this);
+			tv3.setText("Side Orders");
+			tv3.setTextSize(26);
+			ll.addView(tv3);
+			
+			
 			NodeList nodesOther = doc.getElementsByTagName("others");
 			for (int i = 0; i < nodesOther.getLength(); i++) {
 				final CheckBox chkbx = new CheckBox(this);
@@ -141,6 +168,10 @@ public class KioskActivity extends Activity implements OnClickListener,
 				ll.addView(chkbx);
 			}
 
+			ImageView iv3 = new ImageView(this);
+			iv3.setBackgroundResource(R.drawable.pizza_line);
+			ll.addView(iv3);
+			
 			Button btn1 = new Button(this);
 			btn1.setText("Add to Order");
 			btn1.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
