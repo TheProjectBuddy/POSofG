@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import cs.colostate.cs414.g.util.OrderStatus;
-import cs.colostate.cs414.g.util.Stage;
-import cs.colostate.cs414.g.util.TimeRange;
-import cs.colostate.cs414.g.util.TimeSystem;
-import cs.colostate.cs414.g.util.Update;
 import cs.colostate.cs414.g.util.WaitingQueue;
 
-public class Oven extends Stage implements Update,OrderItemEmp, java.io.Serializable
+public class Oven implements OrderItemEmp, java.io.Serializable
 {
 
 	private static final long serialVersionUID = 5609302306524659364L;
@@ -61,26 +57,19 @@ public class Oven extends Stage implements Update,OrderItemEmp, java.io.Serializ
 
 	public void update() {
 		Iterator<OrderItem> it =cookingList.iterator();
-		TimeRange tempTRange;
 		OrderItem currentItem;		
 
 		while(it.hasNext()){
 			currentItem=it.next();
-			double cookingTime= currentItem.getFood().getCookTime() * 60.0;
-			tempTRange = currentItem.getStageTimes().get(stage);
-			double elapsedTime = TimeSystem.getCurrentTime() - tempTRange.getStart();
 			
-			if (elapsedTime >=cookingTime){
+			
 				currentItem.endStage(stage);
 				freeSpace += currentItem.getFood().getOvenSpace();
 				it.remove(); 
 				currentItem.setWorker(null);
 				currentItem.startStage(OrderStatus.COMPLETED);
 				currentItem.endStage(OrderStatus.COMPLETED);
-				if(nextStage!=null)
-				nextStage.addOrderItem(currentItem);
 				
-			}
 		}
 		
 		synchronized(waitingQueue) {

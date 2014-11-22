@@ -9,11 +9,11 @@ import cs.colostate.cs414.g.ui.WelcomeWindow;
 
 public class MainUtil {
 
-	public static void run(final PhoneOrder phoneOrder, final Menu menu, final Stage startStage) {
+	public static void run(final PhoneOrder phoneOrder, final Menu menu) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					WelcomeWindow frame = new WelcomeWindow(phoneOrder, menu, startStage);
+					WelcomeWindow frame = new WelcomeWindow(phoneOrder, menu);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

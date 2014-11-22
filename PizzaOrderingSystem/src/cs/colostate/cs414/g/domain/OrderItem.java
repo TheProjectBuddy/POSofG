@@ -3,8 +3,6 @@ package cs.colostate.cs414.g.domain;
 import java.util.TreeMap;
 
 import cs.colostate.cs414.g.util.OrderStatus;
-import cs.colostate.cs414.g.util.TimeRange;
-import cs.colostate.cs414.g.util.TimeSystem;
 
 public class OrderItem implements java.io.Serializable{
 	
@@ -12,7 +10,6 @@ public class OrderItem implements java.io.Serializable{
 	private MenuItem food;
 	private Order order;
 	private OrderItemEmp worker;
-	private TreeMap< OrderStatus, TimeRange > stageTimes = new TreeMap< OrderStatus, TimeRange >();
 	private OrderStatus currentStage = OrderStatus.MODIFY;
 	
 	public OrderItem(Order order, MenuItem food) {
@@ -26,17 +23,10 @@ public class OrderItem implements java.io.Serializable{
 	}
 	
 	public void startStage(OrderStatus stage) {
-		assert(stageTimes.get(stage) == null);
 		currentStage = stage;
-		TimeRange tr = new TimeRange();
-		tr.setStart(TimeSystem.getCurrentTime());
-		stageTimes.put(stage, tr);
 	}
 	
 	public void endStage(OrderStatus stage) {
-		TimeRange tr = stageTimes.get(stage);
-		assert(tr != null);
-		tr.setEnd(TimeSystem.getCurrentTime());
 	}
 
 	public OrderItemEmp getWorker() {
@@ -53,10 +43,6 @@ public class OrderItem implements java.io.Serializable{
 
 	public Order getOrder() {
 		return order;
-	}
-
-	public TreeMap<OrderStatus, TimeRange> getStageTimes() {
-		return stageTimes;
 	}
 	
 	public OrderStatus getCurrentStage() {

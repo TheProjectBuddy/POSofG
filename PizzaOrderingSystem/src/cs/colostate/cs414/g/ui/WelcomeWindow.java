@@ -19,7 +19,6 @@ import javax.swing.border.EmptyBorder;
 import cs.colostate.cs414.g.domain.Menu;
 import cs.colostate.cs414.g.domain.PhoneOrder;
 import cs.colostate.cs414.g.util.LoginUtil;
-import cs.colostate.cs414.g.util.Stage;
 import cs.colostate.cs414.g.util.ViewCustomerOrders;
 
 public class WelcomeWindow extends JFrame{
@@ -46,9 +45,9 @@ public class WelcomeWindow extends JFrame{
 	/**
 	 * Create the frame.
 	 */
-	public WelcomeWindow(final PhoneOrder phoneOrder, Menu menu, Stage startStage) {
-		mw = new ManagerWindow(startStage, menu);
-		phoneOperatorWindow = new PhoneOperatorWindow(this, phoneOrder, menu, startStage);
+	public WelcomeWindow(final PhoneOrder phoneOrder, Menu menu) {
+		mw = new ManagerWindow(menu);
+		phoneOperatorWindow = new PhoneOperatorWindow(this, phoneOrder, menu);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 632, 429);
 		contentPane = new JPanel();
@@ -106,8 +105,8 @@ public class WelcomeWindow extends JFrame{
 		buttonChef.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(phoneOperatorWindow.customer!=null){
-					UpdateOrderStatusWindow dialog = new UpdateOrderStatusWindow (phoneOrder,phoneOperatorWindow.customer);
-				dialog.setVisible(true);
+					ViewCustomerOrders dialog = new ViewCustomerOrders(phoneOrder, phoneOperatorWindow.customer);
+					dialog.setVisible(true);
 				}
 			}
 		});

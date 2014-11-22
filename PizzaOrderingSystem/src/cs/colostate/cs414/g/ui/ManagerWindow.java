@@ -38,7 +38,6 @@ import javax.swing.table.DefaultTableModel;
 
 import cs.colostate.cs414.g.domain.*;
 import cs.colostate.cs414.g.util.MainUtil;
-import cs.colostate.cs414.g.util.Stage;
 public class ManagerWindow  extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
@@ -57,7 +56,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public ManagerWindow(final Stage startStage, final Menu menu) {
+	public ManagerWindow(final Menu menu) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 712, 410);
 		contentPane = new JPanel();
@@ -121,7 +120,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 				try {
 					inputStream = new FileInputStream(new File("menu.txt"));
 					Menu newMenu = new Menu(inputStream);
-				      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+				      ManagerWindow addedItem = new ManagerWindow(newMenu);
 				      addedItem.setVisible(true);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -201,7 +200,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 					try {
 						inputStream = new FileInputStream(new File("menu.txt"));
 						Menu newMenu = new Menu(inputStream);
-					      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+					      ManagerWindow addedItem = new ManagerWindow(newMenu);
 					      addedItem.setVisible(true);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -268,7 +267,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 					try {
 						inputStream = new FileInputStream(new File("menu.txt"));
 						Menu newMenu = new Menu(inputStream);
-					      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+					      ManagerWindow addedItem = new ManagerWindow(newMenu);
 					      addedItem.setVisible(true);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -298,7 +297,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 					try {
 						inputStream = new FileInputStream(new File("menu.txt"));
 						Menu newMenu = new Menu(inputStream);
-					      ManagerWindow addedItem = new ManagerWindow(startStage, newMenu);
+					      ManagerWindow addedItem = new ManagerWindow(newMenu);
 					      addedItem.setVisible(true);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block

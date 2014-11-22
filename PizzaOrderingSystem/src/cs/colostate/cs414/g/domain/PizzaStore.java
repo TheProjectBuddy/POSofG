@@ -15,7 +15,6 @@ import java.util.Vector;
 import cs.colostate.cs414.g.util.FileManager;
 import cs.colostate.cs414.g.util.LoginUtil;
 import cs.colostate.cs414.g.util.MainUtil;
-import cs.colostate.cs414.g.util.TimeSystem;
 
 class ConfigParameters
 {
@@ -83,40 +82,24 @@ public class PizzaStore {
 			System.exit(1);
 		}
 		
-		final TimeSystem timeSystem = new TimeSystem();
-		TimeSystem.setTimeScale(180.0); 
-		// 1 second of real team == 3 minutes simulated time
-		
 		final Kitchen kitchen = new Kitchen();
 		for (int i = 0; i < configParams.numChefs; ++i) {
 			Chef c = new Chef();
 			kitchen.addChef(c);
-			timeSystem.addUpdateable(c);
 		}
 		
 		for (int i = 0; i < configParams.numOvens; ++i) {
 			Oven o = new Oven(configParams.ovenCapacity);
 			kitchen.addOven(o);
-			timeSystem.addUpdateable(o);
 		}
-		
-		timeSystem.addUpdateable(kitchen);	
-		Thread updateThread = new Thread() {
-			public void run() {
-				while (true) {
-					timeSystem.update();
-				}
-			}
-		};
-
+			
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				PizzaStore.saveDatabaseInfo();
 			}
 		});
 		
-		updateThread.start();
-		MainUtil.run(new PhoneOrder(customers, orders), menu, kitchen);
+		MainUtil.run(new PhoneOrder(customers, orders), menu);
 	}
 	
 	public static void saveDatabaseInfo() {

@@ -57,7 +57,7 @@ public class OrderEntryWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public OrderEntryWindow(final Stage startStage, final Menu menu, 
+	public OrderEntryWindow(final Menu menu, 
 			final PhoneOrder phoneOperator, final Customer customer, 
 			final PhoneOperatorWindow operatorWindow) {
 		

@@ -1,14 +1,10 @@
 package cs.colostate.cs414.g.domain;
 
 import cs.colostate.cs414.g.util.OrderStatus;
-import cs.colostate.cs414.g.util.Stage;
-import cs.colostate.cs414.g.util.TimeRange;
-import cs.colostate.cs414.g.util.TimeSystem;
-import cs.colostate.cs414.g.util.Update;
 import cs.colostate.cs414.g.util.WaitingQueue;
 
 
-public class Chef extends Stage implements Update, OrderItemEmp, java.io.Serializable
+public class Chef implements OrderItemEmp, java.io.Serializable
 {
 	private static final long serialVersionUID = 1249465871308592055L;
 	private WaitingQueue waitingQueue = null;
@@ -37,18 +33,10 @@ public class Chef extends Stage implements Update, OrderItemEmp, java.io.Seriali
 	public void update() {
 
 		if (currentOrderItem != null) {
-			TimeRange timeRange = currentOrderItem.getStageTimes().get(getAssociatedStage());
-			double elapsedTime = TimeSystem.getCurrentTime() - timeRange.getStart(); 
-
-			elapsedTime /= 60.0;
-
-			if (elapsedTime > currentOrderItem.getFood().getPrepTime()) {
 				currentOrderItem.endStage(getAssociatedStage());
 				currentOrderItem.setWorker(null);
-
-				nextStage.addOrderItem(currentOrderItem);
 				currentOrderItem = null;
-			}
+			
 		}
 		
 		if (currentOrderItem == null && waitingQueue.peekNextItem() != null) {

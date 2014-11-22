@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import cs.colostate.cs414.g.domain.OrderItem;
 import cs.colostate.cs414.g.domain.OrderItemEmp;
 
-public class WaitingQueue extends Stage implements OrderItemEmp,
+public class WaitingQueue implements OrderItemEmp,
 		Iterable<OrderItem>, java.io.Serializable {
 	private LinkedList<OrderItem> queue = new LinkedList<OrderItem>();
 	private OrderStatus associatedStage;

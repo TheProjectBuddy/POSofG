@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import cs.colostate.cs414.g.util.OrderStatus;
-import cs.colostate.cs414.g.util.TimeRange;
 
 public class Order implements java.io.Serializable{
 	
@@ -20,7 +19,6 @@ public class Order implements java.io.Serializable{
 	
 	public Order(Customer customer) {
 		this.customer = customer;
-		this.orderId = orderCounter++;
 	}
 	
 	public synchronized OrderItem addFood(MenuItem food) {
@@ -65,60 +63,7 @@ public class Order implements java.io.Serializable{
 		return sum;
 	}
 	
-	
-	/**
-	 * Calculate how long it took (or is taking, if the order is still in 
-	 * progress) for this order to complete 
-	 * @return the time it took for this order to complete (or is taking).
-	 */
-	public synchronized double calculateTotalTime() {
-		double max = 0.0;
-		max = getTimeCreated();
-		for (OrderItem oi : orderItems) {
-			TreeMap< OrderStatus, TimeRange > durations = oi.getStageTimes();
-			if (durations.size() > 0) {
-				OrderStatus lastStage = durations.lastKey();
-				double endTime = durations.get(lastStage).getEnd();
-				if (endTime > max) {
-					max = endTime;
-				}
-			}
-		}
-		
-		assert(max > getTimeCreated());
-		return (max - getTimeCreated());
-	}
-	
-	/**
-	 * Totals time spent preparing for this order
-	 * @return time spent preparing for this order
-	 */
-	public synchronized double getTimeSpentPreparing(){
-		double orderPrepTime=0;
-		for (OrderItem curItem: orderItems){
-			TimeRange prepWait=curItem.getStageTimes().get(OrderStatus.PREPARATION_WAITING);
-			TimeRange prep=curItem.getStageTimes().get(OrderStatus.PREPARATION);
-			if (prep != null) orderPrepTime += prep.getDuration();
-			if (prepWait != null) orderPrepTime += prepWait.getDuration();
-		}
-		return orderPrepTime;
-	}
-	
-	/**
-	 * Totals time spent cooking for this order
-	 * @return time spent cooking for this order
-	 */
-	public synchronized double getTimeSpentCooking(){
-		double orderCookTime=0;
-		for (OrderItem curItem: orderItems){
-			TimeRange cookWait=curItem.getStageTimes().get(OrderStatus.COOKING_WAITING);
-			TimeRange cook=curItem.getStageTimes().get(OrderStatus.COOKING);
-			if (cook != null) orderCookTime += cook.getDuration();
-			if (cookWait != null) orderCookTime += cookWait.getDuration();
-		}
-		return orderCookTime;
-	}
-	
+
 	/**
 	 * Is the order complete (ie, delivered)?
 	 * 

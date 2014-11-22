@@ -35,7 +35,7 @@ public class PhoneOperatorWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PhoneOperatorWindow(WelcomeWindow welcomeWindow, PhoneOrder po, final Menu menu, final Stage startStage) {		
+	public PhoneOperatorWindow(WelcomeWindow welcomeWindow, PhoneOrder po, final Menu menu) {		
 		this.welcomeWindow = welcomeWindow;
 		this.phoneOperator = po;
 		
@@ -122,7 +122,7 @@ public class PhoneOperatorWindow extends JFrame {
 		buttonPlacemodifyOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				PhoneOperatorWindow.this.setVisible(false);
-				OrderEntryWindow orderEntryWindow = new OrderEntryWindow(startStage, menu, phoneOperator, customer, PhoneOperatorWindow.this);
+				OrderEntryWindow orderEntryWindow = new OrderEntryWindow( menu, phoneOperator, customer, PhoneOperatorWindow.this);
 				orderEntryWindow.setVisible(true);
 			}
 		});
