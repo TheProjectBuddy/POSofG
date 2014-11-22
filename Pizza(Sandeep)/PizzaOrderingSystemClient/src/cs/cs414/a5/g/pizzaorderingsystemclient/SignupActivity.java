@@ -73,11 +73,18 @@ public class SignupActivity extends ActionBarActivity {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} 
-					Toast.makeText(getApplicationContext(), response ,Toast.LENGTH_LONG).show();
-				
+					
+				if(response==null)
+				{
+					Toast.makeText(getApplicationContext(),"Signup failed,username exists" ,Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					Toast.makeText(getApplicationContext(),response ,Toast.LENGTH_LONG).show();
 				   Intent intent=new Intent(SignupActivity.this,KioskActivity.class);
 				   intent.putExtra("GName",name.replace("+"," "));
 				   startActivity(intent);
+				}
 				}
 				
 				

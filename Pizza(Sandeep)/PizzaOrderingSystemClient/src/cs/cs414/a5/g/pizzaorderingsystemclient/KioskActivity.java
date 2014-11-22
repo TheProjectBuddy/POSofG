@@ -280,6 +280,8 @@ case MY_BUTTON3:
 	try{
 		String loggedin=(String)logResult.get();
 		Toast.makeText(getApplicationContext(), loggedin, Toast.LENGTH_LONG).show();
+		Intent intents=new Intent(KioskActivity.this,MainActivity2.class);
+		startActivity(intents);
 	}
 	catch(Exception e)
 	{

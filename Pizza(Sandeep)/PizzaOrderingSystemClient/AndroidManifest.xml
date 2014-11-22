@@ -44,6 +44,22 @@
             android:name=".OrderActivity"
             android:label="@string/title_activity_order" >
         </activity>
+        <activity
+            android:name=".ThankYou"
+            android:label="@string/title_activity_thank_you" >
+        </activity>
+        <activity
+            android:name=".MainActivity2"
+            android:label="@string/title_activity_main_activity2" >
+        </activity>
+        <activity
+            android:name=".Delivery"
+            android:label="@string/title_activity_delivery" >
+        </activity>
+        <activity
+            android:name=".PaymentCard"
+            android:label="@string/title_activity_payment_card" >
+        </activity>
     </application>
 
 </manifest>

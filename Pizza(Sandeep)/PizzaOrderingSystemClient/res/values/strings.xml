@@ -12,5 +12,9 @@
     <string name="remove">Remove Item</string>
     <string name="title_activity_kiosk">KioskActivity</string>
     <string name="title_activity_order">OrderActivity</string>
+    <string name="title_activity_thank_you">ThankYou</string>
+    <string name="title_activity_main_activity2">MainActivity2</string>
+    <string name="title_activity_delivery">Delivery</string>
+    <string name="title_activity_payment_card">PaymentCard</string>
 
 </resources>
