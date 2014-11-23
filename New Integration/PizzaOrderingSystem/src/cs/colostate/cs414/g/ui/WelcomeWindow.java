@@ -104,11 +104,9 @@ public class WelcomeWindow extends JFrame{
 		buttonChef = new JButton("Chef");
 		buttonChef.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(phoneOperatorWindow.customer!=null){
-					ViewCustomerOrders dialog = new ViewCustomerOrders(phoneOrder, phoneOperatorWindow.customer);
-					dialog.setVisible(true);
+				ChefWindow chefWindow = new ChefWindow();
+				chefWindow.setVisible(true);
 				}
-			}
 		});
 		panel.add(buttonChef);
 		buttonCustomer = new JButton("Customer");
