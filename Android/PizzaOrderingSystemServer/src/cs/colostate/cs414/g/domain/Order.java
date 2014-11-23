@@ -7,7 +7,7 @@ public class Order implements java.io.Serializable{
 	private static final long serialVersionUID = 5199787946298783352L;
 	private ArrayList< OrderItem > orderItems = new ArrayList< OrderItem >();
 	Customer customer;
-	private int orderId;
+	private static int orderId=1;
 	public double total;
 	
 	public static int orderCounter;
@@ -17,6 +17,7 @@ public class Order implements java.io.Serializable{
 	}
 	public Order(Customer customer) {
 		this.customer = customer;
+		this.orderId++;
 	}
 	
 	public synchronized OrderItem addFood(MenuItem food) {

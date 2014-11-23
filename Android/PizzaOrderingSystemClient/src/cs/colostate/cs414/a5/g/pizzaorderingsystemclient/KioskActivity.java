@@ -51,10 +51,10 @@ public class KioskActivity extends Activity implements OnClickListener,
 	final ArrayList<String> othersSelected = new ArrayList<String>();
 	final ArrayList<CheckBox> selectedcheckBox = new ArrayList<CheckBox>();
 	public static String orderString = null;
-	public static int orderId = 1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		uriString = "customer=guest&orderId="+orderId;
+		uriString = "customer=guest&orderId=1";
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_kiosk);
@@ -288,8 +288,21 @@ public class KioskActivity extends Activity implements OnClickListener,
 
 			break;
 		case MY_BUTTON3:
-			orderId ++;
+			// Create a tuple in a file
+			uriString ="&status=true";
+			AsyncTask result3 = new SendOrder().execute(uriString);
+			try {
+				orderString = (String) result3.get();
+				// use TOTAL from here...
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
 	}
 	
 	@Override
