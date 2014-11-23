@@ -1,1 +1,2 @@
 1|SMALL-Tomato-Jalapeno|LARGE-Mushrooms|Fountain_Drink|23.0|PAID
+1|Salad|5.0|PAID

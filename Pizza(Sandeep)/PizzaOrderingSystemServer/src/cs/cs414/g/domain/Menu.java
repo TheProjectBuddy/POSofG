@@ -31,7 +31,7 @@ public class Menu implements Serializable {
 			
 			final int NUM_PIZZA_PARAMS = 6;
 			final int NUM_TOPPINGS_PARAMS = 3;
-			final int NUM_OTHER_PARAMS = 4;
+			final int NUM_OTHER_PARAMS = 5;
 			if (splits.length == NUM_PIZZA_PARAMS && splits[0].equals("0")) {
 				// must be a pizza
 				Pizza.Size size;
