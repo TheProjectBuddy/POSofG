@@ -30,15 +30,15 @@ public class OrderUtil {
 
 					String[] splits = line.split("\\|");
 					int length = splits.length;
-					if (!splits[length - 1].equalsIgnoreCase("COMPLETED")) {
-						for (int i = 0; i < splits.length; ++i) {
-							splits[i] = splits[i].trim();
-						}
+//					if (!splits[length - 1].equalsIgnoreCase("COMPLETED")) {
+//						for (int i = 0; i < splits.length; ++i) {
+//							splits[i] = splits[i].trim();
+//						}
 						for (int i = 0; i < splits.length; i++)
 							orderList += splits[i] + " ";
 						orderList += "\n";
 					}
-				}
+				//}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
