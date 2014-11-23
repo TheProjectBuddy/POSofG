@@ -1,10 +1,10 @@
 package cs.cs414.a5.g.pizzaorderingsystemclient;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class SignupActivity extends ActionBarActivity {
+public class SignupActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

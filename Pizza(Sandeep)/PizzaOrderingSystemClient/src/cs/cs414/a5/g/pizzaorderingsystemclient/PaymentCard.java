@@ -22,7 +22,7 @@ public class PaymentCard extends Activity {
 	
 
 
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
+	//@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,7 +31,7 @@ public class PaymentCard extends Activity {
 		Button buttonPayment = (Button) findViewById(R.id.button2);
 		buttonPayment.setOnClickListener(new OnClickListener() {
 			
-			@TargetApi(Build.VERSION_CODES.GINGERBREAD)
+			//@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub

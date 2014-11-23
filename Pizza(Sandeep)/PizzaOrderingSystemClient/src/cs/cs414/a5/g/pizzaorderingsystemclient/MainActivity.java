@@ -1,7 +1,8 @@
 package cs.cs414.a5.g.pizzaorderingsystemclient;
 
 
-import android.support.v7.app.ActionBarActivity;
+//import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

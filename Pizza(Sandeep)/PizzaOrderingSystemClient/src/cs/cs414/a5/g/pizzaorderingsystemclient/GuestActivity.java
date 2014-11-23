@@ -1,7 +1,6 @@
 package cs.cs414.a5.g.pizzaorderingsystemclient;
 
-import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,9 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-public class GuestActivity extends ActionBarActivity {
+public class GuestActivity extends Activity {
 
 	static int guestId=1;
 	@Override
