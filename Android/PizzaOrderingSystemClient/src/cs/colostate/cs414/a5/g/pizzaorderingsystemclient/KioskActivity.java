@@ -290,14 +290,39 @@ public class KioskActivity extends Activity implements OnClickListener,
 		case MY_BUTTON3:
 			// Create a tuple in a file
 			uriString ="&status=true";
+			int totalPrice = 0;
 			AsyncTask result3 = new SendOrder().execute(uriString);
 			try {
 				orderString = (String) result3.get();
 				// use TOTAL from here...
+				DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+				DocumentBuilder b;
+					b = f.newDocumentBuilder();
+				Document doc = b.parse(new InputSource(new StringReader(orderString)));
+				NodeList price = doc.getElementsByTagName("total");
+				for(int l=0;l<price.getLength();l++){
+					Element total = (Element) price.item(l);
+					totalPrice = Integer.parseInt(getCharacterDataFromElement(total));
+				}
+				Intent intentPay = new Intent(this, PaymentActivity.class);
+				intentPay.putExtra("TotalPrice", totalPrice);
+				startActivityForResult(intentPay, 1);
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
