@@ -290,7 +290,7 @@ public class KioskActivity extends Activity implements OnClickListener,
 		case MY_BUTTON3:
 			// Create a tuple in a file
 			uriString ="&status=true";
-			int totalPrice = 0;
+			String totalPrice = new String();
 			AsyncTask result3 = new SendOrder().execute(uriString);
 			try {
 				orderString = (String) result3.get();
@@ -302,9 +302,9 @@ public class KioskActivity extends Activity implements OnClickListener,
 				NodeList price = doc.getElementsByTagName("total");
 				for(int l=0;l<price.getLength();l++){
 					Element total = (Element) price.item(l);
-					totalPrice = Integer.parseInt(getCharacterDataFromElement(total));
+					totalPrice = getCharacterDataFromElement(total);
 				}
-				Intent intentPay = new Intent(this, PaymentActivity.class);
+				Intent intentPay = new Intent(this, PaymentFirst.class);
 				intentPay.putExtra("TotalPrice", totalPrice);
 				startActivityForResult(intentPay, 1);
 				
