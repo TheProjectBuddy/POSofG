@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
-public class MainActivity2 extends Activity {
+public class PaymentFirst extends Activity {
 	
 	
 
@@ -21,7 +21,10 @@ public class MainActivity2 extends Activity {
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity2);
-        
+        Intent intent = getIntent();
+		double total = Double.parseDouble(intent.getStringExtra("TotalPrice"));
+		String customernum=intent.getStringExtra("CustomerID");
+		Toast.makeText(getApplicationContext(),customernum+total,Toast.LENGTH_LONG).show();
         final double d = 12.3;
         
         Button button1 = (Button) findViewById(R.id.button1);
@@ -32,6 +35,12 @@ public class MainActivity2 extends Activity {
 				// TODO Auto-generated method stub
 				final String customerID = "1";
 				double point = 0;
+				
+				/**
+				 * To be removed later
+				 */
+				point=0;
+				//point=total;
 				//customerID
 				final AsyncTask redeemResult = new RedeemPointCall().execute(customerID);
 				try 
@@ -48,7 +57,7 @@ public class MainActivity2 extends Activity {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Intent intent1 = new Intent(MainActivity2.this, ThankYou.class);
+				Intent intent1 = new Intent(PaymentFirst.this, ThankYou.class);
 				intent1.putExtra("customerID", customerID);
 				intent1.putExtra("customerPoints", Double.toString(point));
 				startActivity(intent1);
@@ -63,7 +72,7 @@ public class MainActivity2 extends Activity {
 				// TODO Auto-generated method stub
 				
 				 
-				Intent intent2 = new Intent(MainActivity2.this, Delivery.class);
+				Intent intent2 = new Intent(PaymentFirst.this, Delivery.class);
 				startActivity(intent2);
 			}
 		});

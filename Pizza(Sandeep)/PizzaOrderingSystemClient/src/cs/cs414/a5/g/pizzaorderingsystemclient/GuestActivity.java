@@ -41,6 +41,7 @@ public class GuestActivity extends Activity {
 			       // Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
 			        Intent intent=new Intent(GuestActivity.this,KioskActivity.class);
 			        intent.putExtra("GName",name);
+			        intent.putExtra("CustomerID",0);
 			        startActivity(intent);
 			                          
 			       }  
@@ -51,7 +52,8 @@ public class GuestActivity extends Activity {
 			        public void onClick(DialogInterface dialog, int which) {
 			        	//Toast.makeText(getApplicationContext(),"Skipped",Toast.LENGTH_LONG).show();
 			        	Intent intent=new Intent(GuestActivity.this,KioskActivity.class);
-				        intent.putExtra("GName","Guest");
+				        //intent.putExtra("GName","Guest");
+				        intent.putExtra("CustomerID", 0);
 				        startActivity(intent);
 			        }
 			    });		    

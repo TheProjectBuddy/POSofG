@@ -16,6 +16,7 @@ import cs.cs414.a5.g.util.DataUtil;
 
 public class SigninController implements HttpHandler{
 
+	String customerID;
 	String name;
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
@@ -23,10 +24,14 @@ public class SigninController implements HttpHandler{
 		
 		
 		String response=null;
+		String temp="";
 		Boolean r=authenticate(uri.getQuery());;
 		if(r==true)
 		{
-		response=name;
+			temp+=name;
+			temp+="-";
+			temp+=customerID;
+			response=temp;
 		DataUtil.setLoggedin(r);
 		}
 		
@@ -63,9 +68,9 @@ public class SigninController implements HttpHandler{
 				elements = newLine.split("\\|");
 				
 				for(int i=0;i<elements.length;i++)
-				System.out.println(elements[i]);
+				//System.out.println(elements[i]);
 				
-				System.out.println(elements.length);
+				//System.out.println(elements.length);
 				
 				//System.out.println(elements[3]);
 				//System.out.println(elements[elements.length]);
@@ -75,8 +80,9 @@ public class SigninController implements HttpHandler{
 					
 					if(elements[4].equals(password))
 					{
-					    flag = true;	
+					    flag = true;
 					    name=elements[0];
+					    customerID=elements[5];
 					}
 					else
 					{

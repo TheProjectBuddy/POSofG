@@ -22,6 +22,7 @@ public class SignupController implements HttpHandler{
 
 	String name;
 	String response=null;
+	int customerID;
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		URI uri= exchange.getRequestURI();
@@ -31,7 +32,7 @@ public class SignupController implements HttpHandler{
 		//System.out.println(uri.getQuery());
 		if(success==true)
 		{
-		response="Signup Successful!";
+		response=""+customerID;
         DataUtil.setLoggedin(success);
 		}
 		
@@ -88,9 +89,9 @@ public class SignupController implements HttpHandler{
 			bufferedWriter.write(temp[1]+"|");			
 			}
 			
-			bufferedWriter.write(count+"|"+100+"\n");
+			bufferedWriter.write((count+1)+"|"+100+"\n");
 			bufferedWriter.close();
-			
+			customerID=count+1;
 			flag=true;
 		}
 		catch(Exception e)

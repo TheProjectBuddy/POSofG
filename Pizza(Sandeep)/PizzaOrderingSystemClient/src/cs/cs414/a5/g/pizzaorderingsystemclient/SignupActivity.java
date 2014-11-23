@@ -80,9 +80,11 @@ public class SignupActivity extends Activity {
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(),response ,Toast.LENGTH_LONG).show();
+				
+				   Toast.makeText(getApplicationContext(),response ,Toast.LENGTH_LONG).show();
 				   Intent intent=new Intent(SignupActivity.this,KioskActivity.class);
 				   intent.putExtra("GName",name.replace("+"," "));
+				   intent.putExtra("CustomerID",response);
 				   startActivity(intent);
 				}
 				}

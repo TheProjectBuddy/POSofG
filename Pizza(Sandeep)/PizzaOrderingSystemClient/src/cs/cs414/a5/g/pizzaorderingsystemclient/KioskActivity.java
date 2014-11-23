@@ -49,7 +49,7 @@ private static final int MY_BUTTON2 = 9001;
 private static final int MY_BUTTON3 = 9002;
 
 public String uriString = new String();
-
+String customerID;
 final RadioButton[] rb = new RadioButton[4];
 RadioGroup rg;
 final ArrayList<String> toppingsSelected = new ArrayList<String>();
@@ -67,12 +67,13 @@ setContentView(R.layout.activity_kiosk);
 
 Intent intent=getIntent();
 uriString="customer="+intent.getStringExtra("GName");
-
+customerID=intent.getStringExtra("CustomerID");
+Toast.makeText(getApplicationContext(),"id="+customerID+uriString, Toast.LENGTH_LONG).show();
 AsyncTask idresult=new OrderIdCall().execute();
 try{
 	String id=(String)idresult.get();
 	uriString+="&orderId="+id;
-	Toast.makeText(getApplicationContext(), uriString, Toast.LENGTH_LONG).show();
+	//Toast.makeText(getApplicationContext(), uriString, Toast.LENGTH_LONG).show();
 }catch(Exception e)
 {
 	e.printStackTrace();
@@ -308,21 +309,50 @@ case MY_BUTTON2:
 
 	break;
 case MY_BUTTON3:
-	AsyncTask logResult=new LogCall().execute();
-	try{
-		String loggedin=(String)logResult.get();
-		Toast.makeText(getApplicationContext(), loggedin, Toast.LENGTH_LONG).show();
-		Intent intents=new Intent(KioskActivity.this,MainActivity2.class);
-		startActivity(intents);
-	}
-	catch(Exception e)
-	{
-		e.printStackTrace();
-	}
-	
-	break;
-} 
-}
+	// Create a tuple in a file
+				uriString ="&status=true";
+				String totalPrice = new String();
+				AsyncTask result3 = new SendOrder().execute(uriString);
+				try {
+					orderString = (String) result3.get();
+					// use TOTAL from here...
+					DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+					DocumentBuilder b;
+						b = f.newDocumentBuilder();
+					Document doc = b.parse(new InputSource(new StringReader(orderString)));
+					NodeList price = doc.getElementsByTagName("total");
+					for(int l=0;l<price.getLength();l++){
+						Element total = (Element) price.item(l);
+						totalPrice = getCharacterDataFromElement(total);
+					}
+					Intent intentPay = new Intent(this, PaymentFirst.class);
+					intentPay.putExtra("TotalPrice", totalPrice);
+					intentPay.putExtra("CustomerID",customerID);
+					startActivityForResult(intentPay, 1);
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				break;
+			}
+			
+		}
 
 @Override
 public void onCheckedChanged(RadioGroup group, int checkedId) {

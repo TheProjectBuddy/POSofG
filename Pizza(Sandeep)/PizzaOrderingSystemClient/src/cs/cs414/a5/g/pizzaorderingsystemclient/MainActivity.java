@@ -64,6 +64,7 @@ public class MainActivity extends Activity {
 					       // Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
 					        Intent intent=new Intent(MainActivity.this,KioskActivity.class);
 					        intent.putExtra("GName",name);
+					        intent.putExtra("CustomerID","0");
 					        startActivity(intent);
 					                          
 					       }  
@@ -75,6 +76,7 @@ public class MainActivity extends Activity {
 					        	//Toast.makeText(getApplicationContext(),"Skipped",Toast.LENGTH_LONG).show();
 					        	Intent intent=new Intent(MainActivity.this,KioskActivity.class);
 						        intent.putExtra("GName","Guest");
+						        intent.putExtra("CustomerID","0");
 						        startActivity(intent);
 					        }
 					    });		    
