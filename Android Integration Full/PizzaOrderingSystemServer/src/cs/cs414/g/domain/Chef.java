@@ -89,4 +89,42 @@ public class Chef implements OrderItemEmp, java.io.Serializable
 		}
 		return orderList;
 	}
+	public String makeDelivered(JTextArea editTextArea, int thisline) {
+		// TODO Auto-generated method stub
+		File file = new File("order.txt");
+		String orderList = new String();
+		try 
+		{
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String lineRead ;
+			if(thisline == 1)
+				orderList+= bufferedReader.readLine().replace("COMPLETED", "DELIVERED");
+			else
+				orderList += bufferedReader.readLine();
+			
+			int lineCount = 1;
+			while((lineRead = bufferedReader.readLine()) != null)
+			{
+			  if (lineCount == thisline-1){
+				  orderList += "\n"+ lineRead.replace("COMPLETED", "DELIVERED");
+				  lineCount++;
+			  }
+			  else{
+				  lineCount++;
+				  orderList += "\n"+lineRead;
+			  }
+			}
+			
+			PrintWriter fileWriter = new PrintWriter(file);
+			fileWriter.println(orderList);
+			fileWriter.close();
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error!!");
+		}
+		return orderList;
+	}
 }

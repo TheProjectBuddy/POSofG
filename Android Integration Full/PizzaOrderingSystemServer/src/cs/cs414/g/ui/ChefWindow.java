@@ -25,6 +25,7 @@ public class ChefWindow extends JFrame implements ActionListener {
 	public static JButton inputButton = new JButton("Order Completed!");
 	public static JTextArea editTextArea = new JTextArea("Type Here!");
 	public static JTextArea uneditTextArea = new JTextArea();
+	public static JButton deliver = new JButton("Delivered Completed!");
 	private String myString;
 
 	/**
@@ -45,7 +46,7 @@ public class ChefWindow extends JFrame implements ActionListener {
 		contentPane.add(uneditTextArea, BorderLayout.CENTER);
 		contentPane.add(editTextArea, BorderLayout.SOUTH);
 		contentPane.add(inputButton, BorderLayout.WEST);
-		
+		contentPane.add(deliver, BorderLayout.EAST);
 		inputButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -55,6 +56,21 @@ public class ChefWindow extends JFrame implements ActionListener {
 				int line = Integer.parseInt(myString);
 				Chef chef = new Chef();
 				myString = chef.makeCompleted(editTextArea,line);
+
+				uneditTextArea.setText(OrderUtil.getOrderText());
+			}
+		});
+		
+		
+		deliver.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myString = editTextArea.getText();
+
+				int line = Integer.parseInt(myString);
+				Chef chef = new Chef();
+				myString = chef.makeDelivered(editTextArea,line);
 
 				uneditTextArea.setText(OrderUtil.getOrderText());
 			}
