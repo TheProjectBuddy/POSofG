@@ -1,4 +1,4 @@
-package com.example.harshil_payment;
+package cs.cs414.a5.g.pizzaorderingsystemclient;
 
 import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
@@ -164,40 +164,84 @@ public class Delivery extends Activity {
 			public void onClick(View v) {
 				EditText editText = (EditText) findViewById(R.id.editText2);
 			    String couponNumber = editText.getText().toString();
-				AsyncTask result=new ReduceCouponCall().execute(couponNumber);
-				TextView textView7 = (TextView) findViewById(R.id.textView3);
-				String[] elements = textView7.getText().toString().split(":");
-				double beforeDisc = Double.parseDouble(elements[1]);
-				
-				Button buttonApply = (Button) findViewById(R.id.button3);
-				
-				try 
-				{
-					String discount = (String) result.get();
-					double discountAmount = Double.parseDouble(discount);
-					double newPrice = beforeDisc - discountAmount;
-					if(discount.equals(""))
-					{
-						
-					}
-					else
-					{
-						buttonApply.setEnabled(false);
-					}
-					
-					TextView textView = (TextView) findViewById(R.id.textView3);
-					DecimalFormat df = new DecimalFormat("#.##");   
-					//df.format(newPrice);
-					textView.setText("Your New Amount: "+df.format(newPrice));
-					
-					Toast.makeText(getApplicationContext(),"Your Discount Is Applied Successfully",Toast.LENGTH_LONG).show();
-				} 
-				catch (Exception e)
-				{
+			    
+			    TextView textView16 = (TextView) findViewById(R.id.textView1);
+				String[] redeemElements = textView16.getText().toString().split(" ");
+			
+				double points = Double.parseDouble(redeemElements[2]);
+				AsyncTask result3=new ReduceCouponCall().execute("ABCD9999");
+				String pointToReduceAllow = "";
+				try {
+					pointToReduceAllow = (String) result3.get();
+					Toast.makeText(getApplicationContext(),pointToReduceAllow,Toast.LENGTH_LONG).show();
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e1.printStackTrace();
 				} 
-				
+				if(couponNumber.equals("ABCD9999") && points >= Double.parseDouble(pointToReduceAllow))
+				{
+					
+					Button buttonApply = (Button) findViewById(R.id.button3);
+					buttonApply.setEnabled(false);
+					
+					Button buttonDis = (Button) findViewById(R.id.button2);
+					buttonDis.setEnabled(false);
+					
+					Button buttonNew = (Button) findViewById(R.id.button1);
+					buttonNew.setText("Submit Order!");
+					
+					TextView textViewF = (TextView) findViewById(R.id.textView3);
+					
+					textViewF.setText("Your New Amount: 0");
+					
+					TextView textView70 = (TextView) findViewById(R.id.textView1);
+					String[] redeemElementsF = textView70.getText().toString().split(" ");
+					
+					
+					double newPoint = Double.parseDouble(redeemElements[2]) - Double.parseDouble(pointToReduceAllow) + 100;
+					textView70.setText("You Have "+newPoint+" Redeem Points Left Now!");
+					
+					CheckBox redeemChange = (CheckBox) findViewById(R.id.checkBox1);
+					redeemChange.setEnabled(false);
+					Toast.makeText(getApplicationContext(),"Your Discount Is Applied Successfully",Toast.LENGTH_LONG).show();
+					
+				}
+				else
+				{
+					AsyncTask result=new ReduceCouponCall().execute(couponNumber);
+					TextView textView7 = (TextView) findViewById(R.id.textView3);
+					String[] elements = textView7.getText().toString().split(":");
+					double beforeDisc = Double.parseDouble(elements[1]);
+					
+					Button buttonApply = (Button) findViewById(R.id.button3);
+					
+					try 
+					{
+						String discount = (String) result.get();
+						double discountAmount = Double.parseDouble(discount);
+						double newPrice = beforeDisc - discountAmount;
+						if(discount.equals(""))
+						{
+							
+						}
+						else
+						{
+							buttonApply.setEnabled(false);
+						}
+						
+						TextView textView = (TextView) findViewById(R.id.textView3);
+						DecimalFormat df = new DecimalFormat("#.##");   
+						//df.format(newPrice);
+						textView.setText("Your New Amount: "+df.format(newPrice));
+						
+						Toast.makeText(getApplicationContext(),"Your Discount Is Applied Successfully",Toast.LENGTH_LONG).show();
+					} 
+					catch (Exception e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+				}
 			}
 		});
 	}

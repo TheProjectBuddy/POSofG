@@ -1,4 +1,4 @@
-package com.example.harshil_payment;
+package cs.cs414.a5.g.pizzaorderingsystemclient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
-public class MainActivity extends Activity {
+public class PaymentFirst extends Activity {
 	
 	
 
@@ -20,20 +20,22 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_activity2);
         
-        final double d = 12.3;
-        
+        final double d = Double.parseDouble(getIntent().getStringExtra("TotalPrice"));
+        final String customerID = getIntent().getStringExtra("CustomerID");
+        Toast.makeText(getApplicationContext(),Double.toString(d),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),customerID,Toast.LENGTH_LONG).show();
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				final String customerID = "1";
+				
 				double point = 0;
 				//customerID
-				final AsyncTask redeemResult = new RedeemPointCall().execute(customerID);
+				final AsyncTask redeemResult = new RedeemPointCall().execute(customerID.trim());
 				try 
 				{
 					
@@ -48,7 +50,7 @@ public class MainActivity extends Activity {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Intent intent1 = new Intent(MainActivity.this, ThankYou.class);
+				Intent intent1 = new Intent(PaymentFirst.this, ThankYou.class);
 				intent1.putExtra("customerID", customerID);
 				intent1.putExtra("customerPoints", Double.toString(point));
 				startActivity(intent1);
@@ -63,7 +65,10 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				
 				 
-				Intent intent2 = new Intent(MainActivity.this, Delivery.class);
+				Intent intent2 = new Intent(PaymentFirst.this, Delivery.class);
+				
+				intent2.putExtra("CustomerID", customerID);
+				intent2.putExtra("TotalPrice", Double.toString(d));
 				startActivity(intent2);
 			}
 		});
