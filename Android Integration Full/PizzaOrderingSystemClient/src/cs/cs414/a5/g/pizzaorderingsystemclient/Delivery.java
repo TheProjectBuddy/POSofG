@@ -113,7 +113,7 @@ public class Delivery extends Activity {
 						points = points*20;
 						DecimalFormat df = new DecimalFormat("#.##"); 
 						DecimalFormat df1 = new DecimalFormat("#"); 
-						//Toast.makeText(getApplicationContext(),Double.toString(amount),Toast.LENGTH_LONG).show();
+						//Toast.m//akeText(getApplicationContext(),Double.toString(amount),Toast.LENGTH_LONG).show();
 						if(amount >= 0) textView8.setText("Your New Amount:"+(df.format(amount)));
 						else 
 							{
@@ -201,7 +201,7 @@ public class Delivery extends Activity {
 				String pointToReduceAllow = "";
 				try {
 					pointToReduceAllow = (String) result3.get();
-					Toast.makeText(getApplicationContext(),pointToReduceAllow,Toast.LENGTH_LONG).show();
+					////Toast.makeText(getApplicationContext(),pointToReduceAllow,//Toast.LENGTH_LONG).show();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

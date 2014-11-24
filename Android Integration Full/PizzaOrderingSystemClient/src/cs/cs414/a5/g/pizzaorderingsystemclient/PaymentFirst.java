@@ -24,8 +24,8 @@ public class PaymentFirst extends Activity {
         
         final double d = Double.parseDouble(getIntent().getStringExtra("TotalPrice"));
         final String customerID = getIntent().getStringExtra("CustomerID");
-        Toast.makeText(getApplicationContext(),Double.toString(d),Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(),customerID,Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),Double.toString(d),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),customerID,Toast.LENGTH_LONG).show();
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new OnClickListener() {
 			

@@ -80,7 +80,7 @@ public class WelcomeWindow extends JFrame{
 				}
 				if(LoginUtil.authenticate(userName, password)){
 					phoneOperatorWindow.present();
-					WelcomeWindow.this.setVisible(false);
+					//WelcomeWindow.this.setVisible(false);
 				}
 			}
 		});
@@ -104,8 +104,18 @@ public class WelcomeWindow extends JFrame{
 		buttonChef = new JButton("Chef");
 		buttonChef.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ChefWindow chefWindow = new ChefWindow();
-				chefWindow.setVisible(true);
+				String userName = JOptionPane.showInputDialog(null, "Please Enter Your Username", "Login Details - Username", 0);
+				JPasswordField pf = new JPasswordField();
+				String password = new String();
+				int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (okCxl == JOptionPane.OK_OPTION) {
+				   password = new String(pf.getPassword());
+				}
+				if(LoginUtil.authenticate(userName, password)){
+					ChefWindow chefWindow = new ChefWindow();
+					chefWindow.setVisible(true);
+				}
+				
 				}
 		});
 		panel.add(buttonChef);
@@ -113,7 +123,7 @@ public class WelcomeWindow extends JFrame{
 		buttonCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				phoneOperatorWindow.present();
-				WelcomeWindow.this.setVisible(false);
+				//WelcomeWindow.this.setVisible(false);
 			}
 		});
 		panel.add(buttonCustomer);

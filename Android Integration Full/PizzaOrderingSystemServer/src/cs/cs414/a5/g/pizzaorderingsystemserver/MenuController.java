@@ -6,9 +6,7 @@ import java.net.URI;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import cs.cs414.a5.g.util.MenuUtil;
-import cs.cs414.g.domain.Menu;
-import cs.cs414.g.domain.MenuItem;
-import cs.cs414.g.domain.Topping;
+import cs.cs414.g.domain.*;
 
 public class MenuController implements HttpHandler {
 
@@ -63,6 +61,9 @@ public class MenuController implements HttpHandler {
 					buffer.append("<price>");
 					buffer.append(menu.getPrice());
 					buffer.append("</price>");
+					buffer.append("<special>");
+					buffer.append(menu.special);
+					buffer.append("</special>");
 					buffer.append("</others>");
 				}
 					

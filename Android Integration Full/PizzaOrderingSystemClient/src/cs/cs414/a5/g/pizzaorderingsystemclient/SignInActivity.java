@@ -44,7 +44,7 @@ public class SignInActivity extends Activity {
 				if(!(response==null))
 				{
 					String temp[]=response.split("-");
-				Toast.makeText(getApplicationContext(), response ,Toast.LENGTH_LONG).show();
+				//Toast.makeText(getApplicationContext(), response ,Toast.LENGTH_LONG).show();
 				Intent intent=new Intent(SignInActivity.this,KioskActivity.class);
 				intent.putExtra("GName",temp[0]);
 				intent.putExtra("CustomerID",temp[1]);

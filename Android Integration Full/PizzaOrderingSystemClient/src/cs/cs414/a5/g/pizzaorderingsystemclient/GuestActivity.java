@@ -38,7 +38,7 @@ public class GuestActivity extends Activity {
 			        EditText mUserText;
 			        mUserText = (EditText) myView.findViewById(R.id.editText1);
 			        String name = mUserText.getText().toString();
-			       // Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
+			       // ////Toast.makeText(getApplicationContext(),name,//Toast.LENGTH_LONG).show();
 			        Intent intent=new Intent(GuestActivity.this,KioskActivity.class);
 			        intent.putExtra("GName",name);
 			        intent.putExtra("CustomerID",0);
@@ -50,7 +50,7 @@ public class GuestActivity extends Activity {
 			    builder.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
 
 			        public void onClick(DialogInterface dialog, int which) {
-			        	//Toast.makeText(getApplicationContext(),"Skipped",Toast.LENGTH_LONG).show();
+			        	//////Toast.makeText(getApplicationContext(),"Skipped",////Toast.LENGTH_LONG).show();
 			        	Intent intent=new Intent(GuestActivity.this,KioskActivity.class);
 				        //intent.putExtra("GName","Guest");
 				        intent.putExtra("CustomerID", 0);

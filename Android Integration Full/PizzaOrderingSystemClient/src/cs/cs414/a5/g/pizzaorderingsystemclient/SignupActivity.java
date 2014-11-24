@@ -63,9 +63,9 @@ public class SignupActivity extends Activity {
 				if(flag==0)
 				{
 					String message="Name="+name+"&"+"Email="+email+"&"+"Address="+address+"&"+"Username="+username+"&"+"Password="+password;
-					Toast toast=Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
+				//	Toast toast=Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG);
+				//	toast.setGravity(Gravity.CENTER, 0, 0);
+				//	toast.show();
 					AsyncTask result= new SignupCall().execute(message);
 					try {
 						response=(String)result.get();
@@ -81,7 +81,7 @@ public class SignupActivity extends Activity {
 				else
 				{
 				
-				   Toast.makeText(getApplicationContext(),response ,Toast.LENGTH_LONG).show();
+				  // Toast.makeText(getApplicationContext(),response ,Toast.LENGTH_LONG).show();
 				   Intent intent=new Intent(SignupActivity.this,KioskActivity.class);
 				   intent.putExtra("GName",name);
 				   intent.putExtra("CustomerID",response);

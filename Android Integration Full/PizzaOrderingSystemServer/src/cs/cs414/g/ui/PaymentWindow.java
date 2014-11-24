@@ -129,6 +129,7 @@ public class PaymentWindow extends JFrame {
 		   //PaymentWindow.this.setVisible(false);
 		   CashPaymentWindow cashPaymentWindow=new CashPaymentWindow(PaymentWindow.this,currentOrder,discountedPrice);
 		   cashPaymentWindow.setVisible(true);
+		   PaymentWindow.this.setVisible(false);
 			}
 		});
 		contentPane.add(buttonByCash);
@@ -141,6 +142,7 @@ public class PaymentWindow extends JFrame {
 		   //PaymentWindow.this.setVisible(false);
 		   CardPaymentWindow cardPaymentWindow=new CardPaymentWindow(PaymentWindow.this,currentOrder,discountedPrice);
 		   cardPaymentWindow.setVisible(true);
+		   PaymentWindow.this.setVisible(false);
 			}
 		});
         

@@ -5,10 +5,14 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -44,7 +48,7 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 	private JTable menuTable;
 	private JLabel labelMenu;
 	private JScrollPane scrollPane;
-	private JButton buttonAdd, buttonModify, buttonDelete;
+	private JButton buttonAdd, buttonModify, buttonDelete, buttonRedeem;
 	
 	
 	private DefaultTableModel menuTableModel;
@@ -123,7 +127,51 @@ public class ManagerWindow  extends JFrame implements ActionListener {
 			}
 		});
 		contentPane.add(buttonAdd);
+		
+		buttonRedeem = new JButton("Modify Redeem ");
+		buttonRedeem.setBounds(34, 331, 117, 29);
+		buttonRedeem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				
+			
+				JPanel myPanel = new JPanel(new GridLayout(12, 2));
+			      myPanel.add(new JLabel("Enter Redeem Point Limit "));
+			      JTextField redeemPoint = new JTextField(10);
+			      myPanel.add(redeemPoint);
+			      
+			     
+			      
+			      int result=JOptionPane.showConfirmDialog(null, myPanel, 
+			               "Redeem Decider", JOptionPane.OK_CANCEL_OPTION);
+			      
+			      if(result == JOptionPane.OK_OPTION)
+			      {
+			    	  try
+			    	  {
+			    		  System.out.println("Yaa");
+			    		  System.out.println(redeemPoint.getText());
+				    	  File file = new File("redeemCount");
+				    	  FileWriter fileWriter = new FileWriter(file);
+				    	  BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
+				    	  writer.write(redeemPoint.getText());
+				    	  JOptionPane.showConfirmDialog(null, "Redeem Successfully Updated", 
+					               "Redeem", JOptionPane.OK_CANCEL_OPTION);
+				    	  fileWriter.close();
+				    	  writer.close();
+			    	  }
+			    	  catch(Exception e)
+			    	  {
+			    		  
+			    	  }
+			    	  
+			      }
+			      
+			}
+		});
+		contentPane.add(buttonRedeem);
 		contentPane.add(scrollPane);
+		
+		
 		
 		menuTable = new JTable(new MenuTableModel(menu));
 		menuTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

@@ -83,7 +83,16 @@ public class CashPaymentWindow extends JFrame {
 			{
 				double temp=Double.parseDouble(getAmount());
 				double temp1=paymentByCash.getReturnAmount(temp);
+				if(temp1<0)
+				{
+					JOptionPane.showMessageDialog(contentPane,"Amount Insufficient","Alert", JOptionPane.ERROR_MESSAGE);
+				}
+				else
+				{
 				returnLabel.setText("$"+Double.toString(temp1));
+				buttonDone.setVisible(true);
+				buttonBack.setVisible(false);
+				}
 				
 			}
 		});
@@ -101,6 +110,7 @@ public class CashPaymentWindow extends JFrame {
 			}
 		
 		});
+		buttonDone.setVisible(false);
 		contentPane.add(buttonDone);
 
 		   buttonBack=new JButton("Back");

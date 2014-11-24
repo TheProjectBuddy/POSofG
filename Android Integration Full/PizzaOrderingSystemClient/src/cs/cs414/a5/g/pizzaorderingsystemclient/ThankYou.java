@@ -22,8 +22,8 @@ public class ThankYou extends Activity {
 		Bundle extras = getIntent().getExtras();
 		String customerID = extras.getString("customerID");
 		String redeemPoints = extras.getString("customerPoints");
-		Toast.makeText(getApplicationContext(),customerID,Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(),redeemPoints,Toast.LENGTH_LONG).show();
+		//Toast.makeText(getApplicationContext(),customerID,Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),redeemPoints,Toast.LENGTH_LONG).show();
 		Toast.makeText(getApplicationContext(),"Thank you!",Toast.LENGTH_LONG).show();
 		final AsyncTask redeemResult = new RedeemUpdateCall().execute(customerID.trim(), redeemPoints.trim());
 	

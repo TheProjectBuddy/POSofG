@@ -31,6 +31,8 @@ public class PaymentByCard extends Payment{
         	flag=false;
 		if(cardno.isEmpty()||cvv.isEmpty()||expiry.isEmpty())
 			flag=false;
+		if(cardno.length()!=16)
+			flag=false;
 		return flag;
 	}
 	

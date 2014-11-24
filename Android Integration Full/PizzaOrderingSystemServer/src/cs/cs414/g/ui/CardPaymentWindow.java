@@ -133,18 +133,16 @@ public class CardPaymentWindow extends JFrame {
 					if(paymentByCard.authenticateCard(getCardNo(), getCVV(), getExpiry()))
 					{
 					buttonOk.setVisible(true);
+					buttonAuthenticate.setVisible(false);
+					buttonBack.setVisible(false);
 					}
 					else
 					{
 					JOptionPane.showMessageDialog(contentPane,"Authentication Failed","Alert", JOptionPane.ERROR_MESSAGE);
 					}
-				} catch (HeadlessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(contentPane,"Check date"+e1.toString(),"Alert",JOptionPane.ERROR_MESSAGE);
+				} 
         	}
         });
         contentPane.add(buttonAuthenticate);
