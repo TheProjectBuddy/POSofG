@@ -59,7 +59,7 @@ public class Menu implements Serializable {
 			else if (splits.length == NUM_OTHER_PARAMS && splits[0].equals("2")) {
 				String name = splits[1];
 				double price = Double.parseDouble(splits[2]);
-				int special = Integer.parseInt(splits[splits.length-1]);
+				int special = Integer.parseInt(splits[splits.length-2]);
 				foods.add(new MenuItem(name, price,special));
 			}
 			else {

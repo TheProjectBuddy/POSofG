@@ -44,18 +44,18 @@ public class KioskActivity extends Activity implements OnClickListener,
 	private static final int MY_BUTTON3 = 9002;
 
 	public String uriString = new String();
-	
+
 	final RadioButton[] rb = new RadioButton[4];
 	RadioGroup rg;
 	final ArrayList<String> toppingsSelected = new ArrayList<String>();
 	final ArrayList<String> othersSelected = new ArrayList<String>();
 	final ArrayList<CheckBox> selectedcheckBox = new ArrayList<CheckBox>();
 	public static String orderString = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		uriString = "customer=guest&orderId=1";
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_kiosk);
 		AsyncTask result = new GetMenu().execute();
@@ -92,25 +92,23 @@ public class KioskActivity extends Activity implements OnClickListener,
 				rg.setOnCheckedChangeListener(this);
 				temp = "";
 			}
-			
+
 			TextView tv1 = new TextView(this);
 			tv1.setText("Pizza Type");
 			tv1.setTextSize(26);
 			ll.addView(tv1);
-			
+
 			ImageView iv = new ImageView(this);
 			iv.setBackgroundResource(R.drawable.pizza_line);
 			ll.addView(iv);
-			
+
 			ll.addView(rg);
 
-			
 			TextView tv2 = new TextView(this);
 			tv2.setText("Toppings");
 			tv2.setTextSize(20);
 			ll.addView(tv2);
-			
-			
+
 			NodeList toppingsList = doc.getElementsByTagName("topping");
 
 			Log.w("Toppings length", toppingsList.getLength() + "");
@@ -128,7 +126,7 @@ public class KioskActivity extends Activity implements OnClickListener,
 							toppingsSelected
 									.add(getCharacterDataFromElement(tpg));
 							selectedcheckBox.add(cb);
-						} 
+						}
 					}
 				});
 
@@ -137,41 +135,87 @@ public class KioskActivity extends Activity implements OnClickListener,
 			ImageView iv2 = new ImageView(this);
 			iv2.setBackgroundResource(R.drawable.pizza_line);
 			ll.addView(iv2);
-			
+
 			TextView tv3 = new TextView(this);
 			tv3.setText("Side Orders");
 			tv3.setTextSize(26);
 			ll.addView(tv3);
-			
-			
+
 			NodeList nodesOther = doc.getElementsByTagName("others");
 			for (int i = 0; i < nodesOther.getLength(); i++) {
 				final CheckBox chkbx = new CheckBox(this);
 				Element others = (Element) nodesOther.item(i);
 				NodeList otherName = others.getElementsByTagName("other");
-				final Element otherLine = (Element) otherName.item(0);
-				chkbx.setText(getCharacterDataFromElement(otherLine));
-				chkbx.setId(i);
-				chkbx.setOnClickListener(new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						// is chkIos checked?
-						if (((CheckBox) v).isChecked()) {
-							othersSelected
-									.add(getCharacterDataFromElement(otherLine));
-							selectedcheckBox.add(chkbx);
-						} 
+				NodeList specialOther = others.getElementsByTagName("special");
+				Element splLine = (Element) specialOther.item(0);
+				int specialVal = Integer
+						.parseInt(getCharacterDataFromElement(splLine));
 
-					}
-				});
-				ll.addView(chkbx);
+				if (specialVal == 0) {
+					final Element otherLine = (Element) otherName.item(0);
+					chkbx.setText(getCharacterDataFromElement(otherLine));
+					chkbx.setId(i);
+					chkbx.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// is chkIos checked?
+							if (((CheckBox) v).isChecked()) {
+								othersSelected
+										.add(getCharacterDataFromElement(otherLine));
+								selectedcheckBox.add(chkbx);
+							}
+
+						}
+					});
+					ll.addView(chkbx);
+				}
 			}
-
+			
 			ImageView iv3 = new ImageView(this);
 			iv3.setBackgroundResource(R.drawable.pizza_line);
 			ll.addView(iv3);
 			
+			TextView tv4 = new TextView(this);
+			tv4.setText("Special Items");
+			tv4.setTextSize(26);
+			ll.addView(tv4);
+			
+			for (int i = 0; i < nodesOther.getLength(); i++) {
+				final CheckBox chkbx = new CheckBox(this);
+				Element others = (Element) nodesOther.item(i);
+				NodeList otherName = others.getElementsByTagName("other");
+
+				NodeList specialOther = others.getElementsByTagName("special");
+				Element splLine = (Element) specialOther.item(0);
+				int specialVal = Integer
+						.parseInt(getCharacterDataFromElement(splLine));
+
+				if (specialVal == 1) {
+					final Element otherLine = (Element) otherName.item(0);
+					chkbx.setText(getCharacterDataFromElement(otherLine));
+					chkbx.setId(i);
+					chkbx.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// is chkIos checked?
+							if (((CheckBox) v).isChecked()) {
+								othersSelected
+										.add(getCharacterDataFromElement(otherLine));
+								selectedcheckBox.add(chkbx);
+							}
+
+						}
+					});
+					ll.addView(chkbx);
+				}
+			}
+			ImageView iv4 = new ImageView(this);
+			iv4.setBackgroundResource(R.drawable.pizza_line);
+			ll.addView(iv4);
+
 			Button btn1 = new Button(this);
 			btn1.setText("Add to Order");
 			btn1.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -230,30 +274,29 @@ public class KioskActivity extends Activity implements OnClickListener,
 		Toast toast;
 		switch (v.getId()) {
 		case MY_BUTTON1:
-	
+
 			int selectedId = rg.getCheckedRadioButtonId();
-		
+
 			// Which Pizza is selected?
-			
+
 			RadioButton rbtn = new RadioButton(this);
 			rbtn = (RadioButton) findViewById(selectedId);
 			// form uri of order
-			if(rbtn == null){
-				//No pizza is selected, check if other items are selected?
+			if (rbtn == null) {
+				// No pizza is selected, check if other items are selected?
 				for (String str : othersSelected) {
 					uriString += "&other=" + str;
 				}
-			}
-			else{
-			uriString += "&type=" + (String) rbtn.getText();
-			// Which toppings are selected?
-			for (String str : toppingsSelected) {
-				uriString += "-" + str;
-			}
-			//which other items
-			for (String str : othersSelected) {
-				uriString += "&other=" + str;
-			}
+			} else {
+				uriString += "&type=" + (String) rbtn.getText();
+				// Which toppings are selected?
+				for (String str : toppingsSelected) {
+					uriString += "-" + str;
+				}
+				// which other items
+				for (String str : othersSelected) {
+					uriString += "&other=" + str;
+				}
 			}
 			AsyncTask result2 = new SendOrder().execute(uriString);
 			try {
@@ -266,30 +309,31 @@ public class KioskActivity extends Activity implements OnClickListener,
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-				rg.clearCheck();
-				for(CheckBox c: selectedcheckBox)
-					c.setChecked(false);
-					
-				othersSelected.clear();
-				toppingsSelected.clear();
-				
+
+			rg.clearCheck();
+			for (CheckBox c : selectedcheckBox)
+				c.setChecked(false);
+
+			othersSelected.clear();
+			toppingsSelected.clear();
+
 			toast = Toast.makeText(this, "Added to Order!!", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.TOP, 25, 400);
 			toast.show();
 			uriString = "";
 			break;
 		case MY_BUTTON2:
-//			//View Order - Should display a new window with all the orders places and should be able to Modify it.
+			// //View Order - Should display a new window with all the orders
+			// places and should be able to Modify it.
 			Intent intent = new Intent(this, OrderActivity.class);
-			Log.w("Inside Kiosk ",orderString);
+			Log.w("Inside Kiosk ", orderString);
 			intent.putExtra("OrderString", orderString);
 			startActivityForResult(intent, 1);
 
 			break;
 		case MY_BUTTON3:
 			// Create a tuple in a file
-			uriString ="&status=true";
+			uriString = "&status=true";
 			String totalPrice = new String();
 			AsyncTask result3 = new SendOrder().execute(uriString);
 			try {
@@ -297,39 +341,38 @@ public class KioskActivity extends Activity implements OnClickListener,
 				// use TOTAL from here...
 				DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
 				DocumentBuilder b;
-					b = f.newDocumentBuilder();
-				Document doc = b.parse(new InputSource(new StringReader(orderString)));
+				b = f.newDocumentBuilder();
+				Document doc = b.parse(new InputSource(new StringReader(
+						orderString)));
 				NodeList price = doc.getElementsByTagName("total");
-				for(int l=0;l<price.getLength();l++){
+				for (int l = 0; l < price.getLength(); l++) {
 					Element total = (Element) price.item(l);
 					totalPrice = getCharacterDataFromElement(total);
 				}
 				Intent intentPay = new Intent(this, PaymentFirst.class);
 				intentPay.putExtra("TotalPrice", totalPrice);
 				startActivityForResult(intentPay, 1);
-				
+
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			catch (SAXException e) {
+			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			catch (ParserConfigurationException e) {
+			} catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 	}

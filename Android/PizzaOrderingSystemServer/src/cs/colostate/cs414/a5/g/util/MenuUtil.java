@@ -108,10 +108,11 @@ public class MenuUtil {
 				for (int i = 0; i < splits.length; ++i) {
 					splits[i] = splits[i].trim();
 				}
-				final int NUM_OTHER_PARAMS = 4;
+				final int NUM_OTHER_PARAMS = 5;
 				if (splits.length == NUM_OTHER_PARAMS && splits[0].equals("2")) {
 					if (splits[1].equalsIgnoreCase(string))
 					 price = Double.parseDouble(splits[2]);	
+					//2|Salad|5|0|9
 				}
 			}
 		} catch (NumberFormatException e) {
