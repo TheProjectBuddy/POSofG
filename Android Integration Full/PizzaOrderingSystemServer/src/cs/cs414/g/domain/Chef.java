@@ -61,20 +61,20 @@ public class Chef implements OrderItemEmp, java.io.Serializable
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String lineRead ;
 			if(thisline == 1)
-				orderList+= bufferedReader.readLine().replace("PAID", "COMPLETED")+"\n";
+				orderList+= bufferedReader.readLine().replace("PAID", "COMPLETED");
 			else
-				orderList += bufferedReader.readLine()+"\n";
+				orderList += bufferedReader.readLine();
 			
 			int lineCount = 1;
 			while((lineRead = bufferedReader.readLine()) != null)
 			{
 			  if (lineCount == thisline-1){
-				  orderList += lineRead.replace("PAID", "COMPLETED")+"\n";
+				  orderList += "\n"+ lineRead.replace("PAID", "COMPLETED");
 				  lineCount++;
 			  }
 			  else{
 				  lineCount++;
-				  orderList += lineRead+"\n";
+				  orderList += "\n"+lineRead;
 			  }
 			}
 			

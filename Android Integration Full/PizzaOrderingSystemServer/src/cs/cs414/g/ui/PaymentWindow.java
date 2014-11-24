@@ -2,6 +2,10 @@ package cs.cs414.g.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,7 +17,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import cs.cs414.g.domain.Order;
+import cs.cs414.g.domain.OrderItem;
 import cs.cs414.g.domain.Payment;
+import cs.cs414.g.domain.Pizza;
 public class PaymentWindow extends JFrame {
 
 	/**
@@ -158,6 +164,38 @@ public class PaymentWindow extends JFrame {
     	   }
        });
        contentPane.add(buttonBack);
+       
+       	ArrayList<OrderItem> temp;
+		String write = new String();
+		temp = cOrder.getOrderItems();
+		write += cOrder.getOrderId() + "|";
+		int len = temp.size();
+		for (int i = 0; i < len; i++) {
+			if (temp.get(i).getFood() instanceof Pizza) {
+				Pizza p = (Pizza) temp.get(i).getFood();
+				write += p.getType() + "-";
+				for (int index = 0; index < p.getToppings().size(); index++)
+					write += p.getToppings().get(index).getType() + "-";
+				write = write.substring(0, write.length() - 1);
+				write+="|";
+			} else {
+					write += temp.get(i).getFood().getType() + "|";
+			}
+		}
+		write = write.substring(0, write.length() - 1);
+
+		try {
+			PrintWriter out = new PrintWriter(new BufferedWriter(
+					new FileWriter("order.txt", true)));
+			out.print(write);
+			out.print("|"+cOrder.getPrice());
+			out.print("|PAID\n");
+			out.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
     }
     public String getCoupon()
     {
