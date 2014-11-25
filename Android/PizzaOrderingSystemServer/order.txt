@@ -1,3 +1,0 @@
-1|SMALL-Tomato-Jalapeno|LARGE-Mushrooms|Fountain_Drink|23.0|PAID
-1|SMALL-Jalapeno-Onions|Pasta|7.0|PAID
-1|Breadticks|SMALL-Tomato-Jalapeno-Onions|10.5|PAID

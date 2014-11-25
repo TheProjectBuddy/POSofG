@@ -1,1 +1,0 @@
-Toast.makeText(getApplicationContext(),"String",Toast.LENGTH_LONG).show();
